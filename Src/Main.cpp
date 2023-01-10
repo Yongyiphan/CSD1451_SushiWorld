@@ -3,16 +3,13 @@
 
 #include "AEEngine.h"
 #include <iostream>;
+#include "Game.h"
 
 
 s8 GameName[] = "Sushi Tale";
 
 // ---------------------------------------------------------------------------
 // main
-enum GameStates {
-	MainMenu,
-	MainMap
-};
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -32,14 +29,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Changing the window title
 	AESysSetWindowTitle(GameName);
-	
+
 	// reset the system modules
 	AESysReset();
-	while (gGameRunning) {
+	
+	Game NG = new Game();
 
+	// Game Loop
+	while (gGameRunning)
+	{
+
+		// check if forcing the application to quit
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;
 	}
+
 	// free the system
 	AESysExit();
+}
+
+void Fuck() {
+
 }
