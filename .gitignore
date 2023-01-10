@@ -1,5 +1,6 @@
 /.tmp
 /.vs
+/bin
 
 *vcxproj.filters
 *vcxproj.user
