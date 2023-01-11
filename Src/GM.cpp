@@ -3,12 +3,18 @@
 #include <iostream>
 #include <vector>
 
+GM::State::State() {
+
+}
 GM::State::State(std::string Name) {
 	StateName = Name;
 }
+GM::State::~State() {
+
+}
 
 
-GM::Engine::Engine() :m_add(false), m_replce(false), m_remove(false) {
+GM::Engine::Engine(){
 
 }
 GM::Engine::~Engine(){}

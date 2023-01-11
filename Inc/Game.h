@@ -1,25 +1,28 @@
 #pragma once
 #include "GM.h"
+#include "AEEngine.h"
 
-class Game : GM::State
+class Game
 {
 private:
-	int rad = 0;
-	s32 x, y;
-	AEGfxVertexList* pMesh;
-	AEGfxTexture* pTex;
 
 public:
+	HINSTANCE hInstance;
+	HINSTANCE hPrevInstance;
+	LPWSTR lpCmdLine;
+	int nCmdShow;
+	const s8 *GameName;
+	s32 WinHeight, WinWidth;
+	s32 FrameRate;
+
+	//AEGfxVertexList* pMesh;
+	//AEGfxTexture* pTex;
+	f32 rad;
+	
 	Game();
 	~Game();
-
-
 	void Init();
-	void Exit();
-	void Update();
-	void Draw();
-	void Pause();
-	void Resume();
+	void Run();
 
 };
 

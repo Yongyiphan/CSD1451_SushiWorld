@@ -19,35 +19,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	
-	int gGameRunning = 1;
-
-	// Initialization of your own variables go here
-	
-	// Using custom window procedure
-	AESysInit(hInstance, nCmdShow, 800, 600, 1, 60, true, NULL);
-
-	// Changing the window title
-	AESysSetWindowTitle(GameName);
-
-	// reset the system modules
-	AESysReset();
-	
-	Game NG = new Game();
-
-	// Game Loop
-	while (gGameRunning)
-	{
-
-		// check if forcing the application to quit
-		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;
-	}
-
-	// free the system
-	AESysExit();
+	Game NG;
+	NG.hInstance = hInstance;
+	NG.hPrevInstance = hPrevInstance;
+	NG.lpCmdLine = lpCmdLine;
+	NG.nCmdShow = nCmdShow;
+	NG.Init();
+	NG.Run();
 }
-
 void Fuck() {
 
 }

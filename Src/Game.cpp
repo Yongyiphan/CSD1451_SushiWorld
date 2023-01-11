@@ -2,20 +2,34 @@
 #include "Game.h"
 #include <iostream>
 #include "GM.h"
+#include <Windows.h>
+#include <WinUser.h>
 
-Game::Game(): State{
 
+Game::Game() {
 }
 
 Game::~Game() {
 
 }
-
 void Game::Init() {
-	
-	// Pointer to Mesh
-	pMesh = 0;
-	// Informing the library that we're about to start adding triangles
+	GameName = "Sushi Tale";
+	WinWidth = 800;
+	WinHeight = 600;
+	FrameRate = 30;
+
+	AESysInit(hInstance, nCmdShow, WinWidth, WinHeight, 1, FrameRate, true, NULL);
+	// Changing the window title
+	AESysSetWindowTitle(GameName);
+
+	// reset the system modules
+
+}
+void Game::Run() {
+	int gGameRunning = 1;
+	AESysReset();
+
+	AEGfxVertexList *pMesh = 0;
 	AEGfxMeshStart();
 	// This shape has 2 triangles that makes up a square
 	// Color parameters represent colours as ARGB
@@ -30,36 +44,23 @@ void Game::Init() {
 	-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
 	// Saving the mesh (list of triangles) in pMesh
 	pMesh = AEGfxMeshEnd();
-	pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
+	AEGfxTexture *pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
 	rad = 0;
-}
-
-void Game::Exit() {
-	AEGfxMeshFree(pMesh);
-	AEGfxTextureUnload(pTex);
-}
-
-void Game::Update() {
-		// Informing the system about the loop's start
+	s32 x, y;
+	// Game Loop
+	while (gGameRunning)
+	{
 		AESysFrameStart();
-		// Handling Input
 		AEInputGetCursorPosition(&x, &y);
 		AEInputUpdate();
 		// Your own update logic goes here
 		if (AEInputCheckTriggered(AEVK_D)) {
-			rad += 1.5;
+			rad += 0.35;
 		}
 		if (AEInputCheckTriggered(AEVK_A)) {
-			rad -= 0.5;
+			rad -= 0.35;
 		}
-		this->Draw();
-
-
-		// Informing the system about the loop's end
-		AESysFrameEnd();
-}
-
-void Game::Draw() {
+		std::cout << rad << std::endl;
 		// Your own rendering logic goes here
 		// Set the background to black.
 		AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
@@ -93,7 +94,14 @@ void Game::Draw() {
 		AEGfxSetTransform(transform.m);
 		// Actually drawing the mesh 
 		AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
+		AESysFrameEnd();
+
+		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
+			gGameRunning = 0;
+
+	}
+
+	// free the system
+	AESysExit();
 }
 
-void Game::Pause() {}
-void Game::Resume(){}
