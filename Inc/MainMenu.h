@@ -5,8 +5,10 @@ class MainMenu : public GM::State {
 private:
 
 public:
-	MainMenu();
-	~MainMenu();
+	
+	MainMenu() {};
+	MainMenu(char const*);
+	~MainMenu() {};
 
 	void Init() override;
 	void Exit() override;

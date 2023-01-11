@@ -6,12 +6,13 @@
 
 namespace GM {
 	class State {
-	private:
-		std::string StateName;
 	public:
-		State();
-		State(std::string);
-		~State();
+		//Variables
+		std::string StateName;
+
+		//Constructor | Destructor
+		State() {};
+		virtual ~State() {};
 	
 		virtual void Init() = 0;
 		virtual void Exit() = 0;
@@ -24,6 +25,7 @@ namespace GM {
 		virtual void Pause() {};
 		virtual void Resume() {};
 
+
 	};
 
 	class Engine {
@@ -32,11 +34,10 @@ namespace GM {
 		std::unique_ptr<State> new_state;
 
 	public:
-		Engine();
-		~Engine();
+		Engine() {};
+		~Engine() {};
 	
-		void AddState(std::unique_ptr<State> toAdd);
-		void ReplaceState(std::unique_ptr<State> toReplace);
+		void AddState(std::unique_ptr<State> toAdd, bool replace);
 		void PopState();
 		void ProcessStateChange();
 		std::unique_ptr<State>& GetCurrent();

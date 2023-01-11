@@ -4,6 +4,7 @@
 #include "GM.h"
 #include <Windows.h>
 #include <WinUser.h>
+#include "MainMenu.h"
 
 
 Game::Game() {
@@ -16,7 +17,7 @@ void Game::Init() {
 	GameName = "Sushi Tale";
 	WinWidth = 800;
 	WinHeight = 600;
-	FrameRate = 30;
+	FrameRate = 60;
 
 	AESysInit(hInstance, nCmdShow, WinWidth, WinHeight, 1, FrameRate, true, NULL);
 	// Changing the window title
@@ -29,7 +30,6 @@ void Game::Run() {
 	int gGameRunning = 1;
 	AESysReset();
 
-	AEGfxVertexList *pMesh = 0;
 	AEGfxMeshStart();
 	// This shape has 2 triangles that makes up a square
 	// Color parameters represent colours as ARGB
@@ -44,23 +44,33 @@ void Game::Run() {
 	-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
 	// Saving the mesh (list of triangles) in pMesh
 	pMesh = AEGfxMeshEnd();
-	AEGfxTexture *pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
+	pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
 	rad = 0;
-	s32 x, y;
+	std::clock_t start = std::clock();
 	// Game Loop
 	while (gGameRunning)
 	{
 		AESysFrameStart();
+		MainMenu MM("Main Menu");
+		
+
+		AESysFrameEnd();
+
+		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
+			gGameRunning = 0;
+
+	}
+
+	// free the system
+	AEGfxMeshFree(pMesh);
+	AEGfxTextureUnload(pTex);
+	AESysExit();
+}
+
+void Game::Draw() {
 		AEInputGetCursorPosition(&x, &y);
 		AEInputUpdate();
-		// Your own update logic goes here
-		if (AEInputCheckTriggered(AEVK_D)) {
-			rad += 0.35;
-		}
-		if (AEInputCheckTriggered(AEVK_A)) {
-			rad -= 0.35;
-		}
-		std::cout << rad << std::endl;
+		rad -= 0.005;
 		// Your own rendering logic goes here
 		// Set the background to black.
 		AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
@@ -94,14 +104,7 @@ void Game::Run() {
 		AEGfxSetTransform(transform.m);
 		// Actually drawing the mesh 
 		AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
-		AESysFrameEnd();
+	
 
-		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;
-
-	}
-
-	// free the system
-	AESysExit();
 }
 

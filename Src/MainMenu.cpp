@@ -3,7 +3,9 @@
 #include "MainMenu.h"
 #include <iostream>
 
-
+MainMenu::MainMenu(char const* Name) {
+	StateName = Name;
+}
 
 void MainMenu::Init() {
 

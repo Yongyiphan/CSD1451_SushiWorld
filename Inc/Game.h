@@ -15,14 +15,16 @@ public:
 	s32 WinHeight, WinWidth;
 	s32 FrameRate;
 
-	//AEGfxVertexList* pMesh;
-	//AEGfxTexture* pTex;
+	AEGfxVertexList* pMesh = 0;
+	AEGfxTexture* pTex;
 	f32 rad;
+	s32 x, y;
 	
 	Game();
 	~Game();
 	void Init();
 	void Run();
+	void Draw();
 
 };
 
