@@ -31,13 +31,15 @@ namespace GM {
 	class Engine {
 	private:
 		std::stack<std::unique_ptr<State>> stateStack;
-		std::unique_ptr<State> new_state;
+		std::unique_ptr<State> new_state, topState;
+
+		bool toAdd, toRemove, toReplace;
 
 	public:
-		Engine() {};
-		~Engine() {};
+		Engine();
+		~Engine();
 	
-		void AddState(std::unique_ptr<State> toAdd, bool replace);
+		void AddState(std::unique_ptr<State>, bool replace = false);
 		void PopState();
 		void ProcessStateChange();
 		std::unique_ptr<State>& GetCurrent();
