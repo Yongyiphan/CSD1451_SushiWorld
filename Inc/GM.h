@@ -14,6 +14,8 @@ namespace GM {
 		State() {};
 		virtual ~State() {};
 	
+		virtual void Load() = 0;
+		virtual void Unload() = 0;
 		virtual void Init() = 0;
 		virtual void Exit() = 0;
 

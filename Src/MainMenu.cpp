@@ -1,7 +1,9 @@
 #include "GM.h"
 #include "AEEngine.h"
 #include "MainMenu.h"
+#include <Windows.h>
 #include <iostream>
+#include "CF.h"
 
 
 
@@ -10,9 +12,7 @@ MainMenu::MainMenu(char const* Name, std::shared_ptr<Context>&context) {
 	m_context = context;
 }
 
-
-void MainMenu::Init() {
-
+void MainMenu::Load() {
 	AEGfxMeshStart();
 	// This shape has 2 triangles that makes up a square
 	// Color parameters represent colours as ARGB
@@ -28,13 +28,23 @@ void MainMenu::Init() {
 	// Saving the mesh (list of triangles) in pMesh
 	pMesh = AEGfxMeshEnd();
 	pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
-	rad = 0;
-	std::clock_t start = std::clock();
+	Font = AEGfxCreateFont("./Assets/From_Cartoon_Blocks.ttf", 15);
+	black = { 100.0f, 0.0f, 0.0f };
 }
-void MainMenu::Exit() {
+void MainMenu::Unload(){
 	AEGfxMeshFree(pMesh);
 	AEGfxTextureUnload(pTex);
+	AEGfxDestroyFont(Font);
+}
 
+void MainMenu::Init() {
+
+	rad = 0;
+	std::clock_t start = std::clock();
+	
+}
+void MainMenu::Exit() {
+	Unload();
 }
 void MainMenu::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&x, &y);
@@ -45,7 +55,11 @@ void MainMenu::Update(f64 deltaTime) {
 void MainMenu::Draw() {
 	// Your own rendering logic goes here
 	// Set the background to black.
-	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
+	
+	CFunc::ClearBackground(black);
+	//AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
+	CFunc::CFDrawText(Font, "FUCK THIS", 400, 300, 1, {100.0f, 150.0f, 50.0f});
+
 	// Tell the engine to get ready to draw something with texture.
 	AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 	// Set the tint to white, so that the sprite can 

@@ -1,8 +1,6 @@
 #include "AEEngine.h"
 #include "GM.h"
 #include <iostream>
-#include <string>
-
 /*
 Engine Model
 [PauseScreen ] <- Add On top
@@ -43,6 +41,7 @@ void GM::Engine::ProcessStateChange() {
 
 	if (toAdd) {
 		if (toReplace && (!stateStack.empty())) {
+			stateStack.top()->Unload();
 			stateStack.top()->Exit();
 			stateStack.pop();
 		}
@@ -50,6 +49,7 @@ void GM::Engine::ProcessStateChange() {
 			stateStack.top()->Pause();
 		}
 		stateStack.push(std::move(new_state));
+		stateStack.top()->Load();
 		stateStack.top()->Init();
 		stateStack.top()->Resume();
 		toAdd = false;

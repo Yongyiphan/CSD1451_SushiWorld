@@ -1,9 +1,7 @@
 #include "AEEngine.h"
-#include "Game.h"
 #include <iostream>
+#include "Game.h"
 #include "GM.h"
-#include <Windows.h>
-#include <WinUser.h>
 #include "MainMenu.h"
 
 
@@ -33,7 +31,7 @@ void Game::Run() {
 	AESysReset();
 
 	// Game Loop
-	while (gGameRunning && AESysDoesWindowExist)
+	while (gGameRunning && AESysDoesWindowExist())
 	{
 		AESysFrameStart();
 		m_context->gman->ProcessStateChange();
