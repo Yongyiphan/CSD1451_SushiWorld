@@ -7,6 +7,7 @@
 #include "AEEngine.h"
 #include "GM.h"
 #include "Game.h"
+#include "CFunc.h"
 
 
 #include <string>
