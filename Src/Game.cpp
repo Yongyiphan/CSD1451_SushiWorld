@@ -1,10 +1,6 @@
-#include "AEEngine.h"
+#include "pch.h"
+
 #include "Game.h"
-#include <iostream>
-#include "GM.h"
-#include <Windows.h>
-#include <WinUser.h>
-#include "MainMenu.h"
 
 
 Game::Game() {
@@ -51,7 +47,6 @@ void Game::Run() {
 	while (gGameRunning)
 	{
 		AESysFrameStart();
-		MainMenu MM("Main Menu");
 		
 
 		AESysFrameEnd();

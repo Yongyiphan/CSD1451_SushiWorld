@@ -1,10 +1,15 @@
 #pragma once
-#include "AEEngine.h"
+#include "pch.h"
 #include <string>
 #include <stack>
 #include <memory>
 
 namespace GM {
+	enum GS_ID {
+		RESTART,
+		QUIT
+		
+	};
 	class State {
 	public:
 		//Variables
@@ -13,6 +18,10 @@ namespace GM {
 		//Constructor | Destructor
 		State() {};
 		virtual ~State() {};
+		
+
+		virtual void Load() = 0;
+		virtual void Unload() = 0;
 	
 		virtual void Init() = 0;
 		virtual void Exit() = 0;

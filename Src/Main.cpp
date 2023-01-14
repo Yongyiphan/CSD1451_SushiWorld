@@ -1,10 +1,8 @@
 // ---------------------------------------------------------------------------
 // includes
 
-#include "AEEngine.h"
-#include <iostream>;
+#include "pch.h"
 #include "Game.h"
-
 
 s8 GameName[] = "Sushi Tale";
 

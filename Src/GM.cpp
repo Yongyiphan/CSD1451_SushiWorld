@@ -1,9 +1,15 @@
-#include "AEEngine.h"
+#include "pch.h"
 #include "GM.h"
-#include <iostream>
 #include <string>
 
 
+GM::Engine::Engine() {
+	std::cout << "Create Game Manger" << std::endl;
+}
+
+void GM::Engine::Initialize() {
+	std::cout << "Init Engine" << std::endl;
+}
 
 
 void GM::Engine::AddState(std::unique_ptr<State> toAdd, bool replace) {

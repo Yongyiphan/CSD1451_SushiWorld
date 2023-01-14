@@ -15,11 +15,13 @@
     <ClCompile Include="Src\GM.cpp" />
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\MainMenu.cpp" />
+    <ClCompile Include="Src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\Game.h" />
     <ClInclude Include="Inc\GM.h" />
     <ClInclude Include="Inc\MainMenu.h" />
+    <ClInclude Include="Inc\pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
