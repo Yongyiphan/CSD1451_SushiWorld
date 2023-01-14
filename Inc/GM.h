@@ -18,11 +18,9 @@ namespace GM {
 		//Constructor | Destructor
 		State() {};
 		virtual ~State() {};
-		
-
+	
 		virtual void Load() = 0;
 		virtual void Unload() = 0;
-	
 		virtual void Init() = 0;
 		virtual void Exit() = 0;
 
@@ -40,7 +38,9 @@ namespace GM {
 	class Engine {
 	private:
 		std::stack<std::unique_ptr<State>> stateStack;
-		std::unique_ptr<State> new_state;
+		std::unique_ptr<State> new_state, topState;
+
+		bool toAdd, toRemove, toReplace;
 
 	public:
 		Engine() {};

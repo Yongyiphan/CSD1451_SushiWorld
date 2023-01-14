@@ -17,11 +17,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	Game NG;
-	NG.hInstance = hInstance;
-	NG.hPrevInstance = hPrevInstance;
-	NG.lpCmdLine = lpCmdLine;
-	NG.nCmdShow = nCmdShow;
+	Game NG(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Sushi Tale");
+
 	NG.Init();
 	NG.Run();
 }
