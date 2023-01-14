@@ -1,9 +1,5 @@
-#include "GM.h"
-#include "AEEngine.h"
+#include "pch.h"
 #include "MainMenu.h"
-#include <Windows.h>
-#include <iostream>
-#include "CF.h"
 
 
 
@@ -29,7 +25,6 @@ void MainMenu::Load() {
 	pMesh = AEGfxMeshEnd();
 	pTex = AEGfxTextureLoad("./Assets/PlanetTexture.png");
 	Font = AEGfxCreateFont("./Assets/From_Cartoon_Blocks.ttf", 15);
-	black = { 100.0f, 0.0f, 0.0f };
 }
 void MainMenu::Unload(){
 	AEGfxMeshFree(pMesh);
@@ -43,22 +38,21 @@ void MainMenu::Init() {
 	std::clock_t start = std::clock();
 	
 }
-void MainMenu::Exit() {
+void MainMenu::Free() {
 	Unload();
 }
 void MainMenu::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&x, &y);
 	AEInputUpdate();
 	rad -= 0.005;
+	
 
 }
 void MainMenu::Draw() {
 	// Your own rendering logic goes here
 	// Set the background to black.
 	
-	CFunc::ClearBackground(black);
-	//AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
-	CFunc::CFDrawText(Font, "FUCK THIS", 400, 300, 1, {100.0f, 150.0f, 50.0f});
+	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
 
 	// Tell the engine to get ready to draw something with texture.
 	AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
@@ -77,7 +71,7 @@ void MainMenu::Draw() {
 	// Create a rotation matrix that rotates by 45 degrees
 	AEMtx33 rotate = { 0 };
 	//AEMtx33Rot(&rotate, PI/4);
-	AEMtx33Rot(&rotate, rad);
+	AEMtx33Rot(&rotate, f32(rad));
 	// Create a translation matrix that translates by
 	// 100 in the x-axis and 100 in the y-axis
 	AEMtx33 translate = { 0 };

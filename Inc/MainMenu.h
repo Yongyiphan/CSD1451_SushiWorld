@@ -7,10 +7,9 @@ private:
 public:
 	AEGfxVertexList* pMesh = 0;
 	AEGfxTexture* pTex = 0;
-	f32 rad = 0;
+	double rad = 0;
 	s32 x = 0, y = 0;
 	s8 Font = 0;
-	CFunc::Color black;
 	
 	MainMenu(char const*, std::shared_ptr<Context>&);
 	~MainMenu() {};
@@ -18,7 +17,7 @@ public:
 	void Load() override;
 	void Unload() override;
 	void Init() override;
-	void Exit() override;
+	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
 	

@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Game.h"
+#include "MainMenu.h"
 
 
 Game::Game(HINSTANCE hI, HINSTANCE pI, LPWSTR lpcmd, int scmd, const s8 *name) : m_context(std::make_unique<Context>()){
@@ -33,11 +34,8 @@ void Game::Run() {
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{
-		AESysFrameStart();
 		m_context->gman->ProcessStateChange();
-		m_context->gman->GetCurrent()->Update(AEFrameRateControllerGetFrameTime());
-		m_context->gman->GetCurrent()->Draw();
-		AESysFrameEnd();
+		m_context->gman->Update();
 
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;

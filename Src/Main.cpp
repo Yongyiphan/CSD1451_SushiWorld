@@ -22,6 +22,3 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	NG.Init();
 	NG.Run();
 }
-void Fuck() {
-
-}
