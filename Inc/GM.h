@@ -45,7 +45,8 @@ namespace GM {
 	public:
 		Engine() {};
 		~Engine() {};
-	
+		
+		void Initialize();
 		void AddState(std::unique_ptr<State> toAdd, bool replace);
 		void PopState();
 		void ProcessStateChange();

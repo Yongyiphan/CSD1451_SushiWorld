@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ComFunc.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GM.cpp" />
     <ClCompile Include="Src\Main.cpp" />
@@ -18,6 +19,7 @@
     <ClCompile Include="Src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\ComFunc.h" />
     <ClInclude Include="Inc\Game.h" />
     <ClInclude Include="Inc\GM.h" />
     <ClInclude Include="Inc\MainMenu.h" />

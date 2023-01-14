@@ -24,6 +24,8 @@ void Game::Init() {
 }
 void Game::Run() {
 	int gGameRunning = 1;
+	GM::Engine GEngine;
+	GEngine.Initialize();
 	AESysReset();
 
 	AEGfxMeshStart();
