@@ -1,21 +1,10 @@
 #include "pch.h"
 
 #include "GM.h"
-/*
-Engine Model
-[PauseScreen ] <- Add On top
-[PlayingField]
-[MainMenu    ]
 
-if Replace, store to state to replace
-In ProcessChange
-	if to remove, replace state with stored state
-if Add, pause top state, push to top
-*/
 namespace GM {
 	Engine::Engine() {
 		std::cout << "Create Game Manger" << std::endl;
-		new_state = nullptr;
 	}
 	
 	Engine::~Engine() {};
@@ -75,12 +64,12 @@ namespace GM {
 
 	}
 
-	GS_ID Engine::Update() {
+	void Engine::Update() {
 		AESysFrameStart();
+		AEInputUpdate();
 		state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
 		state_stack.top()->Draw();
 		AESysFrameEnd();
-		return status;
 	}
 
 	std::unique_ptr< State>& Engine::GetCurrent() {
