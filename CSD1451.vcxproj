@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\AM.cpp" />
     <ClCompile Include="Src\CFunc.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GM.cpp" />
@@ -20,6 +21,7 @@
     <ClCompile Include="Src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\AM.h" />
     <ClInclude Include="Inc\CFunc.h" />
     <ClInclude Include="Inc\Game.h" />
     <ClInclude Include="Inc\GM.h" />

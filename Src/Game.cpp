@@ -20,26 +20,31 @@ void Game::Init() {
 	AESysInit(hInstance, nCmdShow, WinWidth, WinHeight, 1, FrameRate, true, NULL);
 	// Changing the window title
 	AESysSetWindowTitle(GameName);
-	m_context->gman->AddState(std::make_unique<MainMenu>("Main Menu", m_context));
+	GM::Engine GEngine;
+	GEngine.Initialize();
 
 	// reset the system modules
 
 }
 void Game::Run() {
 	int gGameRunning = 1;
-	GM::Engine GEngine;
-	GEngine.Initialize();
 	AESysReset();
-
+	m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
+	GM::GS_ID gstatus = m_context->gman->GetStatus();
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{
+	
 		m_context->gman->ProcessStateChange();
-		m_context->gman->Update();
 
-		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;
-
+		while (m_context->gman->GetStatus() == GM::INPRO) {
+			AEInputUpdate();
+			gstatus = m_context->gman->Update();
+			if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist()) {
+				gGameRunning = 0;
+				break;
+			}
+		}
 	}
 
 	// free the system

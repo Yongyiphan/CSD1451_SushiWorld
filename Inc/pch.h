@@ -6,8 +6,10 @@
 #include <iostream>
 #include "AEEngine.h"
 #include "GM.h"
+#include "AM.h"
 #include "Game.h"
 #include "CFunc.h"
+#include "MainMenu.h"
 
 
 #include <string>

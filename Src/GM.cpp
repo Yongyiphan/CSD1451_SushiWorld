@@ -26,75 +26,105 @@ namespace GM {
 	}
 
 
-	void Engine::AddState(std::unique_ptr<State> state, bool replace) {
-		status = ADD;
+	void Engine::AddState(std::unique_ptr<State> state, GS_ID stat) {
+		status = stat;
 		new_state = std::move(state);
 	}
 
 	/*
-	Scenarios of state change
-	MainMenu ->> GamePlay:
-		[GamePlay] <- 1.Added (Pushed) >> 2.Load >> 3.Init
-		[MainMenu] <- Paused
-		=============================================
-		Continue to Engine::Update() -> [GamePlay]
-
-	GamePlay ->> Pause Screen:
-		[Pause Screen] <- 1.Added (Pushed) >> 2.Load >> 3.Init >> 4.QUIT (Upon UI)
-		[GamePlay] 5. Resume here
-		[MainMenu]
-		=============================================
-		Continue to Engine::Update() -> [GamePlay]
+	Scenarios: Assuming init stack of [MainMenu]
+	Adding State
+	[MainField]
+	[MainMenu]
 	*/
 
 
 	void Engine::ProcessStateChange() {
-ProcessChange:
+
+	startPC:
 		switch (status) {
-		case RESTART:
-			state_stack.top()->Free();
-			state_stack.top()->Init();
-			break;
-		case QUIT: //remove
-			if (!state_stack.empty()) {
-				state_stack.top()->Free();
-				state_stack.top()->Unload();
-				state_stack.pop();
-				if (restart) {
-					status = RESTART;
-					restart = false;
-					goto ProcessChange;
-				}
-			}
-			break;
 		case ADD:
-			if(!state_stack.empty()){
-				state_stack.top()->Pause();
+			//TODO
+			/*1. Check if new_state within stack;
+					true:
+						free/pop stack till top() == new_state <=> new_state = top;
+						new_state = nullptr;
+						top()->Free() >> top->Init()
+					false:
+						top()->Pause()
+						push on top of stack;
+						top()->Load() >> top->Init()
+			*/
+			if (StateCount > 0) {
+				if (CheckHaveState()) {
+					state_stack.top()->Free();
+					state_stack.top()->Init();
+					break;
+				}
+				else {
+					state_stack.top()->Pause();
+				}
 			}
 			state_stack.push(std::move(new_state));
 			state_stack.top()->Load();
 			state_stack.top()->Init();
+			StateCount++;
 			break;
 		}
 		status = INPRO;
+
 	}
 
-	void Engine::Update() {
+	GS_ID Engine::Update() {
 		AESysFrameStart();
 		state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
 		state_stack.top()->Draw();
 		AESysFrameEnd();
+		return status;
 	}
 
 	std::unique_ptr< State>& Engine::GetCurrent() {
 		return state_stack.top();
 	}
 	
+
+	//Parameters for Restarting Prev state (e.g Pause screen)
+	//	ID = QUIT, restart = true
 	void Engine::SetStatus(GS_ID id, bool restart) {
 		status = id;
 		restart = restart;
 	}
 	
 
+	bool Engine::CheckHaveState() {
+		std::stack<std::unique_ptr<State>>temp;
+		bool found = false;
+		while (!state_stack.empty()) {
+			std::string Test = state_stack.top()->StateName;
+			if (state_stack.top()->StateName == new_state->StateName) {
+				found = true;
+				break;
+			}
+			else{
+				temp.push(std::move(state_stack.top()));
+				state_stack.pop();
+			}
+		}
+		while (!temp.empty()) {
+			if (found) {
+				temp.top()->Free();
+				StateCount--;
+			}
+			else {
+				state_stack.push(std::move(temp.top()));
+			}
+			temp.pop();
+		}
+		return found;
+	}
+
+	GS_ID Engine::GetStatus(){
+		return status;
+	}
 	
 }
