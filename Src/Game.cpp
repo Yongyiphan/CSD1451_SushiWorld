@@ -1,8 +1,6 @@
 #include "pch.h"
 
 #include "Game.h"
-#include "MainMenu.h"
-
 
 Game::Game(HINSTANCE hI, HINSTANCE pI, LPWSTR lpcmd, int scmd, const s8 *name) : m_context(std::make_unique<Context>()){
 	hInstance = hI;
@@ -11,6 +9,8 @@ Game::Game(HINSTANCE hI, HINSTANCE pI, LPWSTR lpcmd, int scmd, const s8 *name) :
 	nCmdShow = scmd;
 	GameName = name;
 }
+
+
 
 void Game::Init() {
 	WinWidth = 800;
@@ -39,6 +39,7 @@ void Game::Run() {
 
 		while (m_context->gman->GetStatus() == GM::INPRO) {
 			AEInputUpdate();
+			std::cout << AEFrameRateControllerGetFrameRate() << std::endl;
 			gstatus = m_context->gman->Update();
 			if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist()) {
 				gGameRunning = 0;

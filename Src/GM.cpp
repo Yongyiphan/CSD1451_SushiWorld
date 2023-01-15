@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "GM.h"
 /*
 Engine Model
@@ -41,7 +42,6 @@ namespace GM {
 
 	void Engine::ProcessStateChange() {
 
-	startPC:
 		switch (status) {
 		case ADD:
 			//TODO

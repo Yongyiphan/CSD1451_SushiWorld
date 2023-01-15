@@ -11,11 +11,13 @@ MainMenu::MainMenu(char const* Name, std::shared_ptr<Context>&context) {
 
 void MainMenu::Load() {
 
+	black = CF::CFCreateColor(0.0f, 0.0f, 0.0f);
 }
 void MainMenu::Unload(){
 }
 
 void MainMenu::Init() {
+	std::cout << StateName << std::endl;
 	
 }
 void MainMenu::Free() {
@@ -28,7 +30,7 @@ void MainMenu::Update(f64 deltaTime) {
 
 }
 void MainMenu::Draw() {
-	AEGfxSetBackgroundColor(100.0f, 100.0f, 100.0f);
+	CFSetBackgroundColor(black);
 }
 
 
