@@ -3,8 +3,9 @@
 
 namespace CF {
 	
-	Color CFCreateColor(f32 r, f32 g, f32 b) {
-		return Color{ r,g,b };
+	Color CFCreateColor(f32 r, f32 g, f32 b, f32 a) {
+
+		return Color{ r/255,g/255,b/255, a/255 };
 	}
 	void CFSetBackgroundColor(Color c) {
 		AEGfxSetBackgroundColor(c.r, c.g, c.b);
@@ -24,6 +25,7 @@ namespace CF {
 		0.5f, 0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
 		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
 		// Saving the mesh (list of triangles) in pMesh
+		
 		return AEGfxMeshEnd();
 	}
 }

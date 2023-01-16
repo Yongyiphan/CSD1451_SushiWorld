@@ -6,6 +6,8 @@
 class MainField : public GM::State {
 private:
 	std::shared_ptr<Context> m_context;
+
+
 public:
 	
 	MainField(char const*, std::shared_ptr<Context>&);
