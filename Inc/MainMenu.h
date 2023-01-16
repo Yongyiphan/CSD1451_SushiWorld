@@ -5,8 +5,13 @@ class MainMenu : public GM::State {
 private:
 	std::shared_ptr<Context> m_context;
 public:
-	
-	MainMenu(char const*, std::shared_ptr<Context>&);
+	//Variables
+	CF::Color black;
+
+
+
+	///Methods
+	MainMenu(char const*, const std::shared_ptr<Context>&);
 	~MainMenu() {};
 
 	void Load() override;

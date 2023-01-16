@@ -1,29 +1,13 @@
 #include "pch.h"
-#include "GM.h"
-/*
-Engine Model
-[PauseScreen ] <- Add On top
-[PlayingField]
-[MainMenu    ]
 
-if Replace, store to state to replace
-In ProcessChange
-	if to remove, replace state with stored state
-if Add, pause top state, push to top
-*/
+#include "GM.h"
+
 namespace GM {
 	Engine::Engine() {
-		std::cout << "Create Game Manger" << std::endl;
-		new_state = nullptr;
+		std::cout << "Create Game Manager" << std::endl;
 	}
 	
 	Engine::~Engine() {};
-
-
-
-	void Engine::Initialize() {
-		std::cout << "Init Engine" << std::endl;
-	}
 
 
 	void Engine::AddState(std::unique_ptr<State> state, GS_ID stat) {
@@ -41,7 +25,6 @@ namespace GM {
 
 	void Engine::ProcessStateChange() {
 
-	startPC:
 		switch (status) {
 		case ADD:
 			//TODO
@@ -70,17 +53,32 @@ namespace GM {
 			state_stack.top()->Init();
 			StateCount++;
 			break;
+		case QUIT:
+			/*	Clean up current state;
+				Pop current state
+				if restart:
+					free() -> init()
+				else:
+					do nothing
+			*/
+			state_stack.top()->Free();
+			state_stack.pop();
+			if (restart) {
+				state_stack.top()->Free();
+				state_stack.top()->Init();
+			}
+			break;
 		}
 		status = INPRO;
 
 	}
 
-	GS_ID Engine::Update() {
+	void Engine::Update() {
 		AESysFrameStart();
+		AEInputUpdate();
 		state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
 		state_stack.top()->Draw();
 		AESysFrameEnd();
-		return status;
 	}
 
 	std::unique_ptr< State>& Engine::GetCurrent() {
@@ -91,8 +89,8 @@ namespace GM {
 	//Parameters for Restarting Prev state (e.g Pause screen)
 	//	ID = QUIT, restart = true
 	void Engine::SetStatus(GS_ID id, bool restart) {
-		status = id;
-		restart = restart;
+		this->status  = id;
+		this->restart = restart;
 	}
 	
 
@@ -124,7 +122,7 @@ namespace GM {
 	}
 
 	GS_ID Engine::GetStatus(){
-		return status;
+		return this->status;
 	}
 	
 }

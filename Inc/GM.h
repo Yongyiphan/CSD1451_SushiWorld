@@ -51,10 +51,9 @@ namespace GM {
 		Engine();
 		~Engine();
 		
-		void Initialize();
 		void AddState(std::unique_ptr<State> toAdd, GS_ID stat = ADD);
 		void ProcessStateChange();
-		GS_ID Update();
+		void Update();
 		std::unique_ptr<State>& GetCurrent();
 		
 		void SetStatus(GS_ID, bool restart = false);

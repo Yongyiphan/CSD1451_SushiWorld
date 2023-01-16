@@ -2,6 +2,14 @@
 #include "CFunc.h"
 
 namespace CF {
+	
+	Color CFCreateColor(f32 r, f32 g, f32 b) {
+		return Color{ r,g,b };
+	}
+	void CFSetBackgroundColor(Color c) {
+		AEGfxSetBackgroundColor(c.r, c.g, c.b);
+	}
+
 	AEGfxVertexList* CreateRectMesh(){
 		AEGfxMeshStart();
 		// This shape has 2 triangles that makes up a square

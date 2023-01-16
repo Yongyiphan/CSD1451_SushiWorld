@@ -4,21 +4,23 @@
 
 
 
-MainMenu::MainMenu(char const* Name, std::shared_ptr<Context>&context) {
+MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 	StateName = Name;
 	m_context = context;
 }
 
 void MainMenu::Load() {
 
+	black = CF::CFCreateColor(0.0f, 0.0f, 0.0f);
 }
 void MainMenu::Unload(){
 }
 
 void MainMenu::Init() {
-	
+	std::cout << "Init " << StateName << std::endl;
 }
 void MainMenu::Free() {
+	std::cout << "Free " << StateName << std::endl;
 }
 void MainMenu::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_LBUTTON)){
@@ -28,7 +30,8 @@ void MainMenu::Update(f64 deltaTime) {
 
 }
 void MainMenu::Draw() {
-	AEGfxSetBackgroundColor(100.0f, 100.0f, 100.0f);
+	CFSetBackgroundColor(black);
+	
 }
 
 
