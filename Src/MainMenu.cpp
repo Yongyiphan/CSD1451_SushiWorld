@@ -17,10 +17,10 @@ void MainMenu::Unload(){
 }
 
 void MainMenu::Init() {
-	std::cout << StateName << std::endl;
-	
+	std::cout << "Init " << StateName << std::endl;
 }
 void MainMenu::Free() {
+	std::cout << "Free " << StateName << std::endl;
 }
 void MainMenu::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_LBUTTON)){

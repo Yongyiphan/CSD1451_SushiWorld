@@ -4,16 +4,10 @@
 
 namespace GM {
 	Engine::Engine() {
-		std::cout << "Create Game Manger" << std::endl;
+		std::cout << "Create Game Manager" << std::endl;
 	}
 	
 	Engine::~Engine() {};
-
-
-
-	void Engine::Initialize() {
-		std::cout << "Init Engine" << std::endl;
-	}
 
 
 	void Engine::AddState(std::unique_ptr<State> state, GS_ID stat) {
@@ -59,6 +53,21 @@ namespace GM {
 			state_stack.top()->Init();
 			StateCount++;
 			break;
+		case QUIT:
+			/*	Clean up current state;
+				Pop current state
+				if restart:
+					free() -> init()
+				else:
+					do nothing
+			*/
+			state_stack.top()->Free();
+			state_stack.pop();
+			if (restart) {
+				state_stack.top()->Free();
+				state_stack.top()->Init();
+			}
+			break;
 		}
 		status = INPRO;
 
@@ -80,8 +89,8 @@ namespace GM {
 	//Parameters for Restarting Prev state (e.g Pause screen)
 	//	ID = QUIT, restart = true
 	void Engine::SetStatus(GS_ID id, bool restart) {
-		status = id;
-		restart = restart;
+		this->status  = id;
+		this->restart = restart;
 	}
 	
 
@@ -113,7 +122,7 @@ namespace GM {
 	}
 
 	GS_ID Engine::GetStatus(){
-		return status;
+		return this->status;
 	}
 	
 }
