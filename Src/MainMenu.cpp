@@ -4,7 +4,7 @@
 
 
 
-MainMenu::MainMenu(char const* Name, std::shared_ptr<Context>&context) {
+MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 	StateName = Name;
 	m_context = context;
 }
@@ -31,6 +31,7 @@ void MainMenu::Update(f64 deltaTime) {
 }
 void MainMenu::Draw() {
 	CFSetBackgroundColor(black);
+	
 }
 
 

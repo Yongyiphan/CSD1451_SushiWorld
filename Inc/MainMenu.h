@@ -11,7 +11,7 @@ public:
 
 
 	///Methods
-	MainMenu(char const*, std::shared_ptr<Context>&);
+	MainMenu(char const*, const std::shared_ptr<Context>&);
 	~MainMenu() {};
 
 	void Load() override;
