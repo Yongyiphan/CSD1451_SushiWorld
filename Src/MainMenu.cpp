@@ -11,10 +11,24 @@ MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 }
 
 void MainMenu::Load() {
+	AEGfxMeshStart();
+	// This shape has 2 triangles that makes up a square
+	// Color parameters represent colours as ARGB
+	// UV coordinates to read from loaded textures
+	AEGfxTriAdd(
+	-0.5f, -0.5f, 0xFFFF00FF, 0.0f, 0.0f,
+	 0.5f, -0.5f, 0xFFFFFF00, 1.0f, 0.0f,
+	-0.5f,  0.5f, 0xFF00FFFF, 0.0f, 1.0f);
+	AEGfxTriAdd(
+	 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
+	 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
+	-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
+	// Saving the mesh (list of triangles) in pMesh
+	pMesh = AEGfxMeshEnd();
 
-	black = CF::CFCreateColor(255,255,255,255);
 }
 void MainMenu::Unload(){
+	AEGfxMeshFree(pMesh);
 }
 
 void MainMenu::Init() {
@@ -31,8 +45,12 @@ void MainMenu::Update(f64 deltaTime) {
 
 }
 void MainMenu::Draw() {
-	CFSetBackgroundColor(black);
-	AEGfxSphere(400, 300, 0, 150, 0xFFFFFFFF, 0xFF000000, 8);
+	AEGfxSetBackgroundColor(0.0, 0.0, 0.0);
+	AM::Transform t = { PI / 4, 100,100,100,100 };
+	AM::RenderSetting sett = {AE_GFX_BM_BLEND, AE_GFX_RM_COLOR, 1.0f, AE_GFX_MDM_TRIANGLES};
+	m_context->render->RenderRect(&t, &sett);
+
+
 }
 
 

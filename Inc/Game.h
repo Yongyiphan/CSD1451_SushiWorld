@@ -3,9 +3,11 @@
 
 struct Context {
 	std::unique_ptr<GM::Engine> gman;
+	std::unique_ptr<AM::Renderer> render;
 
 	Context() {
 		gman = std::make_unique<GM::Engine>();
+		render = std::make_unique<AM::Renderer>();
 	}
 };
 
