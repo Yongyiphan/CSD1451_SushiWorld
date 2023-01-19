@@ -8,6 +8,8 @@ public:
 	//Variables
 	
 	AEGfxVertexList* pMesh;
+	AM::RenderSetting sett;
+	AM::Transform t;
 
 	s32 mx, my;
 	///Methods

@@ -23,7 +23,6 @@ void MainMenu::Load() {
 	 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
 	 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
 	-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
-	// Saving the mesh (list of triangles) in pMesh
 	pMesh = AEGfxMeshEnd();
 
 }
@@ -33,31 +32,27 @@ void MainMenu::Unload(){
 
 void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
+	this->t = Transform{ 100,100,400,400 };
+	this->sett = {AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f};
 }
 void MainMenu::Free() {
 	std::cout << "Free " << StateName << std::endl;
 }
-void MainMenu::Update(f64 deltaTime) {
-//	if (AEInputCheckTriggered(AEVK_LBUTTON)){
-//		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
-//	}
-	
 
+void MainMenu::Update(f64 deltaTime) {
+	if (AEInputCheckTriggered(AEVK_LBUTTON)){
+		//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	}
+	t.c = CreateColor(100, 100, 100);
+	AEInputGetCursorPosition(&mx, &my);
+//	t.x = mx;
+//	t.y = my;
+	//std::cout << "X: " << t.x << "(" << mx << ")" << " | Y: " << t.y << "(" << my << ")" << std::endl;
+	
 }
 void MainMenu::Draw() {
 	AEGfxSetBackgroundColor(0.0, 0.0, 0.0);
-	AM::Transform t = { 0,0,200,200 };
-	t.c = CreateColor(100, 100, 100);
-	AEInputGetCursorPosition(&mx, &my);
-	//t.x = mx - winw / 2;
-	//t.y = my * -1 + winh /2;
-	//t.x = mx;
-	//t.y = my;
-	//std::cout << "X: " << t.x << "(" << mx << ")" << " | Y: " << t.y << "(" << my << ")" << std::endl;
-	AM::RenderSetting sett = {AE_GFX_BM_ADD, AE_GFX_RM_COLOR, 1.0f, AE_GFX_MDM_TRIANGLES};
-	m_context->render->RenderRect(&t, &sett);
-
-
+	m_context->render->RenderRect(&t, &sett, 0xFF00FF10);
 }
 
 

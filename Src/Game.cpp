@@ -29,6 +29,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	winh = AEGetWindowHeight();
 
 }
+
 void Game::Run() {
 	int gGameRunning = 1;
 	m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));

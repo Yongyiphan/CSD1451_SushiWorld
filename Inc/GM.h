@@ -61,29 +61,3 @@ namespace GM {
 		GS_ID GetStatus();
 	};
 }
-    /*while (current != GS_QUIT)
-    {
-        if (current != GS_RESTART) {
-			GSM_Update();
-            fpLoad();
-        }
-        else {
-            current = previous;
-            next = previous;
-        }
-        fpInitialize();
-        while (current == next) {
-            Input_Handle();
-            fpUpdate();
-            fpDraw();
-        }
-        fpFree();
-        if (next != GS_RESTART) {
-            fpUnload();
-        }
-        previous = current;
-        current = next;
-    }
-    //Systems exit (terminate)
-    System_Exit();
-	*/
