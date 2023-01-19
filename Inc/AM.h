@@ -35,17 +35,19 @@ namespace AM {
 		f32 r, g, b, a;
 	};
 
+	//Angle, x, y, w, h
 	struct Transform {
-		float RotA;
 		int x, y;
 		int w, h;
-		Transform() :RotA(0), x(0), y(0), w(0), h(0) {};
-		Transform(float rot, int ix, int iy, int iw, int ih) {
-			RotA = rot;
+		float RotA;
+		Color c;
+		Transform() :x(0), y(0), w(0), h(0), RotA(0){};
+		Transform(int ix, int iy, int iw, int ih, float rot = 0.0f) {
 			x = ix;
 			y = iy;
 			w = iw;
 			h = ih;
+			RotA = rot;
 		}
 	};
 	struct RenderSetting {
@@ -70,7 +72,6 @@ namespace AM {
 	class Renderer {
 	private:
 		std::unordered_map<Shape, AEGfxVertexList*> MeshMap;
-		int winw, winh;
 	public:
 		Renderer() ; //Constructor
 		~Renderer();	//Destructor
@@ -78,12 +79,13 @@ namespace AM {
 		void GenerateMesh(Shape);
 		AEGfxVertexList* CreateRectMesh();
 
-		//x, y, w, h
+
 		void RenderRect(Transform*,RenderSetting*, AEGfxTexture *texture = nullptr);
 
+		
 		AEMtx33 TransformMatrix(Transform*);
 	};
 
-	Color CreateColor(f32, f32, f32, f32);
+	Color CreateColor(f32, f32, f32, f32 = 0);
 
 }

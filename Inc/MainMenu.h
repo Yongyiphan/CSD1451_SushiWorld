@@ -9,7 +9,7 @@ public:
 	
 	AEGfxVertexList* pMesh;
 
-
+	s32 mx, my;
 	///Methods
 	MainMenu(char const*, const std::shared_ptr<Context>&);
 	~MainMenu() {};

@@ -10,6 +10,7 @@ struct Context {
 		render = std::make_unique<AM::Renderer>();
 	}
 };
+extern int winw, winh;
 
 class Game
 {

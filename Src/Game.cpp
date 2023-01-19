@@ -8,6 +8,7 @@ Game::~Game() {}
 
 
 
+int winw, winh;
 void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	hInstance = hI; 
 	nCmdShow = scmd;
@@ -24,6 +25,8 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	m_context = std::make_shared<Context>();
 	// reset the system modules
 	AESysReset();
+	winw = AEGetWindowWidth();
+	winh = AEGetWindowHeight();
 
 }
 void Game::Run() {

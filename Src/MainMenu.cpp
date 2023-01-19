@@ -46,8 +46,15 @@ void MainMenu::Update(f64 deltaTime) {
 }
 void MainMenu::Draw() {
 	AEGfxSetBackgroundColor(0.0, 0.0, 0.0);
-	AM::Transform t = { PI / 4, 100,100,100,100 };
-	AM::RenderSetting sett = {AE_GFX_BM_BLEND, AE_GFX_RM_COLOR, 1.0f, AE_GFX_MDM_TRIANGLES};
+	AM::Transform t = { 0,0,200,200 };
+	t.c = CreateColor(100, 100, 100);
+	AEInputGetCursorPosition(&mx, &my);
+	//t.x = mx - winw / 2;
+	//t.y = my * -1 + winh /2;
+	//t.x = mx;
+	//t.y = my;
+	//std::cout << "X: " << t.x << "(" << mx << ")" << " | Y: " << t.y << "(" << my << ")" << std::endl;
+	AM::RenderSetting sett = {AE_GFX_BM_ADD, AE_GFX_RM_COLOR, 1.0f, AE_GFX_MDM_TRIANGLES};
 	m_context->render->RenderRect(&t, &sett);
 
 
