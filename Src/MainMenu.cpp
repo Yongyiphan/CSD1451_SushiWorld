@@ -11,29 +11,46 @@ MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 }
 
 void MainMenu::Load() {
-	AEGfxMeshStart();
-	// This shape has 2 triangles that makes up a square
-	// Color parameters represent colours as ARGB
-	// UV coordinates to read from loaded textures
-	AEGfxTriAdd(
-	-0.5f, -0.5f, 0xFFFF00FF, 0.0f, 0.0f,
-	 0.5f, -0.5f, 0xFFFFFF00, 1.0f, 0.0f,
-	-0.5f,  0.5f, 0xFF00FFFF, 0.0f, 1.0f);
-	AEGfxTriAdd(
-	 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-	 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-	-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 1.0f);
-	pMesh = AEGfxMeshEnd();
 
 }
 void MainMenu::Unload(){
-	AEGfxMeshFree(pMesh);
 }
 
 void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	this->t = Transform{ 100,100,400,400 };
-	this->sett = {AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f};
+	u32 color = 0xFFFFFFFF;
+	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
+	int rmw = winw / RMcol, rmh = winh / RMrow;
+	/*for (int y = 1, ID = 0; y < RMrow; y++) {
+		for (int x = 1; x < RMcol; x++) {
+			MiniRoom crm;
+			crm.ID = ID;
+			crm.Explored = false;
+			crm.t = Transform{
+				x * rmh - winw/2,winh - y*rmw - winh/2,rmw,rmh 
+			};
+			crm.sett = { AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f };
+			crm.sett.Color = color += 0xFF001A10;
+			Room.push_back(crm);
+			ID++;
+		}
+	}*/
+			MiniRoom crm;
+			crm.ID = 0;
+			crm.Explored = false;
+			crm.t = Transform{
+				0,0,rmw,rmh 
+			};
+			crm.sett = { AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f };
+			crm.sett.Color = color;// += 0xFF001A10;
+			Room.push_back(crm);
+
+
+
+
+
+
+
 }
 void MainMenu::Free() {
 	std::cout << "Free " << StateName << std::endl;
@@ -43,16 +60,18 @@ void MainMenu::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_LBUTTON)){
 		//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	}
-	t.c = CreateColor(100, 100, 100);
 	AEInputGetCursorPosition(&mx, &my);
 //	t.x = mx;
 //	t.y = my;
-	//std::cout << "X: " << t.x << "(" << mx << ")" << " | Y: " << t.y << "(" << my << ")" << std::endl;
+	std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	
 }
 void MainMenu::Draw() {
 	AEGfxSetBackgroundColor(0.0, 0.0, 0.0);
-	m_context->render->RenderRect(&t, &sett, 0xFF00FF10);
+//	m_context->render->RenderRect(&t, &sett, 0xFF00FFFF);
+	for (auto i : this->Room) {
+		m_context->render->RenderRect(&i.t, &i.sett, i.sett.Color);
+	}
 }
 
 

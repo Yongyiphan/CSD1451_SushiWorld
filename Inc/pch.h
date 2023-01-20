@@ -16,6 +16,10 @@
 #include <string>
 #include <stack>
 #include <memory>
+#include <vector>
+#include <unordered_map>
+#include <map>
+#include <tuple>
 using namespace GM;
 using namespace CF;
 using namespace AM;

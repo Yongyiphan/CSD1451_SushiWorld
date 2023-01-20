@@ -31,7 +31,12 @@ namespace AM {
 		AEGfxSetTransparency(sett->transparency);
 		AEGfxTextureSet(texture, 0, 0);
 		AEGfxSetTransform(TransformMatrix(t).m);
-		AEGfxMeshDraw(FindMesh(RECT, c), sett->MDM);
+		if (sett->mesh) {
+			AEGfxMeshDraw(sett->mesh, sett->MDM);
+		}
+		else {
+			AEGfxMeshDraw(FindMesh(RECT, c), sett->MDM);
+		}
 	}
 	AEMtx33 Renderer::TransformMatrix(Transform* t) {
 		AEMtx33 scale = { 0 };
@@ -43,8 +48,9 @@ namespace AM {
 		For cursor, mouse top right = origin
 		SetTransofrm, center = origin*/
 
-		std::cout << "X: " << t->x << " | Y: " << t->y << std::endl;
+		//std::cout << "X: " << t->x << " | Y: " << t->y << std::endl;
 		AEMtx33Trans(&translate, t->x, t->y);
+		AEMtx33Trans(&translate, 400, 300);
 		AEMtx33 transform = { 0 };
 		AEMtx33Concat(&transform, &rotate, &scale);
 		AEMtx33Concat(&transform, &translate, &transform);
@@ -80,6 +86,10 @@ namespace AM {
 		-0.5f,  0.5f, p5, 0.0f, 1.0f);
 		return AEGfxMeshEnd();
 	}
+
+
+
+	
 
 	AEGfxVertexList* Renderer::FindMesh(Shape s, u32 Color) {
 		/*

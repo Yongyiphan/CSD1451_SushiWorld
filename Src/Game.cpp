@@ -13,8 +13,8 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	hInstance = hI; 
 	nCmdShow = scmd;
 	GameName = name;
-	WinWidth = 1000;
-	WinHeight = 800;
+	WinWidth = 800;
+	WinHeight = 600;
 	FrameRate = 60;
 	AESysInit(hInstance, nCmdShow, WinWidth, WinHeight, 1, FrameRate, true, NULL);
 	

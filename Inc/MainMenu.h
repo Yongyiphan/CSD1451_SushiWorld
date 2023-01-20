@@ -1,18 +1,25 @@
 #pragma once
 #include "pch.h"
-
+struct MiniRoom {
+	int ID;
+	bool Explored;
+	AM::Transform t;
+	AM::RenderSetting sett;
+};
 class MainMenu : public GM::State {
 private:
 	std::shared_ptr<Context> m_context;
+
+	std::vector<MiniRoom> Room;
 public:
 	//Variables
-	
-	AEGfxVertexList* pMesh;
-	AM::RenderSetting sett;
-	AM::Transform t;
 
 	s32 mx, my;
+
+
+
 	///Methods
+
 	MainMenu(char const*, const std::shared_ptr<Context>&);
 	~MainMenu() {};
 

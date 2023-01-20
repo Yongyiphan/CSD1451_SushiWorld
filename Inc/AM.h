@@ -41,7 +41,6 @@ namespace AM {
 		float x, y;
 		int w, h;
 		float RotA;
-		Color c;
 		Transform() :x(0), y(0), w(0), h(0), RotA(0){}
 		Transform(int ix, int iy, int iw, int ih, float rot = 0.0f) {
 			x = ix;
@@ -51,24 +50,28 @@ namespace AM {
 			RotA = rot;
 		}
 	};
+
 	struct RenderSetting {
 		AEGfxBlendMode BM;
 		AEGfxRenderMode RM;
 		AEGfxMeshDrawMode MDM;
 		float transparency;
 		u32 Color;
+		AEGfxVertexList *mesh;
 		RenderSetting() {
 			BM = AE_GFX_BM_NONE;
 			RM = AE_GFX_RM_COLOR;
 			transparency = 1.0f;
 			MDM = AE_GFX_MDM_TRIANGLES;
+			mesh = nullptr;
 		}
 		RenderSetting(AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm,
-			float it) {
+			float it, AEGfxVertexList *m = nullptr) {
 			BM = ibm;
 			RM = irm;
 			transparency = it;
 			MDM = imdm;
+			mesh = m;
 		}
 	};
 
