@@ -4,7 +4,7 @@ struct MiniRoom {
 	int ID;
 	bool Explored;
 	AM::Transform t;
-	AM::RenderSetting sett;
+	AM::GfxSetting sett;
 };
 class MainMenu : public GM::State {
 private:
@@ -15,6 +15,8 @@ public:
 	//Variables
 
 	s32 mx, my;
+	u32 black, white, blue, red;
+	MiniRoom Border;
 
 
 

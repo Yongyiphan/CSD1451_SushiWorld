@@ -38,54 +38,46 @@ namespace AM {
 
 	//Angle, x, y, w, h
 	struct Transform {
-		float x, y;
+		int x, y;
 		int w, h;
 		float RotA;
-		Transform() :x(0), y(0), w(0), h(0), RotA(0){}
-		Transform(int ix, int iy, int iw, int ih, float rot = 0.0f) {
+		int ox, oy;
+		Transform() :x(0), y(0), w(0), h(0), RotA(0), ox(0), oy(0){}
+		Transform(int ix, int iy, int iw, int ih, int ox = 0, int oy = 0, float rot = 0.0f) {
 			x = ix;
 			y = iy;
 			w = iw;
 			h = ih;
 			RotA = rot;
+			this->ox = ox;
+			this->oy = oy;
 		}
 	};
 
-	struct RenderSetting {
+	struct GfxSetting {
 		AEGfxBlendMode BM;
 		AEGfxRenderMode RM;
 		AEGfxMeshDrawMode MDM;
 		float transparency;
 		u32 Color;
 		AEGfxVertexList *mesh;
-		RenderSetting() {
+		GfxSetting() {
 			BM = AE_GFX_BM_NONE;
 			RM = AE_GFX_RM_COLOR;
-			transparency = 1.0f;
 			MDM = AE_GFX_MDM_TRIANGLES;
+			transparency = 1.0f;
 			mesh = nullptr;
+			Color = 0xFF000000;
 		}
-		RenderSetting(AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm,
-			float it, AEGfxVertexList *m = nullptr) {
+		GfxSetting(AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm, u32 c,
+			float it = 1.0f, AEGfxVertexList *m = nullptr) {
 			BM = ibm;
 			RM = irm;
 			transparency = it;
 			MDM = imdm;
 			mesh = m;
-		}
-	};
+			Color = c;
 
-	struct MeshType {
-		f32 Color;
-		AEGfxVertexList* mesh;
-
-
-
-		bool operator==(MeshType& mt) {
-			if (this->Color == mt.Color) {
-				return true;
-			}
-			return false;
 		}
 	};
 	
@@ -114,7 +106,7 @@ namespace AM {
 		AEGfxVertexList* CreateRectMesh(u32,u32,u32,u32,u32,u32);
 
 
-		void RenderRect(Transform*,RenderSetting*,u32, AEGfxTexture * = nullptr);
+		void RenderRect(Transform*,GfxSetting*, AEGfxTexture* = nullptr);
 
 		
 		AEMtx33 TransformMatrix(Transform*);

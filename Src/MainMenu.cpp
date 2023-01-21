@@ -18,34 +18,42 @@ void MainMenu::Unload(){
 
 void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	u32 color = 0xFFFFFFFF;
-	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
-	int rmw = winw / RMcol, rmh = winh / RMrow;
-	/*for (int y = 1, ID = 0; y < RMrow; y++) {
-		for (int x = 1; x < RMcol; x++) {
-			MiniRoom crm;
-			crm.ID = ID;
-			crm.Explored = false;
-			crm.t = Transform{
-				x * rmh - winw/2,winh - y*rmw - winh/2,rmw,rmh 
+	black = CF::RGBAtoHex(0, 0, 0, 255);
+	white = CF::RGBAtoHex(255,255, 255, 255);
+	red = CF::RGBAtoHex(150, 0, 0, 255);
+	blue = CF::RGBAtoHex(0, 50, 150, 255); 
+
+	//AE draw origin (0,0) <=> centre of screen
+	int ID = 0;
+	int RMrow = 3, RMcol = 3, RMtotal = RMrow * RMcol, padding = 10;
+	int BorderMargin = 50;
+	Border.ID = ID++;
+	Border.Explored = false;
+	Border.t = AM::Transform{
+		winw / 2, winh / 2,
+		winw - BorderMargin * 2, winh - BorderMargin * 2,
+		-(winw / 2), -(winh / 2)
+	};
+	Border.sett = AM::GfxSetting{};
+	Border.sett.Color = white;
+
+	int rmw = Border.t.w / RMcol, rmh = Border.t.h / RMrow;
+	for (int y = 0; y < RMcol; y++) {
+		for (int x = 0; x < RMrow; x++, ID++) {
+			MiniRoom mr;
+			mr.ID = ID;
+			mr.Explored = false;
+			mr.t = AM::Transform{
+				//x, y, w, h, ox, oy, a
+				y * rmw + rmw/2 + BorderMargin, x * rmh + rmh/2 + BorderMargin,
+				rmw - padding, rmh - padding,
+				-(winw/2),-(winh/2)
 			};
-			crm.sett = { AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f };
-			crm.sett.Color = color += 0xFF001A10;
-			Room.push_back(crm);
-			ID++;
+			mr.sett = AM::GfxSetting{};
+			mr.sett.Color = blue;
+			this->Room.push_back(mr);
 		}
-	}*/
-			MiniRoom crm;
-			crm.ID = 0;
-			crm.Explored = false;
-			crm.t = Transform{
-				0,0,rmw,rmh 
-			};
-			crm.sett = { AE_GFX_BM_NONE, AE_GFX_RM_COLOR,AE_GFX_MDM_TRIANGLES,1.0f };
-			crm.sett.Color = color;// += 0xFF001A10;
-			Room.push_back(crm);
-
-
+	}
 
 
 
@@ -67,10 +75,12 @@ void MainMenu::Update(f64 deltaTime) {
 	
 }
 void MainMenu::Draw() {
-	AEGfxSetBackgroundColor(0.0, 0.0, 0.0);
-//	m_context->render->RenderRect(&t, &sett, 0xFF00FFFF);
+	CF::SetBackground(0, 0, 0);
+
+	m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : this->Room) {
-		m_context->render->RenderRect(&i.t, &i.sett, i.sett.Color);
+	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
+		m_context->render->RenderRect(&i.t, &i.sett);
 	}
 }
 

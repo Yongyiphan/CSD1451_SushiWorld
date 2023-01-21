@@ -18,9 +18,11 @@ namespace AM {
 		case RECT:
 			return CreateRectMesh(Color);
 		}
+
+		return nullptr;
 	}
 
-	void Renderer::RenderRect(Transform* t, RenderSetting *sett, u32 c, AEGfxTexture *texture) {
+	void Renderer::RenderRect(Transform* t, GfxSetting *sett, AEGfxTexture *texture) {
 		AEGfxSetBlendMode(sett->BM);
 		if (texture)
 			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
@@ -35,23 +37,17 @@ namespace AM {
 			AEGfxMeshDraw(sett->mesh, sett->MDM);
 		}
 		else {
-			AEGfxMeshDraw(FindMesh(RECT, c), sett->MDM);
+			AEGfxMeshDraw(FindMesh(RECT, sett->Color), sett->MDM);
 		}
 	}
 	AEMtx33 Renderer::TransformMatrix(Transform* t) {
 		AEMtx33 scale = { 0 };
-		AEMtx33Scale(&scale, t->w, t->h);
-		AEMtx33 rotate = { 0 };
-		AEMtx33Rot(&rotate, t->RotA);
-		AEMtx33 translate = { 0 };
-		/*
-		For cursor, mouse top right = origin
-		SetTransofrm, center = origin*/
+		AEMtx33 rotate = { 0 }, translate = { 0 }, transform = { 0 };
+		AEMtx33Scale(&scale, f32(t->w), f32(t->h));
 
-		//std::cout << "X: " << t->x << " | Y: " << t->y << std::endl;
-		AEMtx33Trans(&translate, t->x, t->y);
-		AEMtx33Trans(&translate, 400, 300);
-		AEMtx33 transform = { 0 };
+		AEMtx33Rot(&rotate, f32(t->RotA));
+		AEMtx33Trans(&translate, f32(t->x + t->ox), f32(t->y + t->oy));
+
 		AEMtx33Concat(&transform, &rotate, &scale);
 		AEMtx33Concat(&transform, &translate, &transform);
 		return transform;
