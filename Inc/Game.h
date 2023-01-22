@@ -1,13 +1,16 @@
 #pragma once
 #include "pch.h"
+#include "EPlayer.h"
 
 struct Context {
 	std::unique_ptr<GM::Engine> gman;
-	std::unique_ptr<AM::Renderer> render;
+	std::shared_ptr<AM::Renderer> render;
+	std::unique_ptr<EPlayer> Player;
 
 	Context() {
 		gman = std::make_unique<GM::Engine>();
-		render = std::make_unique<AM::Renderer>();
+		render = std::make_shared<AM::Renderer>();
+		Player = std::make_unique<EPlayer>();
 	}
 };
 extern int winw, winh;

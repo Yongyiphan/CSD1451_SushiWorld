@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "CFunc.h"
 #include "MainMenu.h"
+#include "EPlayer.h"
 
 
 #include <string>

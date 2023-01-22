@@ -69,6 +69,14 @@ namespace AM {
 			mesh = nullptr;
 			Color = 0xFF000000;
 		}
+		GfxSetting(u32 c, float t = 1.0f, AEGfxVertexList*m = nullptr) {
+			BM = AE_GFX_BM_NONE;
+			RM = AE_GFX_RM_COLOR;
+			MDM = AE_GFX_MDM_TRIANGLES;
+			transparency = t;
+			mesh = m;
+			Color = c;
+		}
 		GfxSetting(AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm, u32 c,
 			float it = 1.0f, AEGfxVertexList *m = nullptr) {
 			BM = ibm;
@@ -77,7 +85,6 @@ namespace AM {
 			MDM = imdm;
 			mesh = m;
 			Color = c;
-
 		}
 	};
 	

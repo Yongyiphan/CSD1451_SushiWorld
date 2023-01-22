@@ -37,7 +37,7 @@ void MainMenu::Init() {
 	Border.sett = AM::GfxSetting{};
 	Border.sett.Color = white;
 
-	int rmw = Border.t.w / RMcol, rmh = Border.t.h / RMrow;
+	rmw = Border.t.w / RMcol, rmh = Border.t.h / RMrow;
 	for (int y = 0; y < RMcol; y++) {
 		for (int x = 0; x < RMrow; x++, ID++) {
 			MiniRoom mr;
@@ -54,12 +54,15 @@ void MainMenu::Init() {
 			this->Room.push_back(mr);
 		}
 	}
-
-
-
-
-
+	MiniRoom firstRoom = this->Room.at(0);
+	this->m_context->Player->UpdateInit(firstRoom.t.x, firstRoom.t.y, 100, red);
 }
+
+
+
+
+
+
 void MainMenu::Free() {
 	std::cout << "Free " << StateName << std::endl;
 }
@@ -71,6 +74,15 @@ void MainMenu::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mx, &my);
 //	t.x = mx;
 //	t.y = my;
+	if (AEInputCheckTriggered(AEVK_A)) {
+		
+		if(CheckFieldBound(this->m_context->Player->x - rmw))
+			this->m_context->Player->x -= rmw;
+	}
+	if (AEInputCheckTriggered(AEVK_D)) {
+		this->m_context->Player->x += rmw;
+
+	}
 	std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	
 }
@@ -82,6 +94,16 @@ void MainMenu::Draw() {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		m_context->render->RenderRect(&i.t, &i.sett);
 	}
+	this->m_context->Player->DrawPlayer(this->m_context->render);
+}
+
+bool MainMenu::CheckFieldBound(int nextcoor) {
+	int ex = Border.t.w / 2;
+	int ey = Border.t.h / 2;
+	if (nextcoor > ex || nextcoor < -(ex) || nextcoor > ey || nextcoor < -(ey)) {
+		return false;
+	}
+	return true;
 }
 
 

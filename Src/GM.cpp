@@ -24,7 +24,8 @@ namespace GM {
 
 
 	void Engine::ProcessStateChange() {
-
+		//TODO
+		//IF !State.pause unload;
 		switch (status) {
 		case ADD:
 			//TODO

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Src\AM.cpp" />
     <ClCompile Include="Src\CFunc.cpp" />
+    <ClCompile Include="Src\EPlayer.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GM.cpp" />
     <ClCompile Include="Src\Main.cpp" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
     <ClInclude Include="Inc\CFunc.h" />
+    <ClInclude Include="Inc\EPlayer.h" />
     <ClInclude Include="Inc\Game.h" />
     <ClInclude Include="Inc\GM.h" />
     <ClInclude Include="Inc\MainField.h" />

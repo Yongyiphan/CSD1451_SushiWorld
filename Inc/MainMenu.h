@@ -17,6 +17,7 @@ public:
 	s32 mx, my;
 	u32 black, white, blue, red;
 	MiniRoom Border;
+	int rmw, rmh;
 
 
 
@@ -31,5 +32,7 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
+	
+	bool CheckFieldBound(int);
 	
 };
