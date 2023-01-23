@@ -133,6 +133,7 @@ namespace GM {
 			state_stack.top()->Free();
 			state_stack.top()->Unload();
 			state_stack.pop();
+			StateCount--;
 		}
 	}
 }
