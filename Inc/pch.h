@@ -4,16 +4,18 @@
 
 #include <Windows.h>
 #include <iostream>
-#include <cstdio>
 #include "AEEngine.h"
 #include "GM.h"
 #include "AM.h"
 #include "Game.h"
 #include "CFunc.h"
-#include "MainMenu.h"
 #include "EPlayer.h"
 
+//Game States include
+#include "MainMenu.h"
+#include "MainField.h"
 
+//Common Library include
 #include <string>
 #include <stack>
 #include <memory>

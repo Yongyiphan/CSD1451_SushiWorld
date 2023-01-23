@@ -38,12 +38,12 @@ namespace AM {
 
 	//Angle, x, y, w, h
 	struct Transform {
-		int x, y;
+		float x, y;
 		int w, h;
 		float RotA;
 		int ox, oy;
 		Transform() :x(0), y(0), w(0), h(0), RotA(0), ox(0), oy(0){}
-		Transform(int ix, int iy, int iw, int ih, int ox = 0, int oy = 0, float rot = 0.0f) {
+		Transform(float ix, float iy, int iw, int ih, int ox = 0, int oy = 0, float rot = 0.0f) {
 			x = ix;
 			y = iy;
 			w = iw;

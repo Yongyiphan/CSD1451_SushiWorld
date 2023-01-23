@@ -7,7 +7,9 @@ namespace GM {
 		std::cout << "Create Game Manager" << std::endl;
 	}
 	
-	Engine::~Engine() {};
+	Engine::~Engine() {
+		std::cout << "Exit Game Manager" << std::endl;
+	};
 
 
 	void Engine::AddState(std::unique_ptr<State> state, GS_ID stat) {
@@ -126,4 +128,11 @@ namespace GM {
 		return this->status;
 	}
 	
+	void GM::Engine::CleanUp() {
+		while (!state_stack.empty()) {
+			state_stack.top()->Free();
+			state_stack.top()->Unload();
+			state_stack.pop();
+		}
+	}
 }

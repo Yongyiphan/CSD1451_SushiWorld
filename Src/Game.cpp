@@ -4,7 +4,9 @@
 
 
 Game::Game()  {}
-Game::~Game() {}
+Game::~Game() {
+	AESysExit();
+}
 
 
 
@@ -32,7 +34,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 
 void Game::Run() {
 	int gGameRunning = 1;
-	m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
+	m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{
@@ -42,6 +44,7 @@ void Game::Run() {
 			m_context->gman->Update();
 			if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist()) {
 				gGameRunning = 0;
+				m_context->gman->CleanUp();
 				break;
 			}
 		}
@@ -49,7 +52,6 @@ void Game::Run() {
 	}
 
 	// free the system
-	AESysExit();
 }
 
 void Game::Draw() {
