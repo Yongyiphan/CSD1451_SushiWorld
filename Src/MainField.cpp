@@ -34,8 +34,9 @@ void MainField::Init() {
 	for (float y = 0.5f; y < RMcol; y++) {
 		for (float x = 0.5f; x < RMrow; x++) {
 			MiniRoom mr;
+			mr.Explored = ID == 1 || ID == RMrow * RMcol ? true : false;
 			mr.ID = ID++;
-			mr.Explored = false;
+			mr.Door = 1;
 			mr.t = AM::Transform{
 				y * rmw + BorderMargin, x * rmh + BorderMargin,
 				rmw - RoomMargin * 2, rmh - RoomMargin * 2,
@@ -81,6 +82,7 @@ void MainField::Update(f64 dt) {
 	}
 	//std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	
+	RoomCheck();
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
@@ -95,7 +97,10 @@ void MainField::Draw() {
 	m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : this->Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
-		m_context->render->RenderRect(&i.t, &i.sett);
+		if (i.Explored) {
+			m_context->render->RenderRect(&i.t, &i.sett);
+			std::cout << i.ID << std::endl;
+		}
 	}
 	this->m_context->Player->DrawPlayer(this->m_context->render);
 };
@@ -131,5 +136,27 @@ bool MainField::CheckFieldBound(AM::Transform *target, Direction d, int shift) {
 		break;
 	}
 	return true;
+}
+
+void MainField::RoomCheck() {
+	for (auto r : this->Room) {
+		//TODO
+		/*
+		Find room. using x & y axis, compare with player's coor
+		Room.explored = true
+		*/
+		if (!r.Explored) {
+			AM::Transform rm = r.t;
+			AM::Transform t = this->m_context->Player->tf;
+			float ll = rm.x - rm.w / 2.f;
+			float rl = rm.x + rm.w / 2.f; 
+			float tl = rm.y + rm.h / 2.f;
+			float bl = rm.y - rm.h / 2.f;
+			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
+				r.Explored = true;
+			}
+		}
+
+	}
 }
 

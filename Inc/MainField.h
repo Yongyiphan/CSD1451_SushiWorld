@@ -4,6 +4,7 @@
 struct MiniRoom {
 	int ID;
 	bool Explored;
+	int Door;
 	AM::Transform t;
 	AM::GfxSetting sett;
 };
@@ -32,4 +33,5 @@ public:
 	void Draw()override;
 
 	bool CheckFieldBound(AM::Transform *, Direction, int);
+	void RoomCheck();
 };
