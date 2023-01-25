@@ -29,6 +29,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="Src\TestMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Inc\MainField.h" />
     <ClInclude Include="Inc\MainMenu.h" />
     <ClInclude Include="Inc\pch.h" />
+    <ClInclude Include="Inc\TestMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

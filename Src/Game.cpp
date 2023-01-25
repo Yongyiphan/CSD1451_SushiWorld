@@ -42,7 +42,7 @@ void Game::Run() {
 
 		while (m_context->gman->GetStatus() == INPRO) {
 			m_context->gman->Update();
-			if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist()) {
+			if (m_context->gman->GetCurrent()->StateName == "MainField" && m_context->gman->GetStatus() == QUIT) {
 				gGameRunning = 0;
 				m_context->gman->CleanUp();
 				break;

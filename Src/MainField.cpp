@@ -1,17 +1,15 @@
 #include "pch.h"
 #include "MainField.h"
+#include "TestMap.h"
 
 
-MainField::MainField(char const* Name, std::shared_ptr<Context>& context) {
+MainField::MainField(std::string Name, const std::shared_ptr<Context>& context){
 	StateName = Name;
 	m_context = context;
 
 }
 MainField::~MainField() {};
-void MainField::Load() {};
-void MainField::Unload() {};
-void MainField::Init() {
-	std::cout << "Init " << StateName << std::endl;
+void MainField::Load() {
 	black = CF::RGBAtoHex(0, 0, 0, 255);
 	white = CF::RGBAtoHex(255,255, 255, 255);
 	red = CF::RGBAtoHex(150, 0, 0, 255);
@@ -29,7 +27,6 @@ void MainField::Init() {
 		-(winw / 2), -(winh / 2)
 	};
 	Border.sett = AM::GfxSetting{white};
-
 	rmw = Border.t.w / RMcol, rmh = Border.t.h / RMrow;
 	for (float y = 0.5f; y < RMcol; y++) {
 		for (float x = 0.5f; x < RMrow; x++) {
@@ -49,6 +46,10 @@ void MainField::Init() {
 			this->Room.push_back(mr);
 		}
 	}
+	/* Grid room layout
+	[3] [6] [9] 
+	[2] [5] [8] 
+	[1] [4] [7] */
 	Border.t.w += RoomMargin;
 	Border.t.h += RoomMargin;
 	MiniRoom firstRm = this->Room.at(0);
@@ -57,6 +58,12 @@ void MainField::Init() {
 			firstRm.t.w / 2, firstRm.t.h / 2,
 			-(winw / 2), -(winh / 2)
 		}, AM::GfxSetting{ red });
+
+};
+void MainField::Unload() {};
+void MainField::Init() {
+	std::cout << "Init " << StateName << std::endl;
+
 };
 void MainField::Free() {
 	std::cout << "Free " << StateName << std::endl;
@@ -82,7 +89,6 @@ void MainField::Update(f64 dt) {
 	}
 	//std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	
-	RoomCheck();
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
@@ -99,7 +105,6 @@ void MainField::Draw() {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		if (i.Explored) {
 			m_context->render->RenderRect(&i.t, &i.sett);
-			std::cout << i.ID << std::endl;
 		}
 	}
 	this->m_context->Player->DrawPlayer(this->m_context->render);
@@ -135,11 +140,12 @@ bool MainField::CheckFieldBound(AM::Transform *target, Direction d, int shift) {
 		target->y -= shift;
 		break;
 	}
+	RoomCheck();
 	return true;
 }
 
 void MainField::RoomCheck() {
-	for (auto r : this->Room) {
+	for (auto &r : this->Room) {
 		//TODO
 		/*
 		Find room. using x & y axis, compare with player's coor
@@ -147,16 +153,19 @@ void MainField::RoomCheck() {
 		*/
 		if (!r.Explored) {
 			AM::Transform rm = r.t;
-			AM::Transform t = this->m_context->Player->tf;
+			AM::Transform t = m_context->Player->tf;
 			float ll = rm.x - rm.w / 2.f;
-			float rl = rm.x + rm.w / 2.f; 
+			float rl = rm.x + rm.w / 2.f;
 			float tl = rm.y + rm.h / 2.f;
 			float bl = rm.y - rm.h / 2.f;
 			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
 				r.Explored = true;
+				//execute to go next room
+				m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+				break;
 			}
-		}
 
+		}
 	}
 }
 

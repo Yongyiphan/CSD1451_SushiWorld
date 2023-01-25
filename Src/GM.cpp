@@ -3,12 +3,14 @@
 #include "GM.h"
 
 namespace GM {
+
 	Engine::Engine() {
 		std::cout << "Create Game Manager" << std::endl;
 	}
 	
 	Engine::~Engine() {
 		std::cout << "Exit Game Manager" << std::endl;
+		CleanUp();
 	};
 
 

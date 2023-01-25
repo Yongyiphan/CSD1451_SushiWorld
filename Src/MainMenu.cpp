@@ -16,7 +16,6 @@ void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
 }
 
-
 void MainMenu::Free() {
 	std::cout << "Free " << StateName << std::endl;
 }

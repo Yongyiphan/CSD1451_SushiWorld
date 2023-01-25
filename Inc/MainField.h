@@ -22,7 +22,7 @@ public:
 	MiniRoom Border;
 	int rmw, rmh;
 	
-	MainField(char const*, std::shared_ptr<Context>&);
+	MainField(std::string, const std::shared_ptr<Context>&);
 	~MainField();
 
 	void Load() override;
