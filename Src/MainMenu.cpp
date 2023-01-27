@@ -23,7 +23,8 @@ void MainMenu::Free() {
 void MainMenu::Update(f64 deltaTime) {
 }
 void MainMenu::Draw() {
-	//CF::SetBackground(255,255,255);
+	utils::SetBackground(255,255,255);
+
 }
 
 

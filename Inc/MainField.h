@@ -21,6 +21,7 @@ public:
 	u32 black, white, blue, red;
 	MiniRoom Border;
 	int rmw, rmh;
+	s8 font;
 	
 	MainField(std::string, const std::shared_ptr<Context>&);
 	~MainField();

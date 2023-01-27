@@ -27,5 +27,5 @@ void TestMap::Update(f64 deltaTime) {
 	}
 }
 void TestMap::Draw() {
-	CF::SetBackground(255,255,255);
+	utils::SetBackground(255,255,255);
 }

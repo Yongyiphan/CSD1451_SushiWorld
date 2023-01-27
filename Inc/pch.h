@@ -17,7 +17,7 @@
 #include "AEEngine.h"
 #include "GM.h"
 #include "AM.h"
-#include "CFunc.h"
+#include "Utils.h"
 #include "EPlayer.h"
 
 //Game States include
@@ -26,7 +26,7 @@
 #include "MainField.h"
 
 using namespace GM;
-using namespace CF;
+using namespace utils;
 using namespace AM;
 
 #endif // PCH_H

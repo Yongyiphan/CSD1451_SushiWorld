@@ -10,11 +10,11 @@ MainField::MainField(std::string Name, const std::shared_ptr<Context>& context){
 }
 MainField::~MainField() {};
 void MainField::Load() {
-	black = CF::RGBAtoHex(0, 0, 0, 255);
-	white = CF::RGBAtoHex(255,255, 255, 255);
-	red = CF::RGBAtoHex(150, 0, 0, 255);
-	blue = CF::RGBAtoHex(0, 50, 150, 255); 
-
+	black = utils::RGBAtoHex(0, 0, 0, 255);
+	white = utils::RGBAtoHex(255,255, 255, 255);
+	red	  = utils::RGBAtoHex(150, 0, 0, 255);
+	blue  = utils::RGBAtoHex(0, 50, 150, 255); 
+	font  = AEGfxCreateFont("./Assets/Honey Bear.ttf", 10);
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
 	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
@@ -59,6 +59,7 @@ void MainField::Load() {
 			-(winw / 2), -(winh / 2)
 		}, AM::GfxSetting{ red });
 
+	
 };
 void MainField::Unload() {};
 void MainField::Init() {
@@ -87,7 +88,14 @@ void MainField::Update(f64 dt) {
 	if (AEInputCheckTriggered(AEVK_S)) {
 		CheckFieldBound(&this->m_context->Player->tf, BTM, rmh);
 	}
-	//std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+	AEInputGetCursorPosition(&mx, &my);
+
+	/*if (AEInputCheckTriggered(AEVK_LBUTTON)) {
+		Transform temp = this->m_context->Player->tf;
+		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+		std::cout << "X: " << "(" << temp.x << ")" << " | Y: " << "(" << temp.y << ")" << std::endl;
+		CF::AreaClicked(&this->m_context->Player->tf, mx, my);
+	}*/
 	
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
@@ -98,9 +106,10 @@ void MainField::Update(f64 dt) {
 
 };
 void MainField::Draw() {
-	CF::SetBackground(0,0,0);
-
-	m_context->render->RenderRect(&Border.t, &Border.sett);
+	//Utils::SetBackground(0,0,0);
+	utils::SetBackground(255,255,255);
+	utils::CFDrawText(font, "Hello world", 400, 300, 5, 0.f, 0.f, 0.f);
+	//m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : this->Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		if (i.Explored) {
