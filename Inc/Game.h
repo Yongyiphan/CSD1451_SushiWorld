@@ -10,10 +10,9 @@ struct Context {
 	Context() {
 		gman = std::make_unique<GM::Engine>();
 		render = std::make_shared<AM::Renderer>();
-		Player = std::make_unique<EPlayer>();
+		//Player = std::make_unique<EPlayer>();
 	}
 };
-extern int winw, winh;
 
 class Game
 {

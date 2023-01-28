@@ -68,7 +68,8 @@ namespace GM {
 			*/
 			state_stack.top()->Free();
 			state_stack.pop();
-			if (restart) {
+			StateCount--;
+			if (restart && !state_stack.empty()) {
 				state_stack.top()->Free();
 				state_stack.top()->Init();
 			}
@@ -81,8 +82,13 @@ namespace GM {
 	void Engine::Update() {
 		AESysFrameStart();
 		AEInputUpdate();
-		state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
-		state_stack.top()->Draw();
+		if (state_stack.empty()) {
+			status = QUIT;
+		}
+		else {
+			state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+			state_stack.top()->Draw();
+		}
 		AESysFrameEnd();
 	}
 
@@ -128,6 +134,10 @@ namespace GM {
 
 	GS_ID Engine::GetStatus(){
 		return this->status;
+	}
+
+	int Engine::GetStateCount() {
+		return this->StateCount;
 	}
 	
 	void GM::Engine::CleanUp() {

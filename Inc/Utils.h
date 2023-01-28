@@ -3,7 +3,7 @@
 
 namespace utils {
 
-	u32 RGBAtoHex(int, int, int, int);
+	u32 RGBAtoHex(int, int, int, int a = 255);
 	void SetBackground(int r, int g, int b);
 	
 	bool AreaClicked(AM::Transform*, s32, s32);

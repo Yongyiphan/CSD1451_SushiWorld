@@ -2,6 +2,8 @@
 #include "AM.h"
 
 namespace AM {
+
+
 	Color CreateColor(f32 r, f32 g, f32 b, f32 a) {
 		return Color{ r/255,g/255,b/255, a/255 };
 	}
@@ -11,6 +13,11 @@ namespace AM {
 	Renderer::~Renderer() {
 		//TODO
 		//Free VertexList from Map MeshMap
+		for (auto shape : MeshMap) {
+			for (auto color : shape.second) {
+				AEGfxMeshFree(color.second);
+			}
+		}
 	}
 
 	AEGfxVertexList* Renderer::GenerateMesh(Shape stype, u32 Color) {
@@ -22,22 +29,22 @@ namespace AM {
 		return nullptr;
 	}
 
-	void Renderer::RenderRect(Transform* t, GfxSetting *sett, AEGfxTexture *texture) {
-		AEGfxSetBlendMode(sett->BM);
+	void Renderer::RenderRect(RenderSetting *sett, AEGfxTexture *texture) {
+		AEGfxSetBlendMode(sett->gfx.BM);
 		if (texture)
 			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 		else {
-			AEGfxSetRenderMode(sett->RM);
+			AEGfxSetRenderMode(sett->gfx.RM);
 		}
 		AEGfxSetTintColor(1.0f, 1.0f, 1.0f, 1.0f);
-		AEGfxSetTransparency(sett->transparency);
+		AEGfxSetTransparency(sett->gfx.transparency);
 		AEGfxTextureSet(texture, 0, 0);
-		AEGfxSetTransform(TransformMatrix(t).m);
-		if (sett->mesh) {
-			AEGfxMeshDraw(sett->mesh, sett->MDM);
+		AEGfxSetTransform(TransformMatrix(&sett->t).m);
+		if (sett->gfx.mesh) {
+			AEGfxMeshDraw(sett->gfx.mesh, sett->gfx.MDM);
 		}
 		else {
-			AEGfxMeshDraw(FindMesh(RECT, sett->Color), sett->MDM);
+			AEGfxMeshDraw(FindMesh(RECT, sett->gfx.Color), sett->gfx.MDM);
 		}
 	}
 	AEMtx33 Renderer::TransformMatrix(Transform* t) {

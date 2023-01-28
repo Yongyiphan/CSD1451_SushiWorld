@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AM.cpp" />
+    <ClCompile Include="Src\Boss.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
     <ClCompile Include="Src\Game.cpp" />
@@ -33,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
+    <ClInclude Include="Inc\Boss.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />
     <ClInclude Include="Inc\Game.h" />

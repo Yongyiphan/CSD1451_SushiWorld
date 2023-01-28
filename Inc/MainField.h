@@ -5,8 +5,13 @@ struct MiniRoom {
 	int ID;
 	bool Explored;
 	int Door;
-	AM::Transform t;
-	AM::GfxSetting sett;
+	//Render Settings
+	AM::RenderSetting RS;
+	MiniRoom() {
+		ID = Door = 0;
+		Explored = false;
+		this->RS = AM::RenderSetting{};
+	}
 };
 
 
@@ -20,7 +25,7 @@ public:
 	s32 mx, my;
 	u32 black, white, blue, red;
 	MiniRoom Border;
-	int rmw, rmh;
+	float rmw, rmh;
 	s8 font;
 	
 	MainField(std::string, const std::shared_ptr<Context>&);

@@ -21,42 +21,38 @@ void MainField::Load() {
 	int BorderMargin = 50, RoomMargin = 4;
 	Border.ID = ID++;
 	Border.Explored = false;
-	Border.t = AM::Transform{
+	Border.RS = AM::RenderSetting(AM::Transform{
 		winw / 2.f, winh / 2.f,
-		winw - BorderMargin * 2, winh - BorderMargin * 2,
-		-(winw / 2), -(winh / 2)
-	};
-	Border.sett = AM::GfxSetting{white};
-	rmw = Border.t.w / RMcol, rmh = Border.t.h / RMrow;
+		winw - BorderMargin * 2.f, winh - BorderMargin * 2.f,
+		-wosx, -wosy
+	},AM::GfxSetting{white});
+	rmw = float(Border.RS.t.w / RMcol), rmh = float(Border.RS.t.h / RMrow);
 	for (float y = 0.5f; y < RMcol; y++) {
 		for (float x = 0.5f; x < RMrow; x++) {
 			MiniRoom mr;
 			mr.Explored = ID == 1 || ID == RMrow * RMcol ? true : false;
 			mr.ID = ID++;
 			mr.Door = 1;
-			mr.t = AM::Transform{
+			mr.RS = AM::RenderSetting(AM::Transform{
 				y * rmw + BorderMargin, x * rmh + BorderMargin,
 				rmw - RoomMargin * 2, rmh - RoomMargin * 2,
-				-(winw/2), -(winh/2)
-			};
-			mr.sett = AM::GfxSetting{
-				blue
-			};
-			mr.sett.MDM = AE_GFX_MDM_TRIANGLES;
-			this->Room.push_back(mr);
+				-wosx, -wosy
+				}, AM::GfxSetting{ blue });
+			mr.RS.gfx.MDM = AE_GFX_MDM_TRIANGLES;
+			Room.push_back(mr);
 		}
 	}
 	/* Grid room layout
 	[3] [6] [9] 
 	[2] [5] [8] 
 	[1] [4] [7] */
-	Border.t.w += RoomMargin;
-	Border.t.h += RoomMargin;
-	MiniRoom firstRm = this->Room.at(0);
-	this->m_context->Player->UpdateInit(AM::Transform{
-			firstRm.t.x, firstRm.t.y,
-			firstRm.t.w / 2, firstRm.t.h / 2,
-			-(winw / 2), -(winh / 2)
+	Border.RS.t.w += RoomMargin;
+	Border.RS.t.h += RoomMargin;
+	MiniRoom firstRm = Room.at(0);
+	m_context->Player->UpdateRenderSettings(AM::Transform{
+			firstRm.RS.t.x, firstRm.RS.t.y,
+			firstRm.RS.t.w / 2, firstRm.RS.t.h / 2,
+			-wosx, -wosy
 		}, AM::GfxSetting{ red });
 
 	
@@ -77,24 +73,24 @@ void MainField::Update(f64 dt) {
 	//}
 	AEInputGetCursorPosition(&mx, &my);
 	if (AEInputCheckTriggered(AEVK_A)) {
-		CheckFieldBound(&this->m_context->Player->tf, LEFT,  rmw);
+		CheckFieldBound(&m_context->Player->PlayerRender.t, LEFT,  rmw);
 	}
 	if (AEInputCheckTriggered(AEVK_D)) {
-		CheckFieldBound(&this->m_context->Player->tf, RIGHT, rmw);
+		CheckFieldBound(&m_context->Player->PlayerRender.t, RIGHT, rmw);
 	}
 	if (AEInputCheckTriggered(AEVK_W)) {
-		CheckFieldBound(&this->m_context->Player->tf, TOP, rmh);
+		CheckFieldBound(&m_context->Player->PlayerRender.t, TOP, rmh);
 	}
 	if (AEInputCheckTriggered(AEVK_S)) {
-		CheckFieldBound(&this->m_context->Player->tf, BTM, rmh);
+		CheckFieldBound(&m_context->Player->PlayerRender.t, BTM, rmh);
 	}
 	AEInputGetCursorPosition(&mx, &my);
 
 	/*if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-		Transform temp = this->m_context->Player->tf;
+		Transform temp = m_context->Player->tf;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 		std::cout << "X: " << "(" << temp.x << ")" << " | Y: " << "(" << temp.y << ")" << std::endl;
-		CF::AreaClicked(&this->m_context->Player->tf, mx, my);
+		CF::AreaClicked(&m_context->Player->tf, mx, my);
 	}*/
 	
 
@@ -108,23 +104,23 @@ void MainField::Update(f64 dt) {
 void MainField::Draw() {
 	//Utils::SetBackground(0,0,0);
 	utils::SetBackground(255,255,255);
-	utils::CFDrawText(font, "Hello world", 400, 300, 5, 0.f, 0.f, 0.f);
+	utils::UDrawText(font, "Hello world", 400, 300, 5, 0, 0, 0);
 	//m_context->render->RenderRect(&Border.t, &Border.sett);
-	for (auto i : this->Room) {
+	for (auto i : Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		if (i.Explored) {
-			m_context->render->RenderRect(&i.t, &i.sett);
+			m_context->render->RenderRect(&i.RS);
 		}
 	}
-	this->m_context->Player->DrawPlayer(this->m_context->render);
+	m_context->Player->DrawPlayer(m_context->render);
 };
 
 bool MainField::CheckFieldBound(AM::Transform *target, Direction d, int shift) {
-	float leftLimit  = Border.t.x - Border.t.w / 2.f;
-	float rightLimit = Border.t.x + Border.t.w / 2.f;
+	float leftLimit  = Border.RS.t.x - Border.RS.t.w / 2.f;
+	float rightLimit = Border.RS.t.x + Border.RS.t.w / 2.f;
 
-	float topLimit = Border.t.y + Border.t.h / 2.f;
-	float btmLimit = Border.t.y - Border.t.h / 2.f;
+	float topLimit = Border.RS.t.y + Border.RS.t.h / 2.f;
+	float btmLimit = Border.RS.t.y - Border.RS.t.h / 2.f;
 	
 
 	switch (d) {
@@ -154,15 +150,15 @@ bool MainField::CheckFieldBound(AM::Transform *target, Direction d, int shift) {
 }
 
 void MainField::RoomCheck() {
-	for (auto &r : this->Room) {
+	for (auto &r : Room) {
 		//TODO
 		/*
 		Find room. using x & y axis, compare with player's coor
 		Room.explored = true
 		*/
 		if (!r.Explored) {
-			AM::Transform rm = r.t;
-			AM::Transform t = m_context->Player->tf;
+			AM::Transform rm = r.RS.t;
+			AM::Transform t = m_context->Player->PlayerRender.t;
 			float ll = rm.x - rm.w / 2.f;
 			float rl = rm.x + rm.w / 2.f;
 			float tl = rm.y + rm.h / 2.f;
