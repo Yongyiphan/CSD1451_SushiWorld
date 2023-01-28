@@ -17,10 +17,14 @@ private:
 	std::vector<MiniRoom> Room;
 
 public:
+	//Mouse's x and y
 	s32 mx, my;
 	u32 black, white, blue, red;
+	//While border, player's boundary
 	MiniRoom Border;
+	//room width, height
 	int rmw, rmh;
+	//font
 	s8 font;
 	
 	MainField(std::string, const std::shared_ptr<Context>&);

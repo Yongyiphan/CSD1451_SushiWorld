@@ -11,7 +11,7 @@ namespace utils {
 		AEGfxSetBackgroundColor(f32(r / 255), f32(g / 255), f32(b / 255));
 	}
 
-	void CFDrawText(s8 Font, std::string string, f32 screenX, f32 screenY, f32 scale, f32 r,f32 g, f32 b) {
+	void UDrawText(s8 Font, std::string string, f32 screenX, f32 screenY, f32 scale, f32 r,f32 g, f32 b) {
 		f32 percX = screenX / winw * 2 - 1;
 		f32 percY = screenY / winh * 2 - 1;
 		AEGfxSetBlendMode(AE_GFX_BM_BLEND);

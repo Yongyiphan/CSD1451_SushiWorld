@@ -17,7 +17,9 @@ void MainField::Load() {
 	font  = AEGfxCreateFont("./Assets/Honey Bear.ttf", 10);
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
-	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
+	//No. of rows, col in grid
+	int RMrow = 6, RMcol = 8;
+	//Might be redundant if using sprite
 	int BorderMargin = 50, RoomMargin = 4;
 	Border.ID = ID++;
 	Border.Explored = false;
@@ -108,7 +110,7 @@ void MainField::Update(f64 dt) {
 void MainField::Draw() {
 	//Utils::SetBackground(0,0,0);
 	utils::SetBackground(255,255,255);
-	utils::CFDrawText(font, "Hello world", 400, 300, 5, 0.f, 0.f, 0.f);
+	utils::UDrawText(font, "Hello world", 400, 300, 5, 0.f, 0.f, 0.f);
 	//m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : this->Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
@@ -170,7 +172,7 @@ void MainField::RoomCheck() {
 			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
 				r.Explored = true;
 				//execute to go next room
-				m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+				//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 				break;
 			}
 
