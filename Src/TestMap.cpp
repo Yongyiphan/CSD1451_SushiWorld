@@ -13,6 +13,7 @@ void TestMap::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
 	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
 
 }
 void TestMap::Unload(){

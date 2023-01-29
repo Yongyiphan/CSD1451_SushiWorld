@@ -14,6 +14,9 @@ namespace AM {
 				AEGfxDestroyFont(size.second);
 			}
 		}
+		for (auto& sprite : TextureMap) {
+			AEGfxTextureUnload(sprite.second);
+		}
 	}
 
 	s8 AssetManager::LoadFont(std::string location, int size) {
@@ -33,4 +36,6 @@ namespace AM {
 		}
 		return FontMap[location][size];
 	}
+
+
 }

@@ -24,6 +24,17 @@ void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0)};
 }
 
+/*TODO Load in sprite texture
+	Map texture to mesh
+	Custom mesh for every animation
+*/
+void EPlayer::LoadTexture(std::string location) {
+	/*Define Sprite sheet parameters
+		width/height -> normalize
+	*/
+	
+}
+
 void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 	PlayerRender.t = t;
 	PlayerRender.gfx = s;

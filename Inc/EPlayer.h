@@ -22,6 +22,7 @@ public:
 	float fullhpbar, currhpbar;
 
 	AM::RenderSetting PlayerRender, MaxHPRender, CurrHPRender;
+	AEGfxTexture* PTexture;
 
 	EPlayer() {
 		x = y = size = 0;
@@ -31,11 +32,13 @@ public:
 		color = 0xFFFFFFFF;
 		PlayerRender = AM::RenderSetting{};
 		MaxHPRender = CurrHPRender = AM::RenderSetting{};
+		PTexture = nullptr;
 	};
 
 	~EPlayer() {};
 	//TODO: Initialise withPlayer Max HP (Incomplete)
 	void InitPlayerStats(int, int);
+	void LoadTexture(std::string);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
