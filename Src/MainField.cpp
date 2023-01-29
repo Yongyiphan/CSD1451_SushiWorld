@@ -104,7 +104,7 @@ void MainField::Update(f64 dt) {
 void MainField::Draw() {
 	//Utils::SetBackground(0,0,0);
 	utils::SetBackground(255,255,255);
-	utils::UDrawText(font, "Hello world", 400, 300, 5, 0, 0, 0);
+	utils::UDrawText(font, "Hello world", 400, 300, 5, Color{0,0,0});
 	//m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
@@ -115,7 +115,7 @@ void MainField::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);
 };
 
-bool MainField::CheckFieldBound(AM::Transform *target, Direction d, int shift) {
+bool MainField::CheckFieldBound(AM::Transform *target, Direction d, float shift) {
 	float leftLimit  = Border.RS.t.x - Border.RS.t.w / 2.f;
 	float rightLimit = Border.RS.t.x + Border.RS.t.w / 2.f;
 

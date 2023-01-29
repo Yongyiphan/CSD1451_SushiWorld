@@ -27,14 +27,14 @@ public:
 		x = y = size = 0;
 		maxhp = currhp = hpsize = 0;
 		hpscale = 1;
+		fullhpbar = currhpbar = 0.f;
 		color = 0xFFFFFFFF;
 		PlayerRender = AM::RenderSetting{};
 		MaxHPRender = CurrHPRender = AM::RenderSetting{};
 	};
 
 	~EPlayer() {};
-	//TODO
-	//Initialise withPlayer Max HP (Incomplete)
+	//TODO: Initialise withPlayer Max HP (Incomplete)
 	void InitPlayerStats(int, int);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);

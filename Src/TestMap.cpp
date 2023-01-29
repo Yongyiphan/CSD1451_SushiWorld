@@ -12,6 +12,8 @@ void TestMap::Load() {
 	green = utils::RGBAtoHex(0, 150, 0);
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
+	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+
 }
 void TestMap::Unload(){
 }
@@ -44,10 +46,11 @@ void TestMap::Update(f64 deltaTime) {
 	}
 }
 void TestMap::Draw() {
-	utils::SetBackground(150,100,10);
-	m_context->Player->DrawHPBar(m_context->render, 100,500);
+	utils::SetBackground(150,150,150);
+	//Temp var for x, y for drawing
+	float posx = 50, posy = 500, baroffset = 20;
+	utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
+	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 }
 
 
-void TestMap::DrawHPBar() {
-}

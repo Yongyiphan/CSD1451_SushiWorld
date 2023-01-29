@@ -38,6 +38,6 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 
-	bool CheckFieldBound(AM::Transform *, Direction, int);
+	bool CheckFieldBound(AM::Transform *, Direction, float);
 	void RoomCheck();
 };

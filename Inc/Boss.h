@@ -3,5 +3,6 @@
 
 class Boss {
 private:
+	
 public:
 };

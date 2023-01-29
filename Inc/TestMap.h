@@ -17,9 +17,10 @@ public:
 	~TestMap() {};
 	u32 red, green, blue, yellow;
 	s32 mx, my;
+	s8 FontID;
 
 	std::vector<Arrow> ArrowVect;
-
+	
 
 	void Load() override;
 	void Unload() override;

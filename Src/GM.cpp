@@ -28,7 +28,7 @@ namespace GM {
 
 
 	void Engine::ProcessStateChange() {
-		//TODO
+		/*TODO Adding Load and Unload to State Change Manager*/
 		//IF !State.pause unload;
 		switch (status) {
 		case ADD:
