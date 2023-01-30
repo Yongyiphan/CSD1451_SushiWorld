@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TestMap.h"
+#include "time.h"
 
 TestMap::TestMap(char const* name, std::shared_ptr<Context>& context)
 {
@@ -31,11 +32,25 @@ void TestMap::Load() {
 	pmesh = AEGfxMeshEnd();
 //	ptex = AEGfxTextureLoad("./Assets/SushiRiceBall.png");
 
+	u32 rcolour[] = {red,green,blue,yellow};
+	srand(time(NULL));
+
+	for (int i = 0; i < 8; i++) {
+		int random = (rand() % 4);
+		checkbox cb;
+		cb.dead = 0;
+		cb.rs = AM::RenderSetting(AM::Transform{
+			75.f + (i * 60.f) , 450.f,
+			50.f , 50.f ,
+			-wosx, -wosy
+			}, AM::GfxSetting{ rcolour[random] });
+		box.push_back(cb);
+	}
+
 }
+
 void TestMap::Unload(){
-	AEGfxDestroyFont(FontID);
-	AEGfxMeshFree(pmesh);
-	AEGfxTextureUnload(ptex);
+	
 }
 
 void TestMap::Init() {
@@ -43,6 +58,9 @@ void TestMap::Init() {
 	if (m_context->Player->hpsize == 0) {
 		m_context->Player->InitPlayerStats(10, 250);
 	}
+	dmg_count = 0;
+	isEmpty = false;
+	boss.InitBossStats(10, 250);
 }
 
 void TestMap::Free() {
@@ -50,6 +68,85 @@ void TestMap::Free() {
 }
 
 void TestMap::Update(f64 deltaTime) {
+	
+	if (this->box.empty()) {
+		std::cout << "empty" << std::endl;
+		isEmpty = true;
+	}
+	if (isEmpty == false) {
+		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+			m_context->gman->SetStatus(QUIT);
+		}
+		if (AEInputCheckTriggered(AEVK_A)) {
+			if (m_context->Player->currhp > 0) {
+				m_context->Player->currhp -= 1;
+			}
+		}
+		if (AEInputCheckTriggered(AEVK_D)) {
+			m_context->Player->currhp += 1;
+		}
+		if (AEInputCheckTriggered(AEVK_LBUTTON)) {
+			AEInputGetCursorPosition(&mx, &my);
+			Transform temp = m_context->Player->PlayerRender.t;
+			std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+		}
+		//up = blue
+		if (AEInputCheckTriggered(AEVK_UP)) {
+			if (this->box.front().rs.gfx.Color == blue) {
+				dmg_count++;
+				this->box.erase(this->box.begin());
+				std::cout << dmg_count << std::endl;
+			}
+			else {
+				isEmpty = true;
+			}
+		}
+		//down = red
+		if (AEInputCheckTriggered(AEVK_DOWN)) {
+			if (this->box.front().rs.gfx.Color == red) {
+				dmg_count++;
+				this->box.erase(this->box.begin());
+				std::cout << dmg_count << std::endl;
+			}
+			else {
+				isEmpty = true;
+			}
+		}
+		//left = green
+		if (AEInputCheckTriggered(AEVK_LEFT)) {
+			if (this->box.front().rs.gfx.Color == green) {
+				dmg_count++;
+				this->box.erase(this->box.begin());
+				std::cout << dmg_count << std::endl;
+			}
+			else {
+				isEmpty = true;
+			}
+		}
+		//right = yellow
+		if (AEInputCheckTriggered(AEVK_RIGHT)) {
+			if (this->box.front().rs.gfx.Color == yellow) {
+				dmg_count++;
+				this->box.erase(this->box.begin());
+				std::cout << dmg_count << std::endl;
+			}
+			else {
+				isEmpty = true;
+			}
+		}
+	}
+	else if (isEmpty == true) {
+		if (boss.currhp > dmg_count) {
+			boss.currhp -= dmg_count;
+		}
+		else if(boss.currhp < dmg_count) {
+			boss.currhp = 0;
+		}
+		TestMap::Load();
+		dmg_count = 0;
+		isEmpty = false;
+	}
+}
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT);
 	}
@@ -78,6 +175,19 @@ void TestMap::Draw() {
 	utils::SetBackground(150,150,150);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
+	utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
+	m_context->Player->DrawHPBar(m_context->render, posx,posy);
+
+	utils::UDrawText(FontID, "Boss's HP:", posx + 400, posy + baroffset, 1, Color{ 255,255,255 });
+	boss.DrawHPBar(m_context->render, posx + 400, posy);
+
+	if (boss.currhp == 0) {
+		utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
+	}
+
+	for (auto& i : this->box) {
+		m_context->render->RenderRect(&i.rs);
+	}
 	m_context->Player->PlayerRender.t.x = 200;
 	m_context->Player->PlayerRender.t.y = 300;
 	m_context->Player->PlayerRender.t.w = 200;

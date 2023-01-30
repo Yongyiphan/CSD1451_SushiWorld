@@ -9,9 +9,18 @@ struct Arrow {
 		dead = false;
 	}
 };
+
+struct checkbox {
+	bool dead = false;
+	AM::RenderSetting rs;
+	
+};
+
 class TestMap : public GM::State {
 private:
 	std::shared_ptr<Context> m_context;
+
+	std::vector<checkbox> box;
 public:
 	TestMap(char const*, std::shared_ptr<Context>&);
 	~TestMap() {};
@@ -22,6 +31,9 @@ public:
 	AEGfxTexture* ptex;
 	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;
+	int dmg_count;
+	bool isEmpty;
+	Boss boss{};
 
 	std::vector<Arrow> ArrowVect;
 	

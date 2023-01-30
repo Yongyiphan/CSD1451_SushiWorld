@@ -20,6 +20,7 @@
 #include "Renderer.h"
 #include "Utils.h"
 #include "EPlayer.h"
+#include "Boss.h"
 
 //Game States include
 #include "Game.h"
