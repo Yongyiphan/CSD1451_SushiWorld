@@ -39,7 +39,6 @@ void MainField::Load() {
 				rmw - RoomMargin * 2, rmh - RoomMargin * 2,
 				-wosx, -wosy
 				}, AM::GfxSetting{ blue });
-			mr.RS.gfx.MDM = AE_GFX_MDM_TRIANGLES;
 			Room.push_back(mr);
 		}
 	}
@@ -56,6 +55,7 @@ void MainField::Load() {
 			-wosx, -wosy
 		}, AM::GfxSetting{ red });
 
+	SavePlayerSettings = m_context->Player->PlayerRender;
 	
 };
 void MainField::Unload() {};
@@ -68,7 +68,6 @@ void MainField::Free() {
 	
 };
 void MainField::Update(f64 dt) {
-
 	//if (AEInputCheckTriggered(AEVK_LBUTTON)){
 	//	m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
 	//}
@@ -174,3 +173,10 @@ void MainField::RoomCheck() {
 	}
 }
 
+void MainField::Resume() {
+	m_context->Player->PlayerRender = SavePlayerSettings;
+}
+
+void MainField::Pause() {
+	SavePlayerSettings = m_context->Player->PlayerRender;
+}

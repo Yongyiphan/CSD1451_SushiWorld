@@ -8,7 +8,7 @@ MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 }
 
 void MainMenu::Load() {
-	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 }
 void MainMenu::Unload(){
 }
@@ -31,7 +31,7 @@ void MainMenu::Update(f64 deltaTime) {
 }
 void MainMenu::Draw() {
 	SetBackground(255, 127, 80);
-	UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
+	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 }
 
 

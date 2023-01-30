@@ -30,9 +30,9 @@ namespace AM {
 		else {
 			AEGfxSetRenderMode(sett->gfx.RM);
 		}
-		AEGfxSetTintColor(1.0f, 1.0f, 1.0f, 1.0f);
-		AEGfxSetTransparency(sett->gfx.transparency);
 		AEGfxTextureSet(texture, 0, 0);
+		AEGfxSetTintColor(1.0f, 1.0f, 1.0f, sett->gfx.transparency);
+		AEGfxSetTransparency(sett->gfx.transparency);
 		AEGfxSetTransform(TransformMatrix(&sett->t).m);
 		if (sett->gfx.mesh) {
 			AEGfxMeshDraw(sett->gfx.mesh, sett->gfx.MDM);

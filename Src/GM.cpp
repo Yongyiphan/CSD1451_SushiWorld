@@ -69,10 +69,17 @@ namespace GM {
 			state_stack.top()->Free();
 			state_stack.pop();
 			StateCount--;
-			if (restart && !state_stack.empty()) {
-				state_stack.top()->Free();
-				state_stack.top()->Init();
+			if (!state_stack.empty()) {
+				if (restart) {
+					state_stack.top()->Free();
+					state_stack.top()->Init();
+
+				}
+				else {
+					state_stack.top()->Resume();
+				}
 			}
+
 			break;
 		}
 		status = INPRO;

@@ -17,7 +17,10 @@ public:
 	~TestMap() {};
 	u32 red, green, blue, yellow;
 	s32 mx, my;
+	//std::shared_ptr<s8> FontID;
 	s8 FontID;
+	AEGfxTexture* ptex;
+	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;
 
 	std::vector<Arrow> ArrowVect;

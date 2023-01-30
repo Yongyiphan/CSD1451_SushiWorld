@@ -29,6 +29,7 @@ public:
 	MiniRoom Border;
 	float rmw, rmh;
 	s8 font;
+	AM::RenderSetting SavePlayerSettings;
 	
 	MainField(std::string, const std::shared_ptr<Context>&);
 	~MainField();
@@ -38,7 +39,9 @@ public:
 	void Init() override;
 	void Free() override;
 	void Update(f64 dt) override;
-	void Draw()override;
+	void Draw() override;
+	void Resume() override;
+	void Pause() override;
 
 	bool CheckFieldBound(AM::Transform *, Direction, float);
 	void RoomCheck();

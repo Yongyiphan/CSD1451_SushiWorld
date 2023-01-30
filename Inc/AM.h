@@ -12,7 +12,7 @@ namespace AM {
 	class AssetManager {
 
 	private:
-		std::unordered_map<std::string, std::unordered_map<int, s8>> FontMap;
+		std::unordered_map<std::string, std::unordered_map<int, std::shared_ptr<s8>>> FontMap;
 		//std::unordered_map<std::string, AEGfxTexture*> TextureMap;
 		std::unordered_map<std::string, TextureMesh> TextureMap;
 	public:
@@ -21,7 +21,7 @@ namespace AM {
 
 		//Needs a file location, file location will be used as the dict key
 		//Needs a int for font size
-		s8 LoadFont(std::string, int);
+		std::shared_ptr<s8> LoadFont(std::string, int);
 		//TODO: Load Texture
 		AEGfxTexture* LoadTexture(std::string location);
 

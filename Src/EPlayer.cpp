@@ -28,40 +28,59 @@ void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 	Map texture to mesh
 	Custom mesh for every animation
 */
-void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager> &AM) {
+void EPlayer::LoadTexture(std::string location) {
 	/*Define Sprite sheet parameters
 		width/height -> normalize
 		for loop, to iterate through frames
 	*/
 	
-	AEGfxTexture* imgload = AEGfxTextureLoad(location.c_str());
+	PlayerTexture.texture = AEGfxTextureLoad(location.c_str());
 	//Key using file path
-	int imgwidth = 320, imgheight = 160;
-	int noOfSprite = 2;
+	float spritewidth = 320, spriteheight = 160;
+	AnimationFrames = 2;
+	float imgwidth = spritewidth / AnimationFrames, imgheight = spriteheight;
 	
 	//First Image = normalize<320/2>
-	int s = 0;
-	std::vector<AEGfxVertexList*> FrameList;
-	while (s < noOfSprite) {
-		
+	int s = 0, scale = 5;
+	int los = 6, ros = 6, tos = 7, bos = 8;
+	//std::vector<AEGfxVertexList*> FrameList;
+	while (s < AnimationFrames) {
+		float topv = (tos * scale) / spriteheight;
+		float btmv = (spriteheight - bos*scale) / spriteheight;
+
+		float leftu = ((s*imgwidth) + (los * scale)) / spritewidth;
+		float rightu =(((s + 1) * imgwidth) - (ros * scale)) / spritewidth;
+
 		AEGfxMeshStart();
 		AEGfxTriAdd(
-		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-		 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+			-0.5,  0.5, 0xFFFFFFFF,  leftu,  topv, //TopLeft
+			-0.5, -0.5, 0xFFFFFFFF,  leftu,  btmv, //BtmLeft
+			 0.5, -0.5, 0xFFFFFFFF,  rightu, btmv	//BtmRight
+		);
 		AEGfxTriAdd(
-		-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f,
-		 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-		 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f);
+			-0.5,  0.5, 0xFFFFFFFF, leftu , topv,	//TopLeft
+			 0.5,  0.5, 0xFFFFFFFF, rightu, topv,	//TopRight
+			 0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmLeft
+		);
+		
+		//AEGfxTriAdd(
+		//	-0.5,  0.5, 0xFFFFFFFF,  0.f,  0.f,
+		//	-0.5, -0.5, 0xFFFFFFFF,  0.f,  1.f,
+		//	 0.5, -0.5, 0xFFFFFFFF,  0.5f, 1.f
+		//);
+		//AEGfxTriAdd(
+		//	-0.5,  0.5, 0xFFFFFFFF, 0.f , 0.f,
+		//	 0.5,  0.5, 0xFFFFFFFF, 0.5f, 0.f,
+		//	 0.5, -0.5, 0xFFFFFFFF, 0.5f, 1.f
+		//);
 		/*
 		(0,0)	(1,0)
 
-		(1,0)	(1,1)
+		(0,1)	(1,1)
 		*/
-		FrameList.push_back(AEGfxMeshEnd());
+		PlayerTexture.animationframes.push_back(AEGfxMeshEnd());
 		s++;
 	}
-
 
 	
 }
@@ -74,8 +93,13 @@ void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	
 	//Draw Rect;
-	render->RenderRect(&PlayerRender);
-	
+	int f = currentFrame % AnimationFrames;
+	std::cout << f << std::endl;
+	if (this->frameCounter % 30 == 0) {
+		currentFrame++;
+	}
+	this->PlayerRender.gfx.mesh = this->PlayerTexture.animationframes.at(currentFrame % AnimationFrames);
+	render->RenderRect(&PlayerRender, this->PlayerTexture.texture);
 }
 
 void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
