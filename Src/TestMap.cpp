@@ -13,8 +13,7 @@ void TestMap::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
 	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
-
+	//lrarrow = m_context->assets->LoadTexture("./Assets/Arrows/L-Arr-1.PNG");
 }
 void TestMap::Unload(){
 }
@@ -44,6 +43,15 @@ void TestMap::Update(f64 deltaTime) {
 		AEInputGetCursorPosition(&mx, &my);
 		Transform temp = m_context->Player->PlayerRender.t;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+	}
+	if (AEInputCheckTriggered(AEVK_UP)) {
+		
+	}
+	if (AEInputCheckTriggered(AEVK_DOWN)) {
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+	}
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
 	}
 }
 void TestMap::Draw() {

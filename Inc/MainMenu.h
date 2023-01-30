@@ -17,6 +17,7 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
+	s8 FontID;
 	
 	
 };
