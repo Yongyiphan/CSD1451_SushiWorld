@@ -7,13 +7,14 @@ namespace AM {
 	\brief */
 	struct TextureMesh {
 		AEGfxTexture* texture;
-		std::vector<AEGfxVertexList> animationframes;
+		std::vector<AEGfxVertexList*> animationframes;
 	};
 	class AssetManager {
 
 	private:
 		std::unordered_map<std::string, std::unordered_map<int, s8>> FontMap;
-		std::unordered_map<std::string, AEGfxTexture*> TextureMap;
+		//std::unordered_map<std::string, AEGfxTexture*> TextureMap;
+		std::unordered_map<std::string, TextureMesh> TextureMap;
 	public:
 		AssetManager();
 		~AssetManager();

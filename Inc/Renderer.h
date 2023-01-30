@@ -35,6 +35,7 @@ namespace AM {
 			this->ox = ox;
 			this->oy = oy;
 		}
+		
 
 	};
 

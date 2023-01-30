@@ -18,6 +18,7 @@ public:
 	u32 red, green, blue, yellow;
 	s32 mx, my;
 	s8 FontID;
+	//AEGfxTexture lrarrow;
 
 	std::vector<Arrow> ArrowVect;
 	

@@ -16,7 +16,9 @@ void MainField::Load() {
 	blue  = utils::RGBAtoHex(0, 50, 150, 255); 
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
-	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
+	//No. of rows, col in grid
+	int RMrow = 6, RMcol = 8;
+	//Might be redundant if using sprite
 	int BorderMargin = 50, RoomMargin = 4;
 	Border.ID = ID++;
 	Border.Explored = false;
@@ -101,9 +103,9 @@ void MainField::Update(f64 dt) {
 
 };
 void MainField::Draw() {
-	//Utils::SetBackground(0,0,0);
-	utils::SetBackground(255,255,255);
-	//m_context->render->RenderRect(&Border.t, &Border.sett);
+	utils::SetBackground(0,0,0);
+	//utils::SetBackground(255,255,255);
+	m_context->render->RenderRect(&Border.RS);
 	for (auto i : Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		if (i.Explored) {

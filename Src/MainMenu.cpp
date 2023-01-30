@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MainMenu.h"
+#include "TestMap.h"
 
 MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 	StateName = Name;
@@ -7,13 +8,14 @@ MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 }
 
 void MainMenu::Load() {
-
+	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 }
 void MainMenu::Unload(){
 }
 
 void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
+	SetBackground(255, 127, 80);	
 }
 
 void MainMenu::Free() {
@@ -21,10 +23,15 @@ void MainMenu::Free() {
 }
 
 void MainMenu::Update(f64 deltaTime) {
+	SetBackground(255, 127, 80);
+	if (AEInputCheckTriggered(AEVK_SPACE)) {
+		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	}
 }
 void MainMenu::Draw() {
-	utils::SetBackground(255,255,255);
-
+	SetBackground(255, 127, 80);
+	UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 }
 
 

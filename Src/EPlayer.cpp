@@ -28,10 +28,41 @@ void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 	Map texture to mesh
 	Custom mesh for every animation
 */
-void EPlayer::LoadTexture(std::string location) {
+void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager> &AM) {
 	/*Define Sprite sheet parameters
 		width/height -> normalize
+		for loop, to iterate through frames
 	*/
+	
+	AEGfxTexture* imgload = AEGfxTextureLoad(location.c_str());
+	//Key using file path
+	int imgwidth = 320, imgheight = 160;
+	int noOfSprite = 2;
+	
+	//First Image = normalize<320/2>
+	int s = 0;
+	std::vector<AEGfxVertexList*> FrameList;
+	while (s < noOfSprite) {
+		
+		AEGfxMeshStart();
+		AEGfxTriAdd(
+		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
+		 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
+		-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+		AEGfxTriAdd(
+		-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f,
+		 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
+		 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f);
+		/*
+		(0,0)	(1,0)
+
+		(1,0)	(1,1)
+		*/
+		FrameList.push_back(AEGfxMeshEnd());
+		s++;
+	}
+
+
 	
 }
 

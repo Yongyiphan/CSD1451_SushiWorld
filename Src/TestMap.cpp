@@ -13,7 +13,7 @@ void TestMap::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
 	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
+	//m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 
 }
 void TestMap::Unload(){
@@ -45,13 +45,23 @@ void TestMap::Update(f64 deltaTime) {
 		Transform temp = m_context->Player->PlayerRender.t;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	}
+	if (AEInputCheckTriggered(AEVK_UP)) {
+		
+	}
+	if (AEInputCheckTriggered(AEVK_DOWN)) {
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+	}
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
+	}
 }
 void TestMap::Draw() {
 	utils::SetBackground(150,150,150);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
-	utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
-	m_context->Player->DrawHPBar(m_context->render, posx,posy);
+	//utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
+
+	//m_context->Player->DrawHPBar(m_context->render, posx,posy);
 }
 
 

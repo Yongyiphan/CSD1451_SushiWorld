@@ -22,8 +22,10 @@ private:
 	std::vector<MiniRoom> Room;
 
 public:
+	//Mouse's x and y
 	s32 mx, my;
 	u32 black, white, blue, red;
+	//While border, player's boundary
 	MiniRoom Border;
 	float rmw, rmh;
 	s8 font;
