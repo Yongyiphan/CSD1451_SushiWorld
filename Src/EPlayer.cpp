@@ -33,7 +33,6 @@ void EPlayer::LoadTexture(std::string location) {
 		width/height -> normalize
 		for loop, to iterate through frames
 	*/
-	
 	PlayerTexture.texture = AEGfxTextureLoad(location.c_str());
 	//Key using file path
 	float spritewidth = 320, spriteheight = 160;
@@ -94,7 +93,7 @@ void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	
 	//Draw Rect;
 	int f = currentFrame % AnimationFrames;
-	std::cout << f << std::endl;
+	//std::cout << f << std::endl;
 	if (this->frameCounter % 30 == 0) {
 		currentFrame++;
 	}

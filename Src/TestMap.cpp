@@ -14,31 +14,12 @@ void TestMap::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
 	
-	//FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	//FontID = AEGfxCreateFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	//m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
-	//m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
+	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 
-	
+	GenerateArrowKeys();
 
 }
-void TestMap::GenerateArrowKeys() {
-	u32 rcolour[] = {red,green,blue,yellow};
-	srand(time(NULL));
-	box.clear();
-	for (int i = 0; i < 8; i++) {
-		int random = (rand() % 4);
-		checkbox cb;
-		cb.dead = 0;
-		cb.rs = AM::RenderSetting(AM::Transform{
-			75.f + (i * 60.f) , 450.f,
-			50.f , 50.f ,
-			-wosx, -wosy
-			}, AM::GfxSetting{ rcolour[random] });
-		box.push_back(cb);
-	}
 
-}
 
 void TestMap::Unload(){
 	
@@ -155,7 +136,7 @@ void TestMap::Draw() {
 	boss.DrawHPBar(m_context->render, posx + 400, posy);
 
 	if (boss.currhp == 0) {
-		utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
+		//utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
 	}
 
 	for (auto& i : this->box) {
@@ -174,3 +155,20 @@ void TestMap::Draw() {
 }
 
 
+void TestMap::GenerateArrowKeys() {
+	u32 rcolour[] = {red,green,blue,yellow};
+	srand(time(NULL));
+	box.clear();
+	for (int i = 0; i < 8; i++) {
+		int random = (rand() % 4);
+		checkbox cb;
+		cb.dead = 0;
+		cb.rs = AM::RenderSetting(AM::Transform{
+			75.f + (i * 60.f) , 450.f,
+			50.f , 50.f ,
+			-wosx, -wosy
+			}, AM::GfxSetting{ rcolour[random] });
+		box.push_back(cb);
+	}
+
+}

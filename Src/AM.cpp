@@ -11,7 +11,7 @@ namespace AM {
 		
 		for (auto& location : FontMap) {
 			for (auto& size : location.second) {
-				AEGfxDestroyFont(*size.second);
+				AEGfxDestroyFont(size.second);
 			}
 		}
 		for (auto& sprite : TextureMap) {
@@ -22,21 +22,22 @@ namespace AM {
 		}
 	}
 
-	std::shared_ptr<s8> AssetManager::LoadFont(std::string location, int size) {
+	s8 AssetManager::LoadFont(std::string location, int size) {
 		if (FontMap.find(location) == FontMap.end()) {
 			//Font not in map
 			//Nested dict
 			//location ->> size ->> fontid
 			FontMap.insert({
 				location,  {
-					{size, std::make_shared<s8>(AEGfxCreateFont(location.c_str(), size)) }
+					{size, AEGfxCreateFont(location.c_str(), size)}
 				} });
 		}
 		else if (FontMap[location].find(size) == FontMap[location].end()) {
 			FontMap[location].insert({
-				size, std::make_shared<s8>(AEGfxCreateFont(location.c_str(), size))
+				size, AEGfxCreateFont(location.c_str(), size)
 				});
 		}
+		
 		return FontMap[location][size];
 	}
 
