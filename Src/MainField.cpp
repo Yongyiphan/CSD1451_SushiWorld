@@ -168,7 +168,7 @@ void MainField::RoomCheck() {
 			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
 				r.Explored = true;
 				//execute to go next room
-				//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+				m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 				break;
 			}
 
