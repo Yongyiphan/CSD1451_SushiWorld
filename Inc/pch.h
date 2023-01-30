@@ -17,6 +17,7 @@
 #include "AEEngine.h"
 #include "GM.h"
 #include "AM.h"
+#include "Renderer.h"
 #include "Utils.h"
 #include "EPlayer.h"
 

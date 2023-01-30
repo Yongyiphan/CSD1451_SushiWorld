@@ -5,8 +5,13 @@ struct MiniRoom {
 	int ID;
 	bool Explored;
 	int Door;
-	AM::Transform t;
-	AM::GfxSetting sett;
+	//Render Settings
+	AM::RenderSetting RS;
+	MiniRoom() {
+		ID = Door = 0;
+		Explored = false;
+		this->RS = AM::RenderSetting{};
+	}
 };
 
 
@@ -22,9 +27,7 @@ public:
 	u32 black, white, blue, red;
 	//While border, player's boundary
 	MiniRoom Border;
-	//room width, height
-	int rmw, rmh;
-	//font
+	float rmw, rmh;
 	s8 font;
 	
 	MainField(std::string, const std::shared_ptr<Context>&);
@@ -37,6 +40,6 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 
-	bool CheckFieldBound(AM::Transform *, Direction, int);
+	bool CheckFieldBound(AM::Transform *, Direction, float);
 	void RoomCheck();
 };

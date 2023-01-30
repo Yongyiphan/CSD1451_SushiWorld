@@ -2,6 +2,12 @@
 #include "pch.h"
 #include <stack>
 
+//Window width, height
+extern int winw, winh;
+
+//window offset x and y
+extern int wosx, wosy;
+
 namespace GM {
 	enum GS_ID {
 		INPRO,	//Default do nothing loop
@@ -56,6 +62,7 @@ namespace GM {
 		void Update();
 		void CleanUp();
 		std::unique_ptr<State>& GetCurrent();
+		int GetStateCount();
 		
 		void SetStatus(GS_ID, bool restart = false);
 		bool CheckHaveState();
