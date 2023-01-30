@@ -30,4 +30,8 @@ namespace utils {
 		}
 		return false;
 	}
+	
+	/*bool isClicked() {
+
+	}*/
 }

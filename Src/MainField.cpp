@@ -104,7 +104,7 @@ void MainField::Update(f64 dt) {
 void MainField::Draw() {
 	//Utils::SetBackground(0,0,0);
 	utils::SetBackground(255,255,255);
-	utils::UDrawText(font, "Hello world", 400, 300, 5, Color{0,0,0});
+	//utils::UDrawText(font, "Hello world", 400, 300, 5, Color{0,0,0});
 	//m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;

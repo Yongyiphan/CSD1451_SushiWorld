@@ -15,8 +15,21 @@ void TestMap::Load() {
 	FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
 
+	for (int i = 0; i < 5; i++) {
+		checkbox cb;
+		cb.dead = 0;
+		cb.rs = AM::RenderSetting(AM::Transform{
+			75.f + (i * 60.f) , 450.f,
+			50.f , 50.f ,
+			-wosx, -wosy
+			}, AM::GfxSetting{ blue });
+		box.push_back(cb);
+	}
+
 }
+
 void TestMap::Unload(){
+
 }
 
 void TestMap::Init() {
@@ -24,6 +37,8 @@ void TestMap::Init() {
 	if (m_context->Player->hpsize == 0) {
 		m_context->Player->InitPlayerStats(10, 250);
 	}
+
+	int dmg_count = 0;
 }
 
 void TestMap::Free() {
@@ -45,6 +60,19 @@ void TestMap::Update(f64 deltaTime) {
 		Transform temp = m_context->Player->PlayerRender.t;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	}
+	if (AEInputCheckTriggered(AEVK_UP)) {
+		for (auto& i : this->box) {
+			i.rs.gfx = { red };
+			i.dead = 1;
+		}
+	}
+	if(AEInputCheckTriggered(AEVK_DOWN)) {
+		for (auto& i : this->box) {
+			i.rs.gfx = { blue };
+			i.dead = 0;
+		}
+	}
+
 }
 void TestMap::Draw() {
 	utils::SetBackground(150,150,150);
@@ -52,6 +80,10 @@ void TestMap::Draw() {
 	float posx = 50, posy = 500, baroffset = 20;
 	utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
+
+	for (auto& i : this->box) {
+		m_context->render->RenderRect(&i.rs);
+	}
 }
 
 
