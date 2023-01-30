@@ -15,7 +15,10 @@ namespace AM {
 			}
 		}
 		for (auto& sprite : TextureMap) {
-			AEGfxTextureUnload(sprite.second);
+			AEGfxTextureUnload(sprite.second.texture);
+			for (auto& vertex : sprite.second.animationframes) {
+				//AEGfxMeshFree(&vertex);
+			}
 		}
 	}
 
@@ -35,6 +38,12 @@ namespace AM {
 				});
 		}
 		return FontMap[location][size];
+	}
+
+	AEGfxTexture* AssetManager::LoadTexture(std::string location) {
+
+		return TextureMap[location].texture;
+
 	}
 
 
