@@ -14,6 +14,7 @@ void MainField::Load() {
 	white = utils::RGBAtoHex(255,255, 255, 255);
 	red	  = utils::RGBAtoHex(150, 0, 0, 255);
 	blue  = utils::RGBAtoHex(0, 50, 150, 255); 
+	font  = AEGfxCreateFont("./Assets/Honey Bear.ttf", 10);
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
 	int RMrow = 6, RMcol = 8, RMtotal = RMrow * RMcol;
@@ -103,6 +104,7 @@ void MainField::Update(f64 dt) {
 void MainField::Draw() {
 	//Utils::SetBackground(0,0,0);
 	utils::SetBackground(255,255,255);
+	utils::UDrawText(font, "Hello world", 400, 300, 5, Color{0,0,0});
 	//m_context->render->RenderRect(&Border.t, &Border.sett);
 	for (auto i : Room) {
 	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;

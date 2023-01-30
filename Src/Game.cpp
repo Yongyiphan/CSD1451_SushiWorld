@@ -39,8 +39,8 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 
 void Game::Run() {
 	int gGameRunning = 1;
-	//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
-	m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+	m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{
