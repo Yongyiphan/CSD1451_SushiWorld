@@ -11,14 +11,14 @@ struct Arrow {
 };
 
 struct checkbox {
-	bool dead;
+	bool dead = false;
 	AM::RenderSetting rs;
 	
 };
 
 class TestMap : public GM::State {
 private:
-	std::shared_ptr<Context> m_context;\
+	std::shared_ptr<Context> m_context;
 
 	std::vector<checkbox> box;
 public:
@@ -27,6 +27,9 @@ public:
 	u32 red, green, blue, yellow;
 	s32 mx, my;
 	s8 FontID;
+	int dmg_count;
+	bool isEmpty;
+	Boss boss{};
 
 	std::vector<Arrow> ArrowVect;
 	
