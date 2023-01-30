@@ -17,24 +17,15 @@ void TestMap::Load() {
 	//FontID = m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	//FontID = AEGfxCreateFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	//m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
-	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
-	AEGfxMeshStart();
-	AEGfxTriAdd(
-		0.5, -0.5, 0xFFFFFFFF,  0.5f, 1.f,
-		-0.5, -0.5, 0xFFFFFFFF, 0.f,  1.f,
-		-0.5, 0.5, 0xFFFFFFFF,  0.f,  0.f
-	);
-	AEGfxTriAdd(
-		0.5, -0.5, 0xFFFFFFFF, 0.5f, 1.f,
-		0.5,0.5, 0xFFFFFFFF,   0.5f, 0.f,
-		-0.5, 0.5, 0xFFFFFFFF, 0.f , 0.f
-	);
-	pmesh = AEGfxMeshEnd();
-//	ptex = AEGfxTextureLoad("./Assets/SushiRiceBall.png");
+	//m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
 
+	
+
+}
+void TestMap::GenerateArrowKeys() {
 	u32 rcolour[] = {red,green,blue,yellow};
 	srand(time(NULL));
-
+	box.clear();
 	for (int i = 0; i < 8; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
@@ -76,14 +67,6 @@ void TestMap::Update(f64 deltaTime) {
 	if (isEmpty == false) {
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
-		}
-		if (AEInputCheckTriggered(AEVK_A)) {
-			if (m_context->Player->currhp > 0) {
-				m_context->Player->currhp -= 1;
-			}
-		}
-		if (AEInputCheckTriggered(AEVK_D)) {
-			m_context->Player->currhp += 1;
 		}
 		if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 			AEInputGetCursorPosition(&mx, &my);
@@ -142,11 +125,10 @@ void TestMap::Update(f64 deltaTime) {
 		else if(boss.currhp < dmg_count) {
 			boss.currhp = 0;
 		}
-		TestMap::Load();
+		TestMap::GenerateArrowKeys();
 		dmg_count = 0;
 		isEmpty = false;
 	}
-}
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT);
 	}
@@ -160,15 +142,6 @@ void TestMap::Update(f64 deltaTime) {
 		AEInputGetCursorPosition(&mx, &my);
 		Transform temp = m_context->Player->PlayerRender.t;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
-	}
-	if (AEInputCheckTriggered(AEVK_UP)) {
-		
-	}
-	if (AEInputCheckTriggered(AEVK_DOWN)) {
-	}
-	if (AEInputCheckTriggered(AEVK_LEFT)) {
-	}
-	if (AEInputCheckTriggered(AEVK_RIGHT)) {
 	}
 }
 void TestMap::Draw() {
