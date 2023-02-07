@@ -2,8 +2,7 @@
 #include "Renderer.h"
 
 namespace AM {
-	Renderer::Renderer(){}
-
+	Renderer::Renderer() {}
 	Renderer::~Renderer() {
 		//TODO
 		//Free VertexList from Map MeshMap

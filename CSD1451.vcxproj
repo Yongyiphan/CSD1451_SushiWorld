@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Src\AM.cpp" />
     <ClCompile Include="Src\Boss.cpp" />
+    <ClCompile Include="Src\PlatformRoom.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
@@ -36,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
     <ClInclude Include="Inc\Boss.h" />
+    <ClInclude Include="Inc\PlatformRoom.h" />
     <ClInclude Include="Inc\Renderer.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />

@@ -55,8 +55,6 @@ void MainField::Load() {
 			-wosx, -wosy
 		}, AM::GfxSetting{ red });
 
-	SavePlayerSettings = m_context->Player->PlayerRender;
-	
 };
 void MainField::Unload() {};
 void MainField::Init() {

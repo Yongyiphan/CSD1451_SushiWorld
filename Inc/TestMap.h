@@ -22,12 +22,12 @@ private:
 
 	std::vector<checkbox> box;
 public:
-	TestMap(char const*, std::shared_ptr<Context>&);
+	TestMap(char const*, const std::shared_ptr<Context>&);
 	~TestMap() {};
 	u32 red, green, blue, yellow;
 	s32 mx, my;
-	//std::shared_ptr<s8> FontID;
-	s8 FontID;
+	std::shared_ptr<s8> FontID;
+	//s8 *FontID;
 	AEGfxTexture* ptex;
 	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;
