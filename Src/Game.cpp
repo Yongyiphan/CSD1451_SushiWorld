@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "Game.h"
-#include "TestMap.h"
+#include "PlatformMap.h"
 
 Game::Game()  {}
 Game::~Game() {
@@ -26,8 +26,9 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	std::cout << "Create Game Instance" << std::endl;
 	m_context = std::make_shared<Context>();
 	//Initialize Player Here
+	//IMPORTANT Load Fonts Here
 	m_context->Player = std::make_unique<EPlayer>();
-	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png");
+	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	
 	// reset the system modules
@@ -42,9 +43,9 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 
 void Game::Run() {
 	int gGameRunning = 1;
-	m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	//m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
-	
+	m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{

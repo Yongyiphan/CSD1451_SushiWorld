@@ -22,14 +22,16 @@
 #include "EPlayer.h"
 #include "Boss.h"
 
+using namespace GM;
+using namespace AM;
+using namespace utils;
+
 //Game States include
 #include "Game.h"
 #include "MainMenu.h"
 #include "MainField.h"
+#include "PlatformMap.h"
 
-using namespace GM;
-using namespace utils;
-using namespace AM;
 
 #endif // PCH_H
 

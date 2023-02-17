@@ -6,7 +6,6 @@
 MainField::MainField(std::string Name, const std::shared_ptr<Context>& context){
 	StateName = Name;
 	m_context = context;
-
 }
 MainField::~MainField() {};
 void MainField::Load() {
@@ -25,7 +24,6 @@ void MainField::Load() {
 	Border.RS = AM::RenderSetting(AM::Transform{
 		winw / 2.f, winh / 2.f,
 		winw - BorderMargin * 2.f, winh - BorderMargin * 2.f,
-		-wosx, -wosy
 	},AM::GfxSetting{white});
 	rmw = float(Border.RS.t.w / RMcol), rmh = float(Border.RS.t.h / RMrow);
 	for (float y = 0.5f; y < RMcol; y++) {
@@ -37,7 +35,6 @@ void MainField::Load() {
 			mr.RS = AM::RenderSetting(AM::Transform{
 				y * rmw + BorderMargin, x * rmh + BorderMargin,
 				rmw - RoomMargin * 2, rmh - RoomMargin * 2,
-				-wosx, -wosy
 				}, AM::GfxSetting{ blue });
 			Room.push_back(mr);
 		}
@@ -52,7 +49,6 @@ void MainField::Load() {
 	m_context->Player->UpdateRenderSettings(AM::Transform{
 			firstRm.RS.t.x, firstRm.RS.t.y,
 			firstRm.RS.t.w / 2, firstRm.RS.t.h / 2,
-			-wosx, -wosy
 		}, AM::GfxSetting{ red });
 
 	SavePlayerSettings = m_context->Player->PlayerRender;

@@ -1,14 +1,15 @@
 #pragma once
 #include "pch.h"
-class MainMenu : public GM::State {
+class PauseScreen : public GM::State {
 private:
+	std::shared_ptr<Context> m_context;
 
 public:
 	//Variables
 	///Methods
 
-	MainMenu(char const*, const std::shared_ptr<GM::Context>&);
-	~MainMenu() {};
+	PauseScreen(char const*, const std::shared_ptr<Context>&);
+	~PauseScreen() {};
 
 	void Load() override;
 	void Unload() override;

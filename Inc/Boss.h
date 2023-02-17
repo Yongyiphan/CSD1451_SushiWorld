@@ -26,7 +26,6 @@ public:
 	};
 
 	~Boss() {};
-	//TODO: Initialise withPlayer Max HP (Incomplete)
 	void InitBossStats(int, int);
 	void LoadTexture(std::string);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);

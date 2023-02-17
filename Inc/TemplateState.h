@@ -1,14 +1,16 @@
 #pragma once
 #include "pch.h"
-class MainMenu : public GM::State {
+//IMPORTANT Template/ Guide to create new state
+class TemplateState : public GM::State {
 private:
+	std::shared_ptr<Context> m_context;
 
 public:
 	//Variables
 	///Methods
 
-	MainMenu(char const*, const std::shared_ptr<GM::Context>&);
-	~MainMenu() {};
+	TemplateState(char const*, const std::shared_ptr<Context>&);
+	~TemplateState() {};
 
 	void Load() override;
 	void Unload() override;

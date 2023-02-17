@@ -18,8 +18,6 @@ struct checkbox {
 
 class TestMap : public GM::State {
 private:
-	std::shared_ptr<Context> m_context;
-
 	std::vector<checkbox> box;
 public:
 	TestMap(char const*, std::shared_ptr<Context>&);
@@ -27,7 +25,7 @@ public:
 	u32 red, green, blue, yellow;
 	s32 mx, my;
 	//std::shared_ptr<s8> FontID;
-	s8 FontID;
+	s8* FontID;
 	AEGfxTexture* ptex;
 	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;

@@ -22,14 +22,7 @@ void Boss::InitBossStats(int StartingHP, int HPsize) {
 	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0) };
 }
 
-/*TODO Load in sprite texture
-	Map texture to mesh
-	Custom mesh for every animation
-*/
 void Boss::LoadTexture(std::string location) {
-	/*Define Sprite sheet parameters
-		width/height -> normalize
-	*/
 
 }
 

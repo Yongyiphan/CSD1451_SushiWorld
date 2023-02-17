@@ -1,14 +1,14 @@
 #pragma once
 #include "pch.h"
-class MainMenu : public GM::State {
+class PlatformMap : public GM::State {
 private:
 
 public:
 	//Variables
 	///Methods
 
-	MainMenu(char const*, const std::shared_ptr<GM::Context>&);
-	~MainMenu() {};
+	PlatformMap(std::string, const std::shared_ptr<Context>&);
+	~PlatformMap() {};
 
 	void Load() override;
 	void Unload() override;
@@ -16,7 +16,7 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	s8 FontID;
+	s8* FontID;
 	
 	
 };

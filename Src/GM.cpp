@@ -14,10 +14,12 @@ namespace GM {
 	};
 
 
-	void Engine::AddState(std::unique_ptr<State> state, GS_ID stat) {
-		status = stat;
+	void Engine::AddState(std::unique_ptr<State> state, GS_ID ID) {
+		status = ID;
 		new_state = std::move(state);
+		
 	}
+
 
 	/*
 	Scenarios: Assuming init stack of [MainMenu]
@@ -32,44 +34,35 @@ namespace GM {
 		//IF !State.pause unload;
 		switch (status) {
 		case ADD:
-			//TODO
-			/*1. Check if new_state within stack;
-					true:
-						free/pop stack till top() == new_state <=> new_state = top;
-						new_state = nullptr;
-						top()->Free() >> top->Init()
-					false:
-						top()->Pause()
-						push on top of stack;
-						top()->Load() >> top->Init()
-			*/
+			//Only check if state exist if No of state > 0
 			if (StateCount > 0) {
+				//Check if state exist within stack
 				if (CheckHaveState()) {
+					//Everything in between should have been freed /and unload
+					//	-> free/pop stack till top() == new_state <=> new_state = top;
+					//Free current top
 					state_stack.top()->Free();
 					state_stack.top()->Init();
 					break;
 				}
 				else {
+					//If theres a prev state, pause it before adding
 					state_stack.top()->Pause();
 				}
 			}
+			//Finally, Add new state on top of stack
 			state_stack.push(std::move(new_state));
 			state_stack.top()->Load();
 			state_stack.top()->Init();
 			StateCount++;
 			break;
 		case QUIT:
-			/*	Clean up current state;
-				Pop current state
-				if restart:
-					free() -> init()
-				else:
-					do nothing
-			*/
+			//Pop current state
 			state_stack.top()->Free();
 			state_stack.pop();
 			StateCount--;
 			if (!state_stack.empty()) {
+				//Check if need to restart prev state
 				if (restart) {
 					state_stack.top()->Free();
 					state_stack.top()->Init();
@@ -86,6 +79,8 @@ namespace GM {
 
 	}
 
+	
+
 	void Engine::Update() {
 		AESysFrameStart();
 		AEInputUpdate();
@@ -95,6 +90,10 @@ namespace GM {
 		else {
 			state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
 			state_stack.top()->Draw();
+			if (!transit_stack.empty()) {
+				transit_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+				transit_stack.top()->Draw();
+			}
 		}
 		AESysFrameEnd();
 	}
@@ -154,5 +153,7 @@ namespace GM {
 			state_stack.pop();
 			StateCount--;
 		}
+
+
 	}
 }

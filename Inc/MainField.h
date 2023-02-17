@@ -17,7 +17,6 @@ struct MiniRoom {
 
 class MainField : public GM::State {
 private:
-	std::shared_ptr<Context> m_context;
 
 	std::vector<MiniRoom> Room;
 
@@ -31,7 +30,7 @@ public:
 	s8 font;
 	AM::RenderSetting SavePlayerSettings;
 	
-	MainField(std::string, const std::shared_ptr<Context>&);
+	MainField(std::string, const std::shared_ptr<GM::Context>&);
 	~MainField();
 
 	void Load() override;

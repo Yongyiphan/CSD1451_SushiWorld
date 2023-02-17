@@ -14,7 +14,6 @@ enum PlayerStat {
 class EPlayer {
 private:
 
-
 public:
 	int x, y, size;
 	u32 color;
@@ -23,9 +22,7 @@ public:
 	float fullhpbar, currhpbar;
 	AM::TextureMesh PlayerTexture;
 	AM::RenderSetting PlayerRender, MaxHPRender, CurrHPRender;
-	AEGfxTexture* PTexture;
 	int AnimationFrames, currentFrame, frameCounter;
-
 	EPlayer() {
 		x = y = size = 0;
 		maxhp = currhp = hpsize = 0;
@@ -35,15 +32,13 @@ public:
 		AnimationFrames = currentFrame = frameCounter = 0;
 		PlayerRender = AM::RenderSetting{};
 		MaxHPRender = CurrHPRender = AM::RenderSetting{};
-		PTexture = nullptr;
 		PlayerTexture = AM::TextureMesh{};
 	};
 
 	~EPlayer() {};
-	//TODO: Initialise withPlayer Max HP (Incomplete)
 	void InitPlayerStats(int, int);
 	//void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);
-	void LoadTexture(std::string);
+	void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);

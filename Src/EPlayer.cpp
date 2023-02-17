@@ -2,7 +2,7 @@
 #include "EPlayer.h"
 
 
-
+//Initialise HP stuff
 void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 	this->maxhp = this->currhp = StartingHP;
 	this->hpsize = HPsize;
@@ -22,71 +22,28 @@ void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 		-wosx, -wosy
 	};
 	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0)};
+	
+
 }
 
 /*TODO Load in sprite texture
 	Map texture to mesh
 	Custom mesh for every animation
 */
-void EPlayer::LoadTexture(std::string location) {
+void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager> &AM) {
 	/*Define Sprite sheet parameters
 		width/height -> normalize
 		for loop, to iterate through frames
 	*/
-	PlayerTexture.texture = AEGfxTextureLoad(location.c_str());
-	//Key using file path
-	float spritewidth = 320, spriteheight = 160;
-	AnimationFrames = 2;
-	float imgwidth = spritewidth / AnimationFrames, imgheight = spriteheight;
-	
-	//First Image = normalize<320/2>
-	int s = 0, scale = 5;
-	int los = 6, ros = 6, tos = 7, bos = 8;
-	//std::vector<AEGfxVertexList*> FrameList;
-	while (s < AnimationFrames) {
-		float topv = (tos * scale) / spriteheight;
-		float btmv = (spriteheight - bos*scale) / spriteheight;
-
-		float leftu = ((s*imgwidth) + (los * scale)) / spritewidth;
-		float rightu =(((s + 1) * imgwidth) - (ros * scale)) / spritewidth;
-
-		AEGfxMeshStart();
-		AEGfxTriAdd(
-			-0.5,  0.5, 0xFFFFFFFF,  leftu,  topv, //TopLeft
-			-0.5, -0.5, 0xFFFFFFFF,  leftu,  btmv, //BtmLeft
-			 0.5, -0.5, 0xFFFFFFFF,  rightu, btmv	//BtmRight
-		);
-		AEGfxTriAdd(
-			-0.5,  0.5, 0xFFFFFFFF, leftu , topv,	//TopLeft
-			 0.5,  0.5, 0xFFFFFFFF, rightu, topv,	//TopRight
-			 0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmLeft
-		);
-		
-		//AEGfxTriAdd(
-		//	-0.5,  0.5, 0xFFFFFFFF,  0.f,  0.f,
-		//	-0.5, -0.5, 0xFFFFFFFF,  0.f,  1.f,
-		//	 0.5, -0.5, 0xFFFFFFFF,  0.5f, 1.f
-		//);
-		//AEGfxTriAdd(
-		//	-0.5,  0.5, 0xFFFFFFFF, 0.f , 0.f,
-		//	 0.5,  0.5, 0xFFFFFFFF, 0.5f, 0.f,
-		//	 0.5, -0.5, 0xFFFFFFFF, 0.5f, 1.f
-		//);
-		/*
-		(0,0)	(1,0)
-
-		(0,1)	(1,1)
-		*/
-		PlayerTexture.animationframes.push_back(AEGfxMeshEnd());
-		s++;
-	}
-
-	
+	PlayerTexture = TextureMesh(320, 160, 2, 1, 5, 5, 6, 6, 7, 8);
+	PlayerTexture = AM->LoadTexture(location, PlayerTexture, ANIMATION);
+	AnimationFrames = PlayerTexture.AFrames;
 }
 
 void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 	PlayerRender.t = t;
 	PlayerRender.gfx = s;
+	
 }
 
 void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
