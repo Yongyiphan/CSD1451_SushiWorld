@@ -1,6 +1,11 @@
 #pragma once
 #include "pch.h"
+#include <mutex>
 
+enum SPRITETYPE {
+	ANIMATION,	//Sprite Sheet with animation
+	SPRITESHEET //Multiple unique texture into one sprite sheet (e.g four arrow, 1 image)
+};
 //Assets Manager
 namespace AM {
 	/*
@@ -49,7 +54,6 @@ namespace AM {
 
 	};
 	class AssetManager {
-
 	private:
 		std::unordered_map<std::string, std::unordered_map<int, s8>> FontDict;
 		//std::unordered_map<std::string, AEGfxTexture*> TextureMap;
@@ -57,7 +61,6 @@ namespace AM {
 	public:
 		AssetManager();
 		~AssetManager();
-
 		//Needs a file location, file location will be used as the dict key
 		//Needs a int for font size
 		void LoadFont(std::string, int);

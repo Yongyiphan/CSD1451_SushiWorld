@@ -2,7 +2,7 @@
 #include "TestMap.h"
 #include "time.h"
 
-TestMap::TestMap(char const* name, std::shared_ptr<Context>& context)
+TestMap::TestMap(char const* name, const std::shared_ptr<Context>& context)
 {
 	this->m_context = context;
 	this->StateName = name;
@@ -149,8 +149,6 @@ void TestMap::Draw() {
 	m_context->Player->PlayerRender.gfx.transparency = f32(1.0);
 	m_context->Player->PlayerRender.gfx.BM = AE_GFX_BM_NONE;
 	m_context->Player->DrawPlayer(m_context->render);
-	//m_context->Player->DrawHPBar(m_context->render, posx,posy);
-	//utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
 
 }
 

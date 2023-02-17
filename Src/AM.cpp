@@ -9,7 +9,7 @@ namespace AM {
 	AssetManager::~AssetManager() {
 		for (auto& location : FontDict) {
 			for (auto& size : location.second) {
-				AEGfxDestroyFont(size.second);
+				AEGfxDestroyFont(*size.second);
 			}
 		}
 		for (auto& sprite : TextureDict) {
@@ -34,6 +34,7 @@ namespace AM {
 			FontDict[location].insert({
 				size, AEGfxCreateFont(location.c_str(), size)
 				});
+			//std::cout << "Adding Font: " << location << std::endl;
 		}
 	}
 

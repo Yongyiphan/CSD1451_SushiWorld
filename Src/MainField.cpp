@@ -51,8 +51,6 @@ void MainField::Load() {
 			firstRm.RS.t.w / 2, firstRm.RS.t.h / 2,
 		}, AM::GfxSetting{ red });
 
-	SavePlayerSettings = m_context->Player->PlayerRender;
-	
 };
 void MainField::Unload() {};
 void MainField::Init() {

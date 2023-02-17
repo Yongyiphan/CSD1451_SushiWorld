@@ -103,6 +103,7 @@ namespace AM {
 		}
 		*/
 		std::unordered_map<Shape, std::unordered_map<u32, AEGfxVertexList*>> MeshMap;
+		std::unordered_map<std::string, AEGfxVertexList*> CustomMesh;
 
 	public:
 		Renderer(); //Constructor
