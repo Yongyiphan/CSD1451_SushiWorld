@@ -2,17 +2,13 @@
 #include "pch.h"
 #include <mutex>
 
-enum SPRITETYPE {
-	ANIMATION,	//Sprite Sheet with animation
-	SPRITESHEET //Multiple unique texture into one sprite sheet (e.g four arrow, 1 image)
-};
 //Assets Manager
 namespace AM {
 	/*
 	\brief */
 	enum TextureMode {
-		ANIMATION,
-		SPRITE_SHEET
+		ANIMATION,	//Sprite Sheet with animation
+		SPRITE_SHEET //Multiple unique texture into one sprite sheet (e.g four arrow, 1 image)
 	};
 	struct TextureMesh {
 		std::string location = "";
@@ -75,7 +71,7 @@ namespace AM {
 	struct Color {
 		f32 r, g, b, a;
 		Color() :r(0), g(0), b(0), a(255) {};
-		Color(float r, float g, float b, float a = 255){
+		Color(float r = 0, float g = 0, float b = 0, float a = 255){
 			this->r = r / 255.f;
 			this->g = g / 255.f;
 			this->b = b / 255.f;

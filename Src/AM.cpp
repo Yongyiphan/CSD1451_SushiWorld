@@ -9,7 +9,7 @@ namespace AM {
 	AssetManager::~AssetManager() {
 		for (auto& location : FontDict) {
 			for (auto& size : location.second) {
-				AEGfxDestroyFont(*size.second);
+				AEGfxDestroyFont(size.second);
 			}
 		}
 		for (auto& sprite : TextureDict) {

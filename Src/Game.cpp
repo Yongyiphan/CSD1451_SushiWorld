@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "PlatformMap.h"
+#include "TestMap.h"
 
 Game::Game()  {}
 Game::~Game() {
