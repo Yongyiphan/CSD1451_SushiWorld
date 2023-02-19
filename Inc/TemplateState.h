@@ -3,7 +3,6 @@
 //IMPORTANT Template/ Guide to create new state
 class TemplateState : public GM::State {
 private:
-	std::shared_ptr<Context> m_context;
 
 public:
 	//Variables

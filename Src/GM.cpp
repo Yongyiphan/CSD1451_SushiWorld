@@ -88,11 +88,14 @@ namespace GM {
 			status = QUIT;
 		}
 		else {
-			state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
-			state_stack.top()->Draw();
 			if (!transit_stack.empty()) {
 				transit_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+				state_stack.top()->Draw();
 				transit_stack.top()->Draw();
+			}
+			else {
+				state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+				state_stack.top()->Draw();
 			}
 		}
 		AESysFrameEnd();
