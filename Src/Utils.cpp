@@ -18,17 +18,6 @@ namespace utils {
 		AEGfxPrint(*Font, _strdup(string.c_str()), percX, percY, scale, c.r, c.g, c.b);
 	}
 
-	bool AreaClicked(AM::Transform* target, s32 mx, s32 my) {
-		my = winh - my;
-		float leftLimit = target->x - target->w / 2.f;
-		float rightLimit = target->x + target->w / 2.f;
+	//void UCreateButton(s8*Font, std::string string, float x, float y, float w, float h)
 
-		float topLimit = target->y + target->h / 2.f;
-		float btmLimit = target->y - target->h / 2.f;
-		if (leftLimit < mx && mx < rightLimit && btmLimit < my && my < topLimit) {
-			return true;
-		}
-		return false;
-	}
-	
 }

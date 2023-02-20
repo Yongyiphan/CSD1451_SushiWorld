@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Src\AM.cpp" />
     <ClCompile Include="Src\Boss.cpp" />
+    <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\PauseScreen.cpp" />
     <ClCompile Include="Src\PlatformMap.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
     <ClInclude Include="Inc\Boss.h" />
+    <ClInclude Include="Inc\Collision.h" />
     <ClInclude Include="Inc\PauseScreen.h" />
     <ClInclude Include="Inc\PlatformMap.h" />
     <ClInclude Include="Inc\Renderer.h" />

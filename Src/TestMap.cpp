@@ -155,7 +155,7 @@ void TestMap::Draw() {
 
 void TestMap::GenerateArrowKeys() {
 	u32 rcolour[] = {red,green,blue,yellow};
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
 	for (int i = 0; i < 8; i++) {
 		int random = (rand() % 4);
