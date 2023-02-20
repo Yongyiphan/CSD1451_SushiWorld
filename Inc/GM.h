@@ -19,8 +19,8 @@ namespace GM {
 	enum GS_ID {
 		INPRO,	//Default do nothing loop
 		ADD,	//Adding state
-		REPLACE,//Replacing state
 		RESTART,//Free >> Re Init State
+		RESUME,	//Resume previous state (after a transit state)
 		QUIT	//Remove State
 	};
 	enum GS_Type {

@@ -26,7 +26,7 @@ void PauseScreen::Free() {
 void PauseScreen::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		//m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
-		m_context->gman->SetStatus(QUIT);
+		m_context->gman->SetStatus(RESUME);
 	}
 }
 void PauseScreen::Draw() {

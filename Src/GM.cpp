@@ -64,6 +64,15 @@ namespace GM {
 			state_stack.top()->Init();
 			StateCount++;
 			break;
+		case RESUME:
+			state_stack.top()->Resume();
+			break;
+		case RESTART:
+			if (!state_stack.empty()) {
+				state_stack.top()->Free();
+				state_stack.top()->Init();
+			}
+			break;
 		case QUIT:
 			//Pop current state
 			state_stack.top()->Free();
