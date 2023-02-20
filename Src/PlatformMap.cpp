@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlatformMap.h"
 
+
 PlatformMap::PlatformMap(std::string Name, const std::shared_ptr<Context>& context)
 {
 	StateName = Name;
@@ -31,6 +32,9 @@ void PlatformMap::Free() {
 void PlatformMap::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
 		m_context->Player->PlayerRender.t.y += 100;
+	}
+	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>("PauseScreen", m_context));
 	}
 	m_context->Player->PlayerRender.t.y -= 1;
 }

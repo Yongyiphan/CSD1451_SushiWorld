@@ -9,6 +9,7 @@ PauseScreen::PauseScreen(char const* Name, const std::shared_ptr<Context>&contex
 
 void PauseScreen::Load() {
 	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 }
 void PauseScreen::Unload(){
 }
@@ -23,13 +24,11 @@ void PauseScreen::Free() {
 }
 
 void PauseScreen::Update(f64 deltaTime) {
-	SetBackground(255, 127, 80);
-	if (AEInputCheckTriggered(AEVK_SPACE)) {
-		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
-		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+		//m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
+		m_context->gman->SetStatus(QUIT);
 	}
 }
 void PauseScreen::Draw() {
-	SetBackground(255, 127, 80);
-	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
+	UDrawText(FontID, "Pause Screen", 0, 0, 1, Color{});
 }

@@ -32,10 +32,10 @@ namespace GM {
 		bool pause = false;
 		std::shared_ptr<Context> m_context;
 		//IMPORTANT: Change within State constructor when initializing transit state
-		GS_Type gs_type = GAME_STATE;
 	public:
 		//Variables
 		std::string StateName;
+		GS_Type gs_type = GAME_STATE;
 
 		//Constructor | Destructor
 		State() {};
