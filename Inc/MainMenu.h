@@ -7,7 +7,7 @@ public:
 	//Variables
 	///Methods
 
-	MainMenu(char const*, const std::shared_ptr<GM::Context>&);
+	MainMenu(const std::shared_ptr<GM::Context>&);
 	~MainMenu() {};
 
 	void Load() override;

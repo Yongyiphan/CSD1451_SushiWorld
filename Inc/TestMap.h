@@ -20,7 +20,7 @@ class TestMap : public GM::State {
 private:
 	std::vector<checkbox> box;
 public:
-	TestMap(char const*, const std::shared_ptr<Context>&);
+	TestMap(const std::shared_ptr<Context>&);
 	~TestMap() {};
 	u32 red, green, blue, yellow;
 	s32 mx, my;

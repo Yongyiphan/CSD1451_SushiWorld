@@ -2,9 +2,9 @@
 #include "PlatformMap.h"
 
 
-PlatformMap::PlatformMap(std::string Name, const std::shared_ptr<Context>& context)
+PlatformMap::PlatformMap(const std::shared_ptr<Context>& context)
 {
-	StateName = Name;
+	StateName = "PlatformMap";
 	m_context = context;
 }
 
@@ -22,7 +22,6 @@ void PlatformMap::Init() {
 		150,150,100,100
 	};
 	m_context->Player->PlayerRender.t = t;
-	m_context->Player->PlayerRender.gfx.transparency = 1.0f;
 }
 
 void PlatformMap::Free() {
@@ -34,7 +33,7 @@ void PlatformMap::Update(f64 deltaTime) {
 		m_context->Player->PlayerRender.t.y += 100;
 	}
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
-		m_context->gman->AddState(std::make_unique<PauseScreen>("PauseScreen", m_context));
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
 	}
 	m_context->Player->PlayerRender.t.y -= 1;
 }

@@ -7,9 +7,11 @@ public:
 	//Variables
 	///Methods
 
-	PauseScreen(char const*, const std::shared_ptr<Context>&);
+	PauseScreen(const std::shared_ptr<Context>&);
 	~PauseScreen() {};
 
+	AM::RenderSetting ResumeGfx = {}, MMGfx = {};
+	
 	void Load() override;
 	void Unload() override;
 	void Init() override;
@@ -17,6 +19,8 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 	s8 *FontID;
+	//Mouse x and y
+	s32 mx, my;
 	
 	
 };

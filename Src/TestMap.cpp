@@ -2,10 +2,10 @@
 #include "TestMap.h"
 #include "time.h"
 
-TestMap::TestMap(char const* name, const std::shared_ptr<Context>& context)
+TestMap::TestMap(const std::shared_ptr<Context>& context)
 {
 	this->m_context = context;
-	this->StateName = name;
+	this->StateName = "TestMap";
 }
 
 void TestMap::Load() {

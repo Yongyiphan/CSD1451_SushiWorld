@@ -8,7 +8,8 @@ public:
 	//Variables
 	///Methods
 
-	TemplateState(char const*, const std::shared_ptr<Context>&);
+	//StateName define it in cpp
+	TemplateState(const std::shared_ptr<Context>&);
 	~TemplateState() {};
 
 	void Load() override;

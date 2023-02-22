@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "TemplateState.h"
 //IMPORTANT Template/ Guide to create new state
-TemplateState::TemplateState(char const* Name, const std::shared_ptr<Context>&context) {
-	StateName = Name;
+TemplateState::TemplateState(const std::shared_ptr<Context>&context) {
+	StateName = "TemplateState";
 	m_context = context;
 }
 
@@ -25,7 +25,7 @@ void TemplateState::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
 		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
-		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+		m_context->gman->AddState(std::make_unique<MainField>(m_context));
 	}
 }
 void TemplateState::Draw() {

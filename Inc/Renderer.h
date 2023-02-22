@@ -3,6 +3,7 @@
 
 
 namespace AM {
+	using RenderPointer = void* ();
 	/* Render process
 	Generate Mesh
 	Set BlendMode
@@ -48,24 +49,14 @@ namespace AM {
 	};
 
 	struct GfxSetting {
-		AEGfxBlendMode BM;
-		AEGfxRenderMode RM;
-		AEGfxMeshDrawMode MDM;
-		float transparency;
-		u32 Color;
-		AEGfxVertexList* mesh;
-		GfxSetting() {
-			BM = AE_GFX_BM_BLEND;
-			RM = AE_GFX_RM_COLOR;
-			MDM = AE_GFX_MDM_TRIANGLES;
-			transparency = 1.0f;
-			mesh = nullptr;
-			Color = 0xFF000000;
-		}
+		AEGfxBlendMode BM = AE_GFX_BM_BLEND;
+		AEGfxRenderMode RM = AE_GFX_RM_COLOR;
+		AEGfxMeshDrawMode MDM = AE_GFX_MDM_TRIANGLES;
+		float transparency = 1.f;
+		u32 Color = 0xFF000000;
+		AEGfxVertexList* mesh = nullptr;
+		GfxSetting() {}
 		GfxSetting(u32 c, float t = 1.0f, AEGfxVertexList* m = nullptr) {
-			BM = AE_GFX_BM_BLEND;
-			RM = AE_GFX_RM_COLOR;
-			MDM = AE_GFX_MDM_TRIANGLES;
 			transparency = t;
 			mesh = m;
 			Color = c;

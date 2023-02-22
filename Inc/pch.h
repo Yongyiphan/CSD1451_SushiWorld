@@ -19,6 +19,7 @@
 #include "AM.h"
 #include "Renderer.h"
 #include "Utils.h"
+#include "Collision.h"
 #include "EPlayer.h"
 #include "Boss.h"
 
