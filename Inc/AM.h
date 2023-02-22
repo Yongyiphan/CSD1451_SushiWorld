@@ -11,22 +11,36 @@ namespace AM {
 		SPRITE_SHEET //Multiple unique texture into one sprite sheet (e.g four arrow, 1 image)
 	};
 	struct TextureMesh {
+		//Location of file
 		std::string location = "";
+		//Texture / Img
 		AEGfxTexture* texture = nullptr;
+		//Store all the mesh a img is mapped to
 		std::vector<AEGfxVertexList*> animationframes;
+		//Img Details
+		//Dimension of the actual file
 		float spritewidth{}, spriteheight{};
+		//Dimension of each individual sprite
 		float imgwidth{}, imgheight{};
-		int AFrames{ 0 }, ACol{ 1 }, ARow{ 1 };
+		//No. of sub-images within the sprite sheet, Col, Row wise.
+		//TImg = total no. of sprite that is supposed to be in the sprite sheet
+		int AFrames{ 0 }, ACol{ 1 }, ARow{ 1 }, TImg{ 1 };
+		//Scale of current img dimension to actual img's dimension. 
 		int ScaleX{ 1 }, ScaleY{ 1 };
 		//left, right, top, btm offset
 		int los{}, ros{}, tos{}, bos{};
 		TextureMesh() {};
-		//Sprite width, height
-		//ACol, ARow
-		//los, ros, tos, bos
+		/*
+		* sw, sh = sprite width and height
+		* acol (no of col of sprites)
+		* arow (no of row of sprites)
+		* timg (supposed total number of sprites)
+		* scale (x, y axis of scaling for img to actual design dimension)
+		* left, right, top, btm offsets (pixel wise)
+		*/
 		TextureMesh(
 			float sw, float sh, 
-			int acol = 1, int arow = 1, 
+			int acol = 1, int arow = 1, int timg = 1,
 			int scaleX = 1, int scaleY = 1,
 			int l = 0, int r = 0, int t = 0, int b = 0
 			) {
@@ -39,6 +53,7 @@ namespace AM {
 			imgheight = sh / arow;
 			ACol = acol;
 			ARow = arow;
+			TImg = timg;
 			los = l;
 			ros = r;
 			tos = t;
@@ -53,7 +68,7 @@ namespace AM {
 	private:
 		std::unordered_map<std::string, std::unordered_map<int, s8>> FontDict;
 		//std::unordered_map<std::string, AEGfxTexture*> TextureMap;
-		std::unordered_map<TextureMode, std::unordered_map<std::string, TextureMesh>> TextureDict;
+		std::unordered_map<std::string, TextureMesh> TextureDict;
 	public:
 		AssetManager();
 		~AssetManager();

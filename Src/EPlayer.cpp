@@ -35,7 +35,7 @@ void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetM
 		width/height -> normalize
 		for loop, to iterate through frames
 	*/
-	PlayerTexture = TextureMesh(320, 160, 2, 1, 5, 5, 6, 6, 7, 8);
+	PlayerTexture = TextureMesh(320, 160, 2, 1, 2, 5, 5, 6, 6, 7, 8);
 	PlayerTexture = AM->LoadTexture(location, PlayerTexture, ANIMATION);
 	AnimationFrames = PlayerTexture.AFrames;
 }
