@@ -160,7 +160,7 @@ void MainField::RoomCheck() {
 				r.Explored = true;
 				//execute to go next room
 				//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
-				m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+				m_context->gman->AddState(std::make_unique<TestMap>(m_context));
 
 				break;
 			}
