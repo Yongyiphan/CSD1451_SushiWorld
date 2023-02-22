@@ -53,6 +53,7 @@ void MainField::Load() {
 
 };
 void MainField::Unload() {};
+
 void MainField::Init() {
 	std::cout << "Init " << StateName << std::endl;
 

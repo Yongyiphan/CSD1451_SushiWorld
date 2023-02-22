@@ -10,8 +10,7 @@ public:
 	PauseScreen(const std::shared_ptr<Context>&);
 	~PauseScreen() {};
 
-	AM::RenderSetting ResumeGfx = {}, MMGfx = {};
-	
+	AM::RenderSetting ResumeGfx = {}, MMGfx = {}, PauseScreenBorderGfx = {};
 	void Load() override;
 	void Unload() override;
 	void Init() override;

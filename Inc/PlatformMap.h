@@ -10,6 +10,8 @@ public:
 	PlatformMap(const std::shared_ptr<Context>&);
 	~PlatformMap() {};
 
+	float floorY = {};
+
 	void Load() override;
 	void Unload() override;
 	void Init() override;

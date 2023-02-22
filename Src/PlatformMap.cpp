@@ -22,6 +22,7 @@ void PlatformMap::Init() {
 		150,150,100,100
 	};
 	m_context->Player->PlayerRender.t = t;
+	floorY = 50.f;
 }
 
 void PlatformMap::Free() {
@@ -40,3 +41,5 @@ void PlatformMap::Update(f64 deltaTime) {
 void PlatformMap::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);
 }
+
+

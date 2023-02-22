@@ -53,54 +53,57 @@ namespace AM {
 		* 1 2 3
 		* 4 5
 		*/
-		if (TextureDict.find(location) == TextureDict.end()) {
-			TM.texture = AEGfxTextureLoad(location.c_str());
-			int r{}, c{}; //<- iterate through rows then col of sprite sheet
+		if (TextureDict.find(mode) == TextureDict.end()) {
+			if (TextureDict[mode].find(location) == TextureDict[mode].end()) {
+				TM.texture = AEGfxTextureLoad(location.c_str());
+				int r{}, c{}; //<- iterate through rows then col of sprite sheet
 
-			while (r < TM.ARow) {
-				while (c < TM.ACol) {
-					float topv = ((r * TM.imgheight) + (TM.tos * TM.ScaleY)) / TM.spriteheight;
-					float btmv = (((r + 1) * TM.imgheight) - (TM.bos * TM.ScaleY)) / TM.spriteheight; 
-					float leftu = ((c * TM.imgwidth) + (TM.los * TM.ScaleX)) / TM.spritewidth;
-					float rightu = (((c + 1) * TM.imgwidth) - (TM.ros * TM.ScaleX)) / TM.spritewidth;
-					AEGfxMeshStart();
-					AEGfxTriAdd(
-						-0.5, 0.5, 0xFFFFFFFF, leftu, topv, //TopLeft
-						-0.5, -0.5, 0xFFFFFFFF, leftu, btmv, //BtmLeft
-						0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmRight
-					);
-					AEGfxTriAdd(
-						-0.5, 0.5, 0xFFFFFFFF, leftu, topv,	//TopLeft
-						0.5, 0.5, 0xFFFFFFFF, rightu, topv,	//TopRight
-						0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmLeft
-					);
+				while (r < TM.ARow) {
+					while (c < TM.ACol) {
+						float topv = ((r * TM.imgheight) + (TM.tos * TM.ScaleY)) / TM.spriteheight;
+						float btmv = (((r + 1) * TM.imgheight) - (TM.bos * TM.ScaleY)) / TM.spriteheight;
+						float leftu = ((c * TM.imgwidth) + (TM.los * TM.ScaleX)) / TM.spritewidth;
+						float rightu = (((c + 1) * TM.imgwidth) - (TM.ros * TM.ScaleX)) / TM.spritewidth;
+						AEGfxMeshStart();
+						AEGfxTriAdd(
+							-0.5, 0.5, 0xFFFFFFFF, leftu, topv, //TopLeft
+							-0.5, -0.5, 0xFFFFFFFF, leftu, btmv, //BtmLeft
+							0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmRight
+						);
+						AEGfxTriAdd(
+							-0.5, 0.5, 0xFFFFFFFF, leftu, topv,	//TopLeft
+							0.5, 0.5, 0xFFFFFFFF, rightu, topv,	//TopRight
+							0.5, -0.5, 0xFFFFFFFF, rightu, btmv	//BtmLeft
+						);
 
-					//AEGfxTriAdd(
-					//	-0.5,  0.5, 0xFFFFFFFF,  0.f,  0.f,
-					//	-0.5, -0.5, 0xFFFFFFFF,  0.f,  1.f,
-					//	 0.5, -0.5, 0xFFFFFFFF,  0.5f, 1.f
-					//);
-					//AEGfxTriAdd(
-					//	-0.5,  0.5, 0xFFFFFFFF, 0.f , 0.f,
-					//	 0.5,  0.5, 0xFFFFFFFF, 0.5f, 0.f,
-					//	 0.5, -0.5, 0xFFFFFFFF, 0.5f, 1.f
-					//);
-					/*
-					(0,0)	(1,0)
+						//AEGfxTriAdd(
+						//	-0.5,  0.5, 0xFFFFFFFF,  0.f,  0.f,
+						//	-0.5, -0.5, 0xFFFFFFFF,  0.f,  1.f,
+						//	 0.5, -0.5, 0xFFFFFFFF,  0.5f, 1.f
+						//);
+						//AEGfxTriAdd(
+						//	-0.5,  0.5, 0xFFFFFFFF, 0.f , 0.f,
+						//	 0.5,  0.5, 0xFFFFFFFF, 0.5f, 0.f,
+						//	 0.5, -0.5, 0xFFFFFFFF, 0.5f, 1.f
+						//);
+						/*
+						(0,0)	(1,0)
 
-					(0,1)	(1,1)
-					*/
-					TM.animationframes.push_back(AEGfxMeshEnd());
-					c++;
-					TM.AFrames++;
+						(0,1)	(1,1)
+						*/
+
+						TM.animationframes.push_back(AEGfxMeshEnd());
+						c++;
+						TM.AFrames++;
+					}
+					r++;
+
 				}
-				r++;
+				TextureDict[mode].insert({location, TM});
 
 			}
-			TextureDict.insert({ location, TM });
-
 		}
-		return TextureDict[location];
+		return TextureDict[mode][location];
 
 	}
 }

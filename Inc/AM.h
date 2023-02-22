@@ -53,7 +53,7 @@ namespace AM {
 	private:
 		std::unordered_map<std::string, std::unordered_map<int, s8>> FontDict;
 		//std::unordered_map<std::string, AEGfxTexture*> TextureMap;
-		std::unordered_map<std::string, TextureMesh> TextureDict;
+		std::unordered_map<TextureMode, std::unordered_map<std::string, TextureMesh>> TextureDict;
 	public:
 		AssetManager();
 		~AssetManager();

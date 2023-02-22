@@ -1,5 +1,4 @@
-#include "pch.h"
-#include "Collision.h"
+#include "pch.h"#include "Collision.h"
 
 namespace utils {
 
@@ -14,6 +13,12 @@ namespace utils {
 			return true;
 		}
 		return false;
+	}
+
+	void ApplyGravity(std::vector<AM::Transform>& tList, double g) {
+		for (auto& i : tList) {
+			
+		}
 	}
 	
 }

@@ -11,16 +11,19 @@ void PauseScreen::Load() {
 	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	//Resume Button
-	int buttonOffsetH = 100;
+	int buttonOffsetH = 80;
 	ResumeGfx = AM::RenderSetting{
 		AM::Transform{f32(wosx), f32(wosy + buttonOffsetH), 150, 50},
 		AM::GfxSetting{utils::RGBAtoHex(100,100,100)}
 	};
-
 	//Return to main menu button
 	MMGfx= AM::RenderSetting{
 		AM::Transform{f32(wosx), f32(wosy - buttonOffsetH), 150, 50},
 		AM::GfxSetting{utils::RGBAtoHex(100,100,100)}
+	};
+	PauseScreenBorderGfx = AM::RenderSetting{
+		AM::Transform{f32(wosx), f32(wosy), 250, 350},
+		AM::GfxSetting{utils::RGBAtoHex(50,150,50)}
 	};
 }
 void PauseScreen::Unload(){
@@ -53,8 +56,11 @@ void PauseScreen::Update(f64 deltaTime) {
 	
 
 }
+
+
+
 void PauseScreen::Draw() {
-	
+	m_context->render->RenderRect(&PauseScreenBorderGfx);
 	UDrawButton(m_context->render, &ResumeGfx, FontID, "Resume Game", AM::Color{150,0,10});
 	UDrawButton(m_context->render, &MMGfx, FontID, "Main Menu", AM::Color{150,0,10});
 }
