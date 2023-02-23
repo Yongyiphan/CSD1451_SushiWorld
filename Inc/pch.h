@@ -33,7 +33,7 @@ using namespace utils;
 #include "MainMenu.h"
 #include "MainField.h"
 #include "PlatformMap.h"
-
+#include "Shop.h"
 
 #endif // PCH_H
 

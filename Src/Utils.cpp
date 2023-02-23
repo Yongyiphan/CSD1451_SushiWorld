@@ -21,9 +21,11 @@ namespace utils {
 	}
 
 	void UDrawButton(const std::shared_ptr<AM::Renderer>& renderer, AM::RenderSetting* sett,
-		s8* Font, std::string string,AM::Color c, f32 scale, AEGfxTexture *texture) {
+		s8* Font, std::string string,AM::Color c, f32 x, f32 y, f32 scale, AEGfxTexture *texture) {
 		renderer->RenderRect(sett, texture);
-		UDrawText(Font, string, sett->t.x, sett->t.y, scale, c);
+		float textx = sett->t.x + x;
+		float texty = sett->t.y + y;
+		UDrawText(Font, string, textx, texty, scale, c);
 	}
 
 

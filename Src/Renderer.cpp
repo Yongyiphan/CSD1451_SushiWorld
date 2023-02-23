@@ -6,8 +6,8 @@ namespace AM {
 	Renderer::~Renderer() {
 		//TODO
 		//Free VertexList from Map MeshMap
-		for (auto shape : MeshMap) {
-			for (auto color : shape.second) {
+		for (auto &shape : MeshMap) {
+			for (auto &color : shape.second) {
 				AEGfxMeshFree(color.second);
 			}
 		}
