@@ -10,6 +10,7 @@ public:
 	PlatformMap(const std::shared_ptr<Context>&);
 	~PlatformMap() {};
 
+	std::vector<GameObject> GameObjectList;
 	float floorY = {};
 
 	void Load() override;

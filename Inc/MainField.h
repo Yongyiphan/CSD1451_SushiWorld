@@ -26,8 +26,10 @@ public:
 	u32 black, white, blue, red;
 	//While border, player's boundary
 	MiniRoom Border;
+	int RoomCol, RoomRow;	
 	float rmw, rmh;
 	s8 font;
+	int currentRoom = 0;
 	AM::RenderSetting SavePlayerSettings;
 	
 	MainField(const std::shared_ptr<GM::Context>&);
@@ -42,6 +44,6 @@ public:
 	void Resume() override;
 	void Pause() override;
 
-	bool CheckFieldBound(AM::Transform *, Direction, float);
-	void RoomCheck();
+	void CheckFieldBound(AM::Transform *, Direction, float);
+	void EnterRoom();
 };

@@ -60,11 +60,11 @@ void Boss::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float posx, fl
 	*/
 	/*Implementation*/
 	fullhpbar = float(maxhp * hpscale);
-	MaxHPRender.t.x = posx + fullhpbar / 2.f;
-	MaxHPRender.t.y = posy;
+	MaxHPRender.t.pos.x = posx + fullhpbar / 2.f;
+	MaxHPRender.t.pos.y = posy;
 	currhpbar = float(currhp * hpscale);
-	CurrHPRender.t.x = posx + currhpbar / 2.f;
-	CurrHPRender.t.y = posy;
+	CurrHPRender.t.pos.x = posx + currhpbar / 2.f;
+	CurrHPRender.t.pos.y = posy;
 	CurrHPRender.t.w = currhpbar;
 	render->RenderRect(&MaxHPRender);
 	render->RenderRect(&CurrHPRender);

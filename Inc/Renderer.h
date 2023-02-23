@@ -28,15 +28,14 @@ namespace AM {
 
 	// x, y, w, h, Angle
 	struct Transform {
-		float x, y;
+		AEVec2 pos;
 		float w, h;
 		float RotA;
 		int ox, oy;
 		TOffset tos = DEFAULT;
-		Transform() :x(0), y(0), w(0), h(0), RotA(0), ox(0), oy(0) {}
+		Transform() :pos({0,0}), w(0), h(0), RotA(0), ox(0), oy(0) {}
 		Transform(float ix, float iy, float iw, float ih, int ox = 0, int oy = 0, float rot = 0.0f, TOffset tos = DEFAULT) {
-			x = ix;
-			y = iy;
+			AEVec2Set(&pos, ix, iy);
 			w = iw;
 			h = ih;
 			RotA = rot;

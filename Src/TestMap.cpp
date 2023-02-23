@@ -51,7 +51,7 @@ void TestMap::Update(f64 deltaTime) {
 		}
 		if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 			AEInputGetCursorPosition(&mx, &my);
-			Transform temp = m_context->Player->PlayerRender.t;
+			Transform temp = m_context->Player->RenderSett.t;
 			std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 		}
 		//up = blue
@@ -121,7 +121,7 @@ void TestMap::Update(f64 deltaTime) {
 	}
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&mx, &my);
-		Transform temp = m_context->Player->PlayerRender.t;
+		Transform temp = m_context->Player->RenderSett.t;
 		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 	}
 }
@@ -142,12 +142,12 @@ void TestMap::Draw() {
 	for (auto& i : this->box) {
 		m_context->render->RenderRect(&i.rs);
 	}
-	m_context->Player->PlayerRender.t.x = 200;
-	m_context->Player->PlayerRender.t.y = 300;
-	m_context->Player->PlayerRender.t.w = 200;
-	m_context->Player->PlayerRender.t.h = 200;
-	m_context->Player->PlayerRender.gfx.transparency = f32(1.0);
-	m_context->Player->PlayerRender.gfx.BM = AE_GFX_BM_NONE;
+	m_context->Player->RenderSett.t.pos.x = 200;
+	m_context->Player->RenderSett.t.pos.y = 300;
+	m_context->Player->RenderSett.t.w = 200;
+	m_context->Player->RenderSett.t.h = 200;
+	m_context->Player->RenderSett.gfx.transparency = f32(1.0);
+	m_context->Player->RenderSett.gfx.BM = AE_GFX_BM_NONE;
 	m_context->Player->DrawPlayer(m_context->render);
 
 }

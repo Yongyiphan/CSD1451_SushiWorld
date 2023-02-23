@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "EPlayer.h"
 
+EPlayer::EPlayer() {
+
+	this->ObjectType = "Player";
+	AnimationFrames = currentFrame = frameCounter = 0;
+	MaxHPRender = CurrHPRender = AM::RenderSetting{};
+}
 
 //Initialise HP stuff
 void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
@@ -22,7 +28,6 @@ void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
 		-wosx, -wosy
 	};
 	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0)};
-	
 
 }
 
@@ -35,14 +40,14 @@ void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetM
 		width/height -> normalize
 		for loop, to iterate through frames
 	*/
-	PlayerTexture = TextureMesh(320, 160, 2, 1, 2, 5, 5, 6, 6, 7, 8);
-	PlayerTexture = AM->LoadTexture(location, PlayerTexture, ANIMATION);
-	AnimationFrames = PlayerTexture.AFrames;
+	TM = TextureMesh(320, 160, 2, 1, 2, 5, 5, 6, 6, 7, 8);
+	TM = AM->LoadTexture(location, TM, ANIMATION);
+	AnimationFrames = TM.AFrames;
 }
 
 void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
-	PlayerRender.t = t;
-	PlayerRender.gfx = s;
+	RenderSett.t = t;
+	RenderSett.gfx = s;
 	
 }
 
@@ -54,8 +59,8 @@ void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	if (this->frameCounter % 30 == 0) {
 		currentFrame++;
 	}
-	this->PlayerRender.gfx.mesh = this->PlayerTexture.animationframes.at(currentFrame % AnimationFrames);
-	render->RenderRect(&PlayerRender, this->PlayerTexture.texture);
+	this->RenderSett.gfx.mesh = this->TM.animationframes.at(currentFrame % AnimationFrames);
+	render->RenderRect(&RenderSett, this->TM.texture);
 }
 
 void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
@@ -80,15 +85,31 @@ void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx,
 	*/
 	/*Implementation*/
 	fullhpbar = float(maxhp  * hpscale);
-	MaxHPRender.t.x = posx + fullhpbar / 2.f;
-	MaxHPRender.t.y = posy;
+	MaxHPRender.t.pos.x = posx + fullhpbar / 2.f;
+	MaxHPRender.t.pos.y = posy;
 	currhpbar = float(currhp * hpscale);
-	CurrHPRender.t.x = posx + currhpbar / 2.f;
-	CurrHPRender.t.y = posy;
+	CurrHPRender.t.pos.x = posx + currhpbar / 2.f;
+	CurrHPRender.t.pos.y = posy;
 	CurrHPRender.t.w = currhpbar;
 	render->RenderRect(&MaxHPRender);
 	render->RenderRect(&CurrHPRender);
 	//std::cout << "X: " << "(" << posx << ")" << " | Y: " << "(" << posy << ")" << std::endl;
 	
 
+}
+
+void EPlayer::PlayerControl(std::string SN) {
+
+	if (SN == "PlatformMap") {
+	if (AEInputCheckTriggered(AEVK_UP)) {
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+	}
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
+	}
+	if (AEInputCheckTriggered(AEVK_DOWN)) {
+	}
+
+	}
+	
 }

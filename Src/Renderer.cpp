@@ -6,8 +6,8 @@ namespace AM {
 	Renderer::~Renderer() {
 		//TODO
 		//Free VertexList from Map MeshMap
-		for (auto shape : MeshMap) {
-			for (auto color : shape.second) {
+		for (auto &shape : MeshMap) {
+			for (auto &color : shape.second) {
 				AEGfxMeshFree(color.second);
 			}
 		}
@@ -49,10 +49,10 @@ namespace AM {
 		AEMtx33Rot(&rotate, f32(t->RotA));
 		switch (t->tos) {
 		case DEFAULT:
-			AEMtx33Trans(&translate, f32(t->x -wosx), f32(t->y -wosy));
+			AEMtx33Trans(&translate, f32(t->pos.x -wosx), f32(t->pos.y -wosy));
 			break;
 		case OFF:
-			AEMtx33Trans(&translate, f32(t->x + t->ox), f32(t->y + t->oy));
+			AEMtx33Trans(&translate, f32(t->pos.x + t->ox), f32(t->pos.y + t->oy));
 			break;
 		}
 

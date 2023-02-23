@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include <mutex>
 
 //Assets Manager
 namespace AM {

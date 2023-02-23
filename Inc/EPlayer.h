@@ -11,7 +11,7 @@ enum Direction {
 enum PlayerStat {
 	HP
 };
-class EPlayer {
+class EPlayer : public GameObject{
 private:
 
 public:
@@ -20,20 +20,17 @@ public:
 	//Max HP, Current HP
 	int maxhp{}, currhp{}, hpsize{}, hpscale{1};
 	float fullhpbar{}, currhpbar{};
-	AM::TextureMesh PlayerTexture = {};
-	AM::RenderSetting PlayerRender, MaxHPRender, CurrHPRender;
+	AM::RenderSetting MaxHPRender, CurrHPRender;
 	int AnimationFrames, currentFrame, frameCounter;
-	EPlayer() {
-		AnimationFrames = currentFrame = frameCounter = 0;
-		PlayerRender = MaxHPRender = CurrHPRender = AM::RenderSetting{};
-		PlayerTexture = AM::TextureMesh{};
-	};
-
+	EPlayer();
 	~EPlayer() {};
 	void InitPlayerStats(int, int);
 	void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
+	void PlayerControl(std::string);
+	
+	double speed = {}, jump = {};
 
 };
