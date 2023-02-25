@@ -44,6 +44,7 @@ void PlatformMap::Update(f64 deltaTime) {
 }
 void PlatformMap::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);
+	m_context->Player->DrawHPBar( m_context->render, 50, winh * 0.85f);
 }
 
 

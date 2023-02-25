@@ -4,32 +4,28 @@
 EPlayer::EPlayer() {
 
 	this->ObjectType = "Player";
+	Gravity = true;
 	AnimationFrames = currentFrame = frameCounter = 0;
-	MaxHPRender = CurrHPRender = AM::RenderSetting{};
-}
-
-//Initialise HP stuff
-void EPlayer::InitPlayerStats(int StartingHP, int HPsize) {
-	this->maxhp = this->currhp = StartingHP;
-	this->hpsize = HPsize;
-	this->hpscale = this->hpsize / this->maxhp;
+	int StartingHP = 100, HPsize = 250;
+	maxhp = currhp = StartingHP;
+	hpsize = HPsize;
+	hpscale = hpsize / maxhp;
 	fullhpbar = float(maxhp  * hpscale);
 	currhpbar = float(currhp * hpscale);
 	float barheight = 30.f;
-	MaxHPRender.t = AM::Transform{
-		fullhpbar / 2.f, 0, 
-		fullhpbar ,barheight,
-		-wosx, -wosy
-	};
-	MaxHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(150,0,0)};
-	CurrHPRender.t = AM::Transform{
-		currhpbar / 2.f, 0,
-		currhpbar, barheight, 
-		-wosx, -wosy
-	};
-	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0)};
+	MaxHPRender = AM::RenderSetting( 
+		AM::Transform{	fullhpbar / 2.f, 0,
+						fullhpbar ,barheight},
+		AM::GfxSetting{ utils::RGBAtoHex(150,0,0)} 
+	);
+	CurrHPRender = AM::RenderSetting(
+		AM::Transform{  currhpbar / 2.f, 0,
+						currhpbar, barheight},
+		AM::GfxSetting{ utils::RGBAtoHex(0,150,0)}
+	);
 
 }
+
 
 /*TODO Load in sprite texture
 	Map texture to mesh
@@ -54,13 +50,11 @@ void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	
 	//Draw Rect;
-	int f = currentFrame % AnimationFrames;
-	//std::cout << f << std::endl;
-	if (this->frameCounter % 30 == 0) {
+	if (frameCounter % 30 == 0) {
 		currentFrame++;
 	}
-	this->RenderSett.gfx.mesh = this->TM.animationframes.at(currentFrame % AnimationFrames);
-	render->RenderRect(&RenderSett, this->TM.texture);
+	RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
+	render->RenderRect(&RenderSett, TM.texture);
 }
 
 void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
@@ -85,31 +79,44 @@ void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx,
 	*/
 	/*Implementation*/
 	fullhpbar = float(maxhp  * hpscale);
-	MaxHPRender.t.pos.x = posx + fullhpbar / 2.f;
-	MaxHPRender.t.pos.y = posy;
+	AEVec2Set(&MaxHPRender.t.pos, posx + fullhpbar / 2.f, posy);
+	if (currhp < 0) {
+		currhp = 0;
+	}
+	else if (currhp > maxhp) {
+		currhp = maxhp;
+	}
 	currhpbar = float(currhp * hpscale);
-	CurrHPRender.t.pos.x = posx + currhpbar / 2.f;
-	CurrHPRender.t.pos.y = posy;
+	AEVec2Set(&CurrHPRender.t.pos ,posx + currhpbar / 2.f, posy);
 	CurrHPRender.t.w = currhpbar;
 	render->RenderRect(&MaxHPRender);
 	render->RenderRect(&CurrHPRender);
-	//std::cout << "X: " << "(" << posx << ")" << " | Y: " << "(" << posy << ")" << std::endl;
 	
 
 }
 
 void EPlayer::PlayerControl(std::string SN) {
-
+	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
+	f32 dt = f32(AEFrameRateControllerGetFrameTime());
+	ApplyGravity(ct);
 	if (SN == "PlatformMap") {
-	if (AEInputCheckTriggered(AEVK_UP)) {
+		if (AEInputCheckTriggered(AEVK_UP)) {
+			ct->pos.y += 50;
+		}
+		if (AEInputCheckCurr(AEVK_DOWN)) {
+		}
 	}
-	if (AEInputCheckTriggered(AEVK_LEFT)) {
-	}
-	if (AEInputCheckTriggered(AEVK_RIGHT)) {
-	}
-	if (AEInputCheckTriggered(AEVK_DOWN)) {
-	}
+	if (AEInputCheckCurr(AEVK_LEFT)) {
+		ct->pos.x -= 100 * dt;
 
 	}
+	if (AEInputCheckCurr(AEVK_RIGHT)) {
+		ct->pos.x += 100 * dt;
+	}
+	if (!CheckWithinWindow(ct)) {
+		RenderSett.t = before;
+	}
+	
+
 	
 }

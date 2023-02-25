@@ -27,9 +27,6 @@ void TestMap::Unload(){
 
 void TestMap::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	if (m_context->Player->hpsize == 0) {
-		m_context->Player->InitPlayerStats(10, 250);
-	}
 	dmg_count = 0;
 	isEmpty = false;
 	boss.InitBossStats(10, 250);

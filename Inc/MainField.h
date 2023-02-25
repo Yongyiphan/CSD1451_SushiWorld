@@ -44,6 +44,6 @@ public:
 	void Resume() override;
 	void Pause() override;
 
-	void CheckFieldBound(AM::Transform *, Direction, float);
+	void CheckFieldBound(AM::Transform *);
 	void EnterRoom();
 };

@@ -11,13 +11,14 @@ class GameObject {
 private:
 protected:
 	std::string ObjectType;
+	bool Gravity = { false };
 public:
 	AEVec2 Pos = {}, Vel = {};
 	AM::TextureMesh TM = {};
 	AM::RenderSetting RenderSett = {};
 	GameObject();
 	~GameObject();
-	void ApplyGravity(double jump, double gravity = 9.81);
+	void ApplyGravity(AM::Transform*, double gravity = 9.81);
 	void CalculateEnergy(EnergyType);
 	void UpdatePosition();
 

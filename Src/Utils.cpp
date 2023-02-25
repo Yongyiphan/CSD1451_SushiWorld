@@ -26,5 +26,7 @@ namespace utils {
 		UDrawText(Font, string, sett->t.pos.x, sett->t.pos.y, scale, c);
 	}
 
+	
+
 
 }

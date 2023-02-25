@@ -24,7 +24,6 @@ public:
 	int AnimationFrames, currentFrame, frameCounter;
 	EPlayer();
 	~EPlayer() {};
-	void InitPlayerStats(int, int);
 	void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);

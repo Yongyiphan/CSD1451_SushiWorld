@@ -63,31 +63,9 @@ void MainField::Free() {
 	
 };
 void MainField::Update(f64 dt) {
-	//if (AEInputCheckTriggered(AEVK_LBUTTON)){
-	//	m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
-	//}
-	AEInputGetCursorPosition(&mx, &my);
-	if (AEInputCheckTriggered(AEVK_A)) {
-		CheckFieldBound(&m_context->Player->RenderSett.t, LEFT,  rmw);
-	}
-	if (AEInputCheckTriggered(AEVK_D)) {
-		CheckFieldBound(&m_context->Player->RenderSett.t, RIGHT, rmw);
-	}
-	if (AEInputCheckTriggered(AEVK_W)) {
-		CheckFieldBound(&m_context->Player->RenderSett.t, TOP, rmh);
-	}
-	if (AEInputCheckTriggered(AEVK_S)) {
-		CheckFieldBound(&m_context->Player->RenderSett.t, BTM, rmh);
-	}
-	AEInputGetCursorPosition(&mx, &my);
-
-	/*if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-		Transform temp = m_context->Player->tf;
-		std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
-		std::cout << "X: " << "(" << temp.x << ")" << " | Y: " << "(" << temp.y << ")" << std::endl;
-		CF::AreaClicked(&m_context->Player->tf, mx, my);
-	}*/
 	
+	AEInputGetCursorPosition(&mx, &my);
+	CheckFieldBound(&m_context->Player->RenderSett.t);
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
@@ -98,10 +76,8 @@ void MainField::Update(f64 dt) {
 };
 void MainField::Draw() {
 	utils::SetBackground(0,0,0);
-	//utils::SetBackground(255,255,255);
 	m_context->render->RenderRect(&Border.RS);
 	for (auto &i : Room) {
-	//	std::cout << "X: " << i.t.x << " | Y: " << i.t.y << std::endl;
 		if (i.Explored) {
 			m_context->render->RenderRect(&i.RS);
 		}
@@ -109,58 +85,31 @@ void MainField::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);
 };
 
-void MainField::CheckFieldBound(AM::Transform *target, Direction d, float shift) {
-//	float rightLimit = Border.RS.t.x + Border.RS.t.w / 2.f;
-//
-//	float topLimit = Border.RS.t.y + Border.RS.t.h / 2.f;
-//	float btmLimit = Border.RS.t.y - Border.RS.t.h / 2.f;
-//	
-//
-//	switch (d) {
-//	case LEFT:
-//		if (target->x - shift < leftLimit)
-//			return false;
-//		target->x -= shift ;
-//		break;
-//	case RIGHT:
-//		if (target->x + shift > rightLimit)
-//			return false;
-//		target->x += shift;
-//		break;
-//	case TOP:
-//		if (target->y + shift > topLimit)
-//			return false;
-//		target->y += shift;
-//		break;
-//	case BTM:
-//		if (target->y - shift < btmLimit)
-//			return false;
-//		target->y -= shift;
-//		break;
-//	}
-//
-//
-//	RoomCheck();
-//	return true;
+void MainField::CheckFieldBound(AM::Transform *target) {
 	int PrevRoomI{ currentRoom }, NextRoomI{};
-	switch (d) {
-	case LEFT:
+	bool IfClick = false;
+	if (AEInputCheckTriggered(AEVK_A)) {
 		NextRoomI = currentRoom - RoomRow;
-		break;
-	case RIGHT:
-		NextRoomI = currentRoom + RoomRow;
-		break;
-	case TOP:
-		NextRoomI = currentRoom + 1;
-		break;
-	case BTM:
-		NextRoomI = currentRoom - 1;
-		break;
+		IfClick = true;
 	}
-	currentRoom = NextRoomI >= 0 && NextRoomI < Room.size() ? NextRoomI : PrevRoomI;
-	m_context->Player->RenderSett.t.pos = Room.at(currentRoom).RS.t.pos;
-	std::cout << currentRoom << std::endl;
-	EnterRoom();
+	if (AEInputCheckTriggered(AEVK_D)) {
+		NextRoomI = currentRoom + RoomRow;
+		IfClick = true;
+	}
+	if (AEInputCheckTriggered(AEVK_W)) {
+		NextRoomI = currentRoom + 1;
+		IfClick = true;
+	}
+	if (AEInputCheckTriggered(AEVK_S)) {
+		NextRoomI = currentRoom - 1;
+		IfClick = true;
+	}
+	if (IfClick) {
+		currentRoom = NextRoomI >= 0 && NextRoomI < Room.size() ? NextRoomI : PrevRoomI;
+		m_context->Player->RenderSett.t.pos = Room.at(currentRoom).RS.t.pos;
+		std::cout << currentRoom << std::endl;
+		EnterRoom();
+	}
 }
 
 void MainField::EnterRoom() {
