@@ -91,6 +91,9 @@ void MainField::Update(f64 dt) {
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
 	}
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<Shop>(m_context));
+	}
 
 	
 

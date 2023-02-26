@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <map>
 #include <tuple>
+#include <ctime>
 
 //Custom Includes
 #include "AEEngine.h"
@@ -22,6 +23,7 @@
 #include "Collision.h"
 #include "EPlayer.h"
 #include "Boss.h"
+#include "ItemManager.h"
 
 using namespace GM;
 using namespace AM;

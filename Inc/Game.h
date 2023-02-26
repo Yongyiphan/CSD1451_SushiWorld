@@ -7,12 +7,14 @@ namespace GM {
 		std::shared_ptr<AM::Renderer> render;
 		std::shared_ptr<AM::AssetManager> assets;
 		std::unique_ptr<EPlayer> Player;
+		std::shared_ptr<ItemManager> Items;
 
 		Context() {
 			gman = std::make_unique<GM::Engine>();
 			render = std::make_shared<AM::Renderer>();
 			assets = std::make_shared<AM::AssetManager>();
 			//Player = std::make_unique<EPlayer>();
+			Items = std::make_shared<ItemManager>();
 		}
 	};
 
