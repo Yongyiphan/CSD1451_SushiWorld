@@ -10,7 +10,8 @@ namespace utils {
 
 	void UDrawButton(const std::shared_ptr<AM::Renderer>& renderer, AM::RenderSetting* sett,
 		s8* = {}, std::string = {}, AM::Color = {}, f32 = 1.f , AEGfxTexture* = nullptr);
-
+	
+	f32 UGetDT();
 
 }
 

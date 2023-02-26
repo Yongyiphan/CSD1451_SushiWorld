@@ -15,18 +15,36 @@ namespace utils {
 		}
 		return false;
 	}
+	
+	bool AABBCollision(AM::Transform& a, AM::Transform& b) {
+		//a = normally player
+		//b = to compare with
+		if (0) {
 
-
-	bool CheckWithinWindow(AM::Transform* target) {
-		int leftLimit  = target->pos.x - target->w / 2;
-		int rightLimit = target->pos.x + target->w / 2;
-
-		int topLimit = target->pos.y + target->h / 2;
-		int btmLimit = target->pos.y - target->h / 2;
-		if (leftLimit < 0 || rightLimit > winw || topLimit > winh || btmLimit < 0) {
-			return false;
 		}
-		return true;
+		return false;
+	}
 
+	//clamps position to along border
+	bool CheckWithinWindow(AM::Transform* target) {
+		int left  = int(target->pos.x - target->w/2);
+		int right = int(target->pos.x + target->w/2);
+		int top	  = int(target->pos.y + target->h/2);
+		int btm	  = int(target->pos.y - target->h/2);
+		AEVec2* pos = &target->pos;
+		if (left < 0) {
+			pos->x = 0 + target->w / 2;
+		}
+		if (right > winw) {
+			pos->x = winw - target->w / 2;
+		}
+		if (btm < 0) {
+			pos->y = 0 + target->h / 2;
+		}
+		if (top > winh) {
+			pos->y = winh - target->h / 2;
+		}
+
+		return true;
 	}
 }

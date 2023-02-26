@@ -13,7 +13,7 @@ enum PlayerStat {
 };
 class EPlayer : public GameObject{
 private:
-
+	AM::Transform prevT;
 public:
 	int x{}, y{}, size{};
 	u32 color{ 0xFF000000 };
@@ -29,7 +29,10 @@ public:
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
 	void PlayerControl(std::string);
-	
+	//True = save
+	//False = load from save
+	void SaveLoadPlayerPos(bool = true);
+
 	double speed = {}, jump = {};
 
 };

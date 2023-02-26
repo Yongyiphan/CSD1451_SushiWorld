@@ -13,14 +13,15 @@ protected:
 	std::string ObjectType;
 	bool Gravity = { false };
 public:
-	AEVec2 Pos = {}, Vel = {};
+	AEVec2 Vel = {};
 	AM::TextureMesh TM = {};
+	//Pos is contained within render sett
 	AM::RenderSetting RenderSett = {};
 	GameObject();
 	~GameObject();
-	void ApplyGravity(AM::Transform*, double gravity = 9.81);
+	void ApplyGravity(double gravity = 9.81);
 	void CalculateEnergy(EnergyType);
-	void UpdatePosition();
+	void UpdatePosition(AEVec2);
 
 };
 #endif // OBJECT_H

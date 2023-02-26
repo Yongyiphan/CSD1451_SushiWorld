@@ -11,7 +11,7 @@ Game::~Game() {
 
 
 
-int winw, winh, wosx, wosy;
+int winw, winh, wosx, wosy, FR;
 void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	hInstance = hI; 
 	nCmdShow = scmd;
@@ -19,6 +19,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	WinWidth = 800;
 	WinHeight = 600;
 	FrameRate = 60;
+	FR = 20;
 	AESysInit(hInstance, nCmdShow, WinWidth, WinHeight, 1, FrameRate, true, NULL);
 	
 	// Changing the window title

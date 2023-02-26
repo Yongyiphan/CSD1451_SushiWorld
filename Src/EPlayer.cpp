@@ -97,26 +97,41 @@ void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx,
 
 void EPlayer::PlayerControl(std::string SN) {
 	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
-	f32 dt = f32(AEFrameRateControllerGetFrameTime());
-	ApplyGravity(ct);
+	f32 dt = utils::UGetDT();
+	ApplyGravity();
+	Vel.x = 0;
+	if (isnan(Vel.y)) {
+		std::cout << std::endl;
+	}
 	if (SN == "PlatformMap") {
 		if (AEInputCheckTriggered(AEVK_UP)) {
-			ct->pos.y += 50;
+			Vel.y += 100;
 		}
 		if (AEInputCheckCurr(AEVK_DOWN)) {
 		}
 	}
 	if (AEInputCheckCurr(AEVK_LEFT)) {
-		ct->pos.x -= 100 * dt;
-
+		Vel.x -= 50;
 	}
 	if (AEInputCheckCurr(AEVK_RIGHT)) {
-		ct->pos.x += 100 * dt;
+		Vel.x += 50;
 	}
+	
+	RenderSett.t.pos.x += Vel.x * dt;
+	RenderSett.t.pos.y += Vel.y * dt;
+	
+
 	if (!CheckWithinWindow(ct)) {
 		RenderSett.t = before;
 	}
 	
+}
 
-	
+void EPlayer::SaveLoadPlayerPos(bool save) {
+	if (save) {
+		prevT = RenderSett.t;
+	}
+	else {
+		RenderSett.t = prevT;
+	}
 }

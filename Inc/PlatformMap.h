@@ -11,8 +11,8 @@ public:
 	~PlatformMap() {};
 
 	std::vector<GameObject> GameObjectList;
-	float floorY = {};
-
+	AM::RenderSetting floorY = {};
+	std::vector<AM::RenderSetting> GameObjectSettings;
 	void Load() override;
 	void Unload() override;
 	void Init() override;

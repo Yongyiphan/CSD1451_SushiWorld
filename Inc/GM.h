@@ -9,6 +9,9 @@ extern int winw, winh;
 //window offset x and y
 extern int wosx, wosy;
 
+//Framerate cannot drop below this value
+extern int FR;
+
 namespace GM {
 	class State;
 	class Engine;

@@ -18,14 +18,19 @@ void PlatformMap::Init() {
 	GameObjectList.clear();
 	GameObjectList.reserve(500);
 	std::cout << "Init " << StateName << std::endl;
-	SetBackground(255, 127, 80);	
+	SetBackground(255, 127, 80);
 
 	AM::Transform t = AM::Transform{
 		150,150,100,100
 	};
 	m_context->Player->RenderSett.t = t;
-	floorY = 50.f;
-
+	floorY = AM::RenderSetting(
+		AM::Transform{
+			f32(wosx), 25.f,
+			f32(winw), 50.f },
+		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
+	);
+	GameObjectSettings.push_back(floorY);
 	//Player's details will be calculated differently (cus unique pointer)
 }
 
@@ -33,18 +38,28 @@ void PlatformMap::Free() {
 	std::cout << "Free " << StateName << std::endl;
 }
 
-void PlatformMap::Update(f64 deltaTime) {
-	
+void PlatformMap::Update(f64 dt) {
+
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT);
 	//	m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
 	}
+	m_context->Player->SaveLoadPlayerPos();
+	m_context->Player->Vel.x = 0;
 	m_context->Player->PlayerControl(StateName);
 	
+	
+	//for (auto& i : GameObjectSettings) {
+	//	if (utils::AABBCollision(m_context->Player->RenderSett.t, i.t)) {
+	//		m_context->Player->SaveLoadPlayerPos(false);
+	//	}
+	//}
 }
 void PlatformMap::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Player->DrawHPBar( m_context->render, 50, winh * 0.85f);
+	m_context->render->RenderRect(&floorY);
+
 }
 
 

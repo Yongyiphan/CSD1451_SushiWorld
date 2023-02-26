@@ -1,24 +1,29 @@
 #include "pch.h"
 #include "Object.h"
+#include <math.h>
 
 GameObject::GameObject() {
-
 }
 
 GameObject::~GameObject() {
 
 }
 
-void GameObject::ApplyGravity(AM::Transform* t, double gravity) {
-	AEVec2* cpos = &t->pos;
-	f32 dt = f32(AEFrameRateControllerGetFrameTime());
-	cpos->y -= 50 * dt;
+void GameObject::ApplyGravity(double gravity) {
+	AM::Transform* t = &RenderSett.t;
+	float effect{};
+	if (t->pos.y > t->h) {
+		Vel.y -= sqrtf(2 * gravity * (t->pos.y - t->h / 2)) * UGetDT();
+	}
+	else {
+		Vel.y = effect;
+	}
 }
 
 void GameObject::CalculateEnergy(EnergyType ET) {
 
 }
 
-void GameObject::UpdatePosition() {
-
+void GameObject::UpdatePosition(AEVec2 npos) {
+	RenderSett.t.pos = npos;
 }
