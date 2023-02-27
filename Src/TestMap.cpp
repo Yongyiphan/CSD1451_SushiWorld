@@ -9,10 +9,10 @@ TestMap::TestMap(char const* name, const std::shared_ptr<Context>& context)
 }
 
 void TestMap::Load() {
-	red = utils::RGBAtoHex(150, 0, 0);
-	green = utils::RGBAtoHex(0, 150, 0);
-	blue = utils::RGBAtoHex(0, 0, 150);
-	yellow = utils::RGBAtoHex(150, 150, 0);
+	red = utils::RGBAtoHex(150, 0, 0);//red
+	green = utils::RGBAtoHex(0, 150, 0);//left
+	blue = utils::RGBAtoHex(0, 0, 150); //up
+	yellow = utils::RGBAtoHex(150, 150, 0);//right
 	
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 
@@ -31,8 +31,10 @@ void TestMap::Init() {
 		m_context->Player->InitPlayerStats(10, 250);
 	}
 	dmg_count = 0;
+	timepassed = 0;
 	isEmpty = false;
 	boss.InitBossStats(10, 250);
+	
 }
 
 void TestMap::Free() {
@@ -40,7 +42,9 @@ void TestMap::Free() {
 }
 
 void TestMap::Update(f64 deltaTime) {
-	
+	this->timepassed += AEFrameRateControllerGetFrameTime();
+	std::cout << timepassed << std::endl;
+
 	if (this->box.empty()) {
 		std::cout << "empty" << std::endl;
 		isEmpty = true;
@@ -138,16 +142,17 @@ void TestMap::Draw() {
 	if (boss.currhp == 0) {
 		//utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
 	}
-
-	for (auto& i : this->box) {
-		m_context->render->RenderRect(&i.rs);
+	if (timepassed >= 5.f) {
+		for (auto& i : this->box) {
+			m_context->render->RenderRect(&i.rs);
+		}
 	}
 	m_context->Player->PlayerRender.t.x = 200;
 	m_context->Player->PlayerRender.t.y = 300;
 	m_context->Player->PlayerRender.t.w = 200;
 	m_context->Player->PlayerRender.t.h = 200;
 	m_context->Player->PlayerRender.gfx.transparency = f32(1.0);
-	m_context->Player->PlayerRender.gfx.BM = AE_GFX_BM_NONE;
+	m_context->Player->PlayerRender.gfx.BM = AE_GFX_BM_BLEND;
 	m_context->Player->DrawPlayer(m_context->render);
 
 }

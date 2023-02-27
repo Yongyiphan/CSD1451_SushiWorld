@@ -32,7 +32,7 @@ public:
 	int dmg_count;
 	bool isEmpty;
 	Boss boss{};
-
+	float timepassed;
 	std::vector<Arrow> ArrowVect;
 	
 
