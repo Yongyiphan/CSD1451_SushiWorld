@@ -17,7 +17,7 @@ struct checkbox {
 };
 
 struct timebox {
-	float dt;
+	float dt{};
 	AM::RenderSetting rs;
 };
 
@@ -35,14 +35,11 @@ public:
 	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;
 	int dmg_count, arrows;
-	bool isEmpty;
-	bool damage;
-	double timer;
+	bool isEmpty, damage;
+	float timer;
 	timebox totaltime;
-	Boss boss{};
 	AM::TextureMesh ArrowMesh;
-	std::vector<Arrow> ArrowVect;
-	
+	std::string str;
 
 	void Load() override;
 	void Unload() override;

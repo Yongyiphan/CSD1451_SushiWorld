@@ -29,7 +29,9 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	//Initialize Player Here
 	//IMPORTANT Load Fonts Here
 	m_context->Player = std::make_unique<EPlayer>();
+	m_context->Boss = std::make_shared<Boss>();
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
+	m_context->Boss->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	
 	// reset the system modules

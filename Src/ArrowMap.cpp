@@ -18,7 +18,7 @@ void ArrowMap::Load() {
 	ArrowMesh = AM::TextureMesh(512,128,4);
 	ArrowMesh = m_context->assets->LoadTexture("./Assets/Arrow.png", ArrowMesh);
 	
-	GenerateArrowKeys(5);
+	//GenerateArrowKeys(5);
 
 }
 
@@ -36,7 +36,8 @@ void ArrowMap::Init() {
 	isEmpty = false;
 	damage = true;
 	arrows = 5;
-	boss.InitBossStats(50, 250);
+	GenerateArrowKeys(arrows);
+	m_context->Boss->InitBossStats(50, 250);
 }
 
 void ArrowMap::Free() {
@@ -44,7 +45,7 @@ void ArrowMap::Free() {
 }
 
 void ArrowMap::Update(f64 deltaTime) {
-	timer = AEFrameRateControllerGetFrameTime();
+	timer = (float)AEFrameRateControllerGetFrameTime();
 	totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
 		totaltime.dt = 0;
@@ -113,12 +114,12 @@ void ArrowMap::Update(f64 deltaTime) {
 				}
 			}
 			else {
-				if (boss.currhp > dmg_count) {
-					boss.currhp -= dmg_count;
+				if (m_context->Boss->currhp > dmg_count) {
+					m_context->Boss->currhp -= dmg_count;
 					arrows++;
 				}
-				else if (boss.currhp <= dmg_count) {
-					boss.currhp = 0;
+				else if (m_context->Boss->currhp <= dmg_count) {
+					m_context->Boss->currhp = 0;
 					totaltime.dt = 0;
 				}
 			}
@@ -150,13 +151,15 @@ void ArrowMap::Draw() {
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
-	utils::UDrawText(FontID, "Player's HP:", posx, posy + baroffset, 1, Color{ 255,255,255 });
+	str = std::to_string(m_context->Player->currhp);
+	utils::UDrawText(FontID, "Player's HP:" + str, posx, posy + baroffset, 1, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
-	utils::UDrawText(FontID, "Boss's HP:", posx + 400, posy + baroffset, 1, Color{ 255,255,255 });
-	boss.DrawHPBar(m_context->render, posx + 400, posy);
+	str = std::to_string(m_context->Boss->currhp);
+	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 400, posy + baroffset, 1, Color{ 0,0,0 });
+	m_context->Boss->DrawHPBar(m_context->render, posx + 400, posy);
 
-	if (boss.currhp == 0) {
+	if (m_context->Boss->currhp == 0) {
 		//utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
 	}
 
@@ -167,13 +170,23 @@ void ArrowMap::Draw() {
 	
 	totaltime.rs.t.w = 30.f * totaltime.dt;
 	m_context->render->RenderRect(&totaltime.rs);
+
+	str = std::to_string((int)totaltime.dt);
+	utils::UDrawText(FontID, str, 350.f, 450.f, 1, Color{ 255,255,255 });
+
 	m_context->Player->PlayerRender.t.x = 200;
 	m_context->Player->PlayerRender.t.y = 200;
 	m_context->Player->PlayerRender.t.w = 200;
 	m_context->Player->PlayerRender.t.h = 200;
 	m_context->Player->PlayerRender.gfx.transparency = f32(1.0);
 	m_context->Player->DrawPlayer(m_context->render);
-
+	
+	m_context->Boss->BossRender.t.x = 600;
+	m_context->Boss->BossRender.t.y = 200;
+	m_context->Boss->BossRender.t.w = 200;
+	m_context->Boss->BossRender.t.h = 200;
+	m_context->Boss->BossRender.gfx.transparency = f32(1.0);
+	m_context->Boss->DrawBoss(m_context->render);
 }
 
 
@@ -182,7 +195,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
 	totaltime.dt = 15.f;
-	for (int i = 0; i < new_arrow; i++) {
+	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
 		cb.ID = random;
@@ -194,7 +207,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 		box.push_back(cb);
 	}
 	totaltime.rs = AM::RenderSetting(AM::Transform{
-		380.f , 450.f,
+		350.f , 450.f,
 		30.f * totaltime.dt , 30.f
 		}, AM::GfxSetting{ blue });
 	/*totaltime.crs = AM::RenderSetting(AM::Transform{
