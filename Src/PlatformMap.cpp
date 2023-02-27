@@ -49,11 +49,11 @@ void PlatformMap::Update(f64 dt) {
 	m_context->Player->PlayerControl(StateName);
 	
 	
-	//for (auto& i : GameObjectSettings) {
-	//	if (utils::AABBCollision(m_context->Player->RenderSett.t, i.t)) {
-	//		m_context->Player->SaveLoadPlayerPos(false);
-	//	}
-	//}
+	for (auto& i : GameObjectSettings) {
+		if (utils::AABBCollision(m_context->Player->RenderSett.t, i.t)) {
+			m_context->Player->SaveLoadPlayerPos(false);
+		}
+	}
 }
 void PlatformMap::Draw() {
 	m_context->Player->DrawPlayer(m_context->render);

@@ -98,14 +98,14 @@ void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx,
 void EPlayer::PlayerControl(std::string SN) {
 	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
 	f32 dt = utils::UGetDT();
-	ApplyGravity();
+	ApplyGravity(70);
 	Vel.x = 0;
 	if (isnan(Vel.y)) {
-		std::cout << std::endl;
+		std::cout << "Is Nan" << std::endl;
 	}
 	if (SN == "PlatformMap") {
 		if (AEInputCheckTriggered(AEVK_UP)) {
-			Vel.y += 100;
+			Vel.y += 200;
 		}
 		if (AEInputCheckCurr(AEVK_DOWN)) {
 		}
