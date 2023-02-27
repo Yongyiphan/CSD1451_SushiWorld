@@ -11,7 +11,7 @@ TestMap::TestMap(const std::shared_ptr<Context>& context)
 void TestMap::Load() {
 	red = utils::RGBAtoHex(150, 0, 0);//red
 	green = utils::RGBAtoHex(0, 150, 0);//left
-	blue = utils::RGBAtoHex(0, 0, 150); //up
+	blue = utils::RGBAtoHex(0, 0,1 ,150); //up
 	yellow = utils::RGBAtoHex(150, 150, 0);//right
 	
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);

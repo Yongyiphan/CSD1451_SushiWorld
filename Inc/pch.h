@@ -22,7 +22,6 @@
 #include "Utils.h"
 #include "Collision.h"
 #include "EPlayer.h"
-#include "Boss.h"
 #include "ItemManager.h"
 
 using namespace GM;
@@ -35,6 +34,8 @@ using namespace utils;
 #include "MainMenu.h"
 #include "MainField.h"
 #include "PlatformMap.h"
+#include "RestState.h"
+#include "Boss.h"
 #include "Shop.h"
 
 #endif // PCH_H

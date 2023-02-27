@@ -40,71 +40,74 @@ void Shop::Update(f64 deltaTime) {
 		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 		m_context->gman->SetStatus(QUIT);
 	}	
-	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, IM.items.at(choice1).name, AM::Color(), 0.f, 100.f, 1.0f);
-	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, IM.items.at(choice2).name, AM::Color(), 0.f, 100.f, 1.0f);
+	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, AM::Color(), 0.f, 100.f, 1.0f);
+	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, AM::Color(), 0.f, 100.f, 1.0f);
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		if (AreaClicked(&shopbuttons.at(0).t, mousex, mousey)) {
-			std::string itemname1 = IM.items.at(choice1).name;
+			std::string itemname1 = m_context->Items->items.at(choice1).name;
 			if (itemname1 == "SALMON") {
-				IM.items[SALMON].level++;
-				IM.items[SALMON].stat += 10;
-				std::cout << IM.items[SALMON].name << std::endl <<
-					IM.items[SALMON].level << std::endl <<
-					IM.items[SALMON].stat << std::endl;
+				m_context->Items->items.at(SALMON).level++;
+				m_context->Items->items.at(SALMON).stat += 10;
+				
+				//IM.items[SALMON].level++;
+				//IM.items[SALMON].stat += 10;
+				std::cout << m_context->Items->items[SALMON].name << std::endl <<
+					m_context->Items->items[SALMON].level << std::endl <<
+					m_context->Items->items[SALMON].stat << std::endl;
 
 			}
 			else if (itemname1 == "TUNA") {
-				IM.items[TUNA].level++;
-				IM.items[TUNA].stat += 3;
-				std::cout << IM.items[TUNA].name << std::endl <<
-					IM.items[TUNA].level << std::endl <<
-					IM.items[TUNA].stat << std::endl;
+				m_context->Items->items[TUNA].level++;
+				m_context->Items->items[TUNA].stat += 3;
+				std::cout << m_context->Items->items[TUNA].name << std::endl <<
+					m_context->Items->items[TUNA].level << std::endl <<
+					m_context->Items->items[TUNA].stat << std::endl;
 			}
 			else if (itemname1 == "SWORDFISH") {
-				IM.items[SWORDFISH].level++;
-				IM.items[SWORDFISH].stat += 5;
-				std::cout << IM.items[SWORDFISH].name << std::endl <<
-					IM.items[SWORDFISH].level << std::endl <<
-					IM.items[SWORDFISH].stat << std::endl;
+				m_context->Items->items[SWORDFISH].level++;
+				m_context->Items->items[SWORDFISH].stat += 5;
+				std::cout << m_context->Items->items[SWORDFISH].name << std::endl <<
+					m_context->Items->items[SWORDFISH].level << std::endl <<
+					m_context->Items->items[SWORDFISH].stat << std::endl;
 			}
 			else if (itemname1 == "SQUID") {
-				IM.items[SQUID].level++;
-				IM.items[SQUID].stat += 2;
-				std::cout << IM.items[SQUID].name << std::endl <<
-					IM.items[SQUID].level << std::endl <<
-					IM.items[SQUID].stat << std::endl;
+				m_context->Items->items[SQUID].level++;
+				m_context->Items->items[SQUID].stat += 2;
+				std::cout << m_context->Items->items[SQUID].name << std::endl <<
+					m_context->Items->items[SQUID].level << std::endl <<
+					m_context->Items->items[SQUID].stat << std::endl;
 			}
 		}
 		if (AreaClicked(&shopbuttons.at(1).t, mousex, mousey)) {
-			std::string itemname2 = IM.items.at(choice2).name;
+			std::string itemname2 = m_context->Items->items.at(choice2).name;
 			if (itemname2 == "SALMON") {
-				IM.items[SALMON].level++;
-				IM.items[SALMON].stat += 10;
-				std::cout << IM.items[SALMON].name << std::endl <<
-					IM.items[SALMON].level << std::endl <<
-					IM.items[SALMON].stat << std::endl;
+				m_context->Items->items[SALMON].level++;
+				m_context->Items->items[SALMON].stat += 10;
+				std::cout << m_context->Items->items[SALMON].name << std::endl <<
+					m_context->Items->items[SALMON].level << std::endl <<
+					m_context->Items->items[SALMON].stat << std::endl;
 
 			}
 			else if (itemname2 == "TUNA") {
-				IM.items[TUNA].level++;
-				IM.items[TUNA].stat += 3;
-				std::cout << IM.items[TUNA].name << std::endl <<
-					IM.items[TUNA].level << std::endl <<
-					IM.items[TUNA].stat << std::endl;
+				m_context->Items->items[TUNA].level++;
+				m_context->Items->items[TUNA].stat += 3;
+				std::cout << m_context->Items->items[TUNA].name << std::endl <<
+					m_context->Items->items[TUNA].level << std::endl <<
+					m_context->Items->items[TUNA].stat << std::endl;
 			}
 			else if (itemname2 == "SWORDFISH") {
-				IM.items[SWORDFISH].level++;
-				IM.items[SWORDFISH].stat += 5;
-				std::cout << IM.items[SWORDFISH].name << std::endl <<
-					IM.items[SWORDFISH].level << std::endl <<
-					IM.items[SWORDFISH].stat << std::endl;
+				m_context->Items->items[SWORDFISH].level++;
+				m_context->Items->items[SWORDFISH].stat += 5;
+				std::cout << m_context->Items->items[SWORDFISH].name << std::endl <<
+					m_context->Items->items[SWORDFISH].level << std::endl <<
+					m_context->Items->items[SWORDFISH].stat << std::endl;
 			}
 			else if (itemname2 == "SQUID") {
-				IM.items[SQUID].level++;
-				IM.items[SQUID].stat += 2;
-				std::cout << IM.items[SQUID].name << std::endl <<
-					IM.items[SQUID].level << std::endl <<
-					IM.items[SQUID].stat << std::endl;
+				m_context->Items->items[SQUID].level++;
+				m_context->Items->items[SQUID].stat += 2;
+				std::cout << m_context->Items->items[SQUID].name << std::endl <<
+					m_context->Items->items[SQUID].level << std::endl <<
+					m_context->Items->items[SQUID].stat << std::endl;
 
 			}
 		}

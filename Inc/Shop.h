@@ -16,15 +16,10 @@ public:
 	void Draw()override;
 	s8* FontID;
 	int choice1, choice2;
-	ItemManager IM;
+	//ItemManager IM;
 	s32 mousex, mousey;
 	int noshopbuttons;
 	void RenderRandomItemChoices();
-	enum ITEMID {
-		SALMON,
-		TUNA,
-		SWORDFISH,
-		SQUID
-	};
+	
 };
 
