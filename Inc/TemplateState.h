@@ -8,7 +8,8 @@ public:
 	//Variables
 	///Methods
 
-	TemplateState(char const*, const std::shared_ptr<Context>&);
+	//StateName define it in cpp
+	TemplateState(const std::shared_ptr<Context>&);
 	~TemplateState() {};
 
 	void Load() override;
@@ -17,7 +18,7 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	s8 FontID;
+	s8 *FontID;
 	
 	
 };

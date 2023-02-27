@@ -3,8 +3,8 @@
 #include "TestMap.h"
 
 
-MainField::MainField(std::string Name, const std::shared_ptr<Context>& context){
-	StateName = Name;
+MainField::MainField(const std::shared_ptr<Context>& context){
+	StateName = "MainField";
 	m_context = context;
 }
 MainField::~MainField() {};
@@ -91,6 +91,9 @@ void MainField::Update(f64 dt) {
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
 	}
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<Shop>(m_context));
+	}
 
 	
 
@@ -159,7 +162,9 @@ void MainField::RoomCheck() {
 			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
 				r.Explored = true;
 				//execute to go next room
-				m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+				//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
+				m_context->gman->AddState(std::make_unique<TestMap>(m_context));
+
 				break;
 			}
 

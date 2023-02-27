@@ -7,7 +7,7 @@ public:
 	//Variables
 	///Methods
 
-	PlatformMap(std::string, const std::shared_ptr<Context>&);
+	PlatformMap(const std::shared_ptr<Context>&);
 	~PlatformMap() {};
 
 	void Load() override;

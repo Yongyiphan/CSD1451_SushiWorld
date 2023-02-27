@@ -30,7 +30,7 @@ public:
 	s8 font;
 	AM::RenderSetting SavePlayerSettings;
 	
-	MainField(std::string, const std::shared_ptr<GM::Context>&);
+	MainField(const std::shared_ptr<GM::Context>&);
 	~MainField();
 
 	void Load() override;

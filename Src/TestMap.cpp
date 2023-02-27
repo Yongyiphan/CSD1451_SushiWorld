@@ -2,10 +2,10 @@
 #include "TestMap.h"
 #include "time.h"
 
-TestMap::TestMap(char const* name, const std::shared_ptr<Context>& context)
+TestMap::TestMap(const std::shared_ptr<Context>& context)
 {
 	this->m_context = context;
-	this->StateName = name;
+	this->StateName = "TestMap";
 }
 
 void TestMap::Load() {
@@ -160,7 +160,7 @@ void TestMap::Draw() {
 
 void TestMap::GenerateArrowKeys() {
 	u32 rcolour[] = {red,green,blue,yellow};
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
 	for (int i = 0; i < 8; i++) {
 		int random = (rand() % 4);

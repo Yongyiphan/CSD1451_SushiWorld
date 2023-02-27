@@ -7,7 +7,7 @@ public:
 	//Variables
 	///Methods
 
-	MainMenu(char const*, const std::shared_ptr<GM::Context>&);
+	MainMenu(const std::shared_ptr<GM::Context>&);
 	~MainMenu() {};
 
 	void Load() override;
@@ -16,7 +16,14 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	s8 FontID;
-	
-	
-};
+	s8* FontID;
+	int NoButtons;
+	std::vector<AM::RenderSetting> MMButtons;
+	std::vector<std::string> MMButtonName;
+	s32 mousex, mousey;
+	enum MMButtonID {
+		Play,
+		Settings,
+		Exit
+	};
+};	

@@ -31,6 +31,8 @@ namespace GM {
 
 	void Engine::ProcessStateChange() {
 		/*TODO Adding Load and Unload to State Change Manager*/
+		//Remove transitional state
+		ProcessTransitState();
 		//IF !State.pause unload;
 		switch (status) {
 		case ADD:
@@ -51,10 +53,25 @@ namespace GM {
 				}
 			}
 			//Finally, Add new state on top of stack
+			if (new_state->gs_type == TRANSIT_STATE) {
+				transit_stack.push(std::move(new_state));
+				transit_stack.top()->Load();
+				transit_stack.top()->Init();
+				break;
+			}
 			state_stack.push(std::move(new_state));
 			state_stack.top()->Load();
 			state_stack.top()->Init();
 			StateCount++;
+			break;
+		case RESUME:
+			state_stack.top()->Resume();
+			break;
+		case RESTART:
+			if (!state_stack.empty()) {
+				state_stack.top()->Free();
+				state_stack.top()->Init();
+			}
 			break;
 		case QUIT:
 			//Pop current state
@@ -79,7 +96,12 @@ namespace GM {
 
 	}
 
-	
+	void Engine::ProcessTransitState() {
+		if (!transit_stack.empty()) {
+			transit_stack.top()->Free();
+			transit_stack.pop();
+		}
+	}
 
 	void Engine::Update() {
 		AESysFrameStart();

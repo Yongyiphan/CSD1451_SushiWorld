@@ -40,10 +40,14 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	wosx = winw / 2;
 	wosy = winh / 2;
 
+	//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
 }
 
 void Game::Run() {
 	int gGameRunning = 1;
+	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
+	m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
+	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 	//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	m_context->gman->AddState(std::make_unique<RestState> ("RestState", m_context));
