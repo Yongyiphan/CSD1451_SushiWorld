@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "MainField.h"
-#include "TestMap.h"
+#include "ArrowMap.h"
 
 
 MainField::MainField(std::string Name, const std::shared_ptr<Context>& context){
@@ -159,7 +159,7 @@ void MainField::RoomCheck() {
 			if (t.x < rl && t.x > ll && t.y > bl && t.y < tl) {
 				r.Explored = true;
 				//execute to go next room
-				m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+				m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
 				break;
 			}
 

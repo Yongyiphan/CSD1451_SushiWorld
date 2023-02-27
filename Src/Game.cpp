@@ -2,7 +2,7 @@
 
 #include "Game.h"
 #include "PlatformMap.h"
-#include "TestMap.h"
+#include "ArrowMap.h"
 
 Game::Game()  {}
 Game::~Game() {
@@ -39,14 +39,15 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	wosx = winw / 2;
 	wosy = winh / 2;
 
-	//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+	//m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
 }
 
 void Game::Run() {
 	int gGameRunning = 1;
 	//m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
+	m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
 	//m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
-	m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
+	//m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{

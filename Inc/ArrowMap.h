@@ -5,23 +5,28 @@ struct Arrow {
 	Direction d;
 	bool dead;
 	Arrow() {
-		d = LEFT;
+		//d = LEFT;
 		dead = false;
 	}
 };
 
 struct checkbox {
+	int ID{};
 	bool dead = false;
 	AM::RenderSetting rs;
-	
 };
 
-class TestMap : public GM::State {
+struct timebox {
+	float dt;
+	AM::RenderSetting rs;
+};
+
+class ArrowMap : public GM::State {
 private:
 	std::vector<checkbox> box;
 public:
-	TestMap(char const*, const std::shared_ptr<Context>&);
-	~TestMap() {};
+	ArrowMap(char const*, const std::shared_ptr<Context>&);
+	~ArrowMap() {};
 	u32 red, green, blue, yellow;
 	s32 mx, my;
 	//std::shared_ptr<s8> FontID;
@@ -29,10 +34,13 @@ public:
 	AEGfxTexture* ptex;
 	AEGfxVertexList *pmesh;
 	//AEGfxTexture lrarrow;
-	int dmg_count;
+	int dmg_count, arrows;
 	bool isEmpty;
+	bool damage;
+	double timer;
+	timebox totaltime;
 	Boss boss{};
-
+	AM::TextureMesh ArrowMesh;
 	std::vector<Arrow> ArrowVect;
 	
 
@@ -43,9 +51,6 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 
-	void GenerateArrowKeys();
-
-
-	void DrawHPBar();
+	void GenerateArrowKeys(int);
 
 };

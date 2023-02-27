@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "MainMenu.h"
-#include "TestMap.h"
+#include "ArrowMap.h"
 
 MainMenu::MainMenu(char const* Name, const std::shared_ptr<Context>&context) {
 	StateName = Name;
@@ -25,7 +25,7 @@ void MainMenu::Free() {
 void MainMenu::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
-		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+		//m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
 		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	}
 }

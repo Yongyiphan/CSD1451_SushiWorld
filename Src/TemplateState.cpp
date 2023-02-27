@@ -24,7 +24,7 @@ void TemplateState::Free() {
 void TemplateState::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
-		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
+		//m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
 		m_context->gman->AddState(std::make_unique<MainField>("MainField", m_context));
 	}
 }
