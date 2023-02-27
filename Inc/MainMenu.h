@@ -21,7 +21,7 @@ public:
 	std::vector<AM::RenderSetting> MMButtons;
 	std::vector<std::string> MMButtonName;
 	s32 mousex, mousey;
-	enum buttonID {
+	enum MMButtonID {
 		Play,
 		Settings,
 		Exit
