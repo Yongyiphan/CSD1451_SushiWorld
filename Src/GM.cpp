@@ -111,12 +111,12 @@ namespace GM {
 		}
 		else {
 			if (!transit_stack.empty()) {
-				transit_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+				transit_stack.top()->Update(utils::UGetDT());
 				state_stack.top()->Draw();
 				transit_stack.top()->Draw();
 			}
 			else {
-				state_stack.top()->Update(AEFrameRateControllerGetFrameTime());
+				state_stack.top()->Update(utils::UGetDT());
 				state_stack.top()->Draw();
 			}
 		}

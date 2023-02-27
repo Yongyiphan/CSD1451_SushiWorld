@@ -2,6 +2,13 @@
 #include "pch.h"
 
 namespace utils {
+	enum Direction {
+		LEFT = 0,
+		TOP,
+		RIGHT,
+		BTM
+
+	};
 
 	u32 RGBAtoHex(int, int, int, int = 255);
 	void SetBackground(int r, int g, int b);
@@ -11,7 +18,7 @@ namespace utils {
 	void UDrawButton(const std::shared_ptr<AM::Renderer>& renderer, AM::RenderSetting* sett,
 		s8* = {}, std::string = {}, AM::Color = {}, f32 = 1.f , AEGfxTexture* = nullptr);
 	
-	f32 UGetDT();
+	f64 UGetDT();
 
 }
 

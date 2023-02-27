@@ -26,9 +26,9 @@ namespace utils {
 		UDrawText(Font, string, sett->t.pos.x, sett->t.pos.y, scale, c);
 	}
 
-	f32 UGetDT() {
-		f32 dt = AEFrameRateControllerGetFrameTime();
-		f32 limitdt = 1.f / FR;
+	f64 UGetDT() {
+		f64 dt = AEFrameRateControllerGetFrameTime();
+		f64 limitdt = 1.f / FR;
 		return dt > limitdt ? limitdt : dt;
 
 	}

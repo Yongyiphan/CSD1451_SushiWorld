@@ -13,11 +13,10 @@ void GameObject::ApplyGravity(double gravity) {
 	AM::Transform* t = &RenderSett.t;
 	float effect{};
 	if (t->pos.y > t->h/2) {
-		Vel.y -= sqrtf(2 * gravity * (t->pos.y - t->h / 2)) * UGetDT();
+		effect = -sqrtf(gravity * (t->pos.y - t->h / 2));
 	}
-	else {
-		Vel.y = effect;
-	}
+	Vel.y += effect;
+	std::cout << t->pos.y << ", " << Vel.y << ", " << effect << std::endl;
 }
 
 void GameObject::CalculateEnergy(EnergyType ET) {

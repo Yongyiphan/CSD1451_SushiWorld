@@ -1,13 +1,6 @@
 #pragma once
 #include "pch.h"
 
-enum Direction {
-	LEFT = 0,
-	TOP,
-	RIGHT,
-	BTM
-
-};
 enum PlayerStat {
 	HP
 };

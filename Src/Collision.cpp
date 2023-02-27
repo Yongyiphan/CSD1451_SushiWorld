@@ -16,16 +16,10 @@ namespace utils {
 		return false;
 	}
 	
-	bool AABBCollision(AM::Transform& a, AM::Transform& b) {
+	Direction AABBCollision(AM::Transform& a, AM::Transform& b) {
 		//a = normally player
 		//b = to compare with
-		if (a.pos.x < b.pos.x + b.w &&
-			a.pos.x + a.w > b.pos.x &&
-			a.pos.y < b.pos.y + b.h &&
-			a.h + a.pos.y > b.pos.y) {
-			return true;
-		}
-		return false;
+		return BTM;
 	}
 
 	//clamps position to along border
@@ -46,7 +40,6 @@ namespace utils {
 		}
 		if (top > winh) {
 			pos->y = winh - target->h / 2;
-			
 		}
 
 		return true;

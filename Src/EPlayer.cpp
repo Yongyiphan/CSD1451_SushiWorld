@@ -53,6 +53,7 @@ void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	if (frameCounter % 30 == 0) {
 		currentFrame++;
 	}
+	std::cout << RenderSett.t.pos.x << " | " << RenderSett.t.pos.y << std::endl;
 	RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
 	render->RenderRect(&RenderSett, TM.texture);
 }
@@ -97,33 +98,28 @@ void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx,
 
 void EPlayer::PlayerControl(std::string SN) {
 	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
-	f32 dt = utils::UGetDT();
-	ApplyGravity(70);
-	Vel.x = 0;
-	if (isnan(Vel.y)) {
-		std::cout << "Is Nan" << std::endl;
-	}
+	f32 dt = f32(utils::UGetDT());
+	ApplyGravity();
+	//Vel.x = 0;
 	if (SN == "PlatformMap") {
 		if (AEInputCheckTriggered(AEVK_UP)) {
-			Vel.y += 200;
+			Vel.y += 1500;
 		}
 		if (AEInputCheckCurr(AEVK_DOWN)) {
 		}
 	}
 	if (AEInputCheckCurr(AEVK_LEFT)) {
-		Vel.x -= 50;
+		Vel.x -= 300;
 	}
 	if (AEInputCheckCurr(AEVK_RIGHT)) {
-		Vel.x += 50;
+		Vel.x += 300;
 	}
 	
 	RenderSett.t.pos.x += Vel.x * dt;
 	RenderSett.t.pos.y += Vel.y * dt;
 	
 
-	if (!CheckWithinWindow(ct)) {
-		RenderSett.t = before;
-	}
+	CheckWithinWindow(ct);
 	
 }
 
