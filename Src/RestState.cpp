@@ -95,7 +95,7 @@ void RestState::Update(f64 deltaTime) {
 			
 			m_context->Player->currhp += 182390;
 			//go back map
-			if (AEInputCheckTriggered(AEVK_SPACE)) {
+			if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 				m_context->gman->AddState(std::make_unique<MainField>(m_context));
 			}
 			break;
@@ -107,7 +107,7 @@ void RestState::Update(f64 deltaTime) {
 						selectedID = i;
 						std::cout << selecteditem << std::endl;
 						MODE = UPGRADE;
-					}
+					}	
 				}
 			}
 			break;
@@ -144,6 +144,10 @@ void RestState::Update(f64 deltaTime) {
 						upgraded = FALSE;
 					}
 				}
+
+				if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+					m_context->gman->AddState(std::make_unique<MainField>(m_context));
+				}
 			}
 			break;
 	}
@@ -159,6 +163,8 @@ void RestState::Draw() {
 			m_context->render->RenderRect(&healbutton.RS);
 			break;
 		case HEALING:
+			UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f, 1, Color{255,255,255});
+
 			break;
 		case UPGRADEchoice:
 			for (int i = 0; i < 4; i++) {
@@ -172,11 +178,14 @@ void RestState::Draw() {
 			if (timepassed <= 5) {
 				UDrawText(FontID, m_context->Items->itemnames.at(selectedID), winw / 2.f, winh / 2.f, 1, Color{255,255,255});
 			}
-			else if(pass){
-				UDrawText(FontID, "Pass", winw / 2.f, winh / 2.f, 1, Color{255,255,255});
-			}
 			else {
-				UDrawText(FontID, "Fail", winw / 2.f, winh / 2.f, 1, Color{255,255,255});
+				if (pass) {
+					UDrawText(FontID, "Pass", winw / 2.f, winh / 2.f, 1, Color{ 255,255,255 });
+				}
+				else {
+					UDrawText(FontID, "Fail", winw / 2.f, winh / 2.f, 1, Color{ 255,255,255 });
+				}
+				UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 1, Color{ 255,255,255 });
 			}
 			break;
 	}
