@@ -12,8 +12,8 @@ private:
 protected:
 	std::string ObjectType;
 	bool Gravity = { false };
-	bool CanJump{ true };
 public:
+	bool CanJump{ true };
 	AEVec2 Vel = {};
 	AEVec2 Size{}, MaxBB{}, MinBB{};
 	AM::TextureMesh TM = {};

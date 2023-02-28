@@ -41,6 +41,13 @@ namespace utils {
 			IF BTM   > a.y = b.min.y - a.h/2
 			TO Check if 
 			*/
+			if (a.MinBB.y <= bMax.y) {
+				a.RenderSett.t.pos.y = bMax.y + a.Size.y;
+				a.Vel.y = 0;
+				D = TOP;
+				a.CanJump = true;
+			}
+
 
 			
 			//std::cout << "Collided: " << D << std::endl;
@@ -59,10 +66,10 @@ namespace utils {
 		//int right = int(target->pos.x + target->w/2);
 		//int top	  = int(target->pos.y + target->h/2);
 		//int btm	  = int(target->pos.y - target->h/2);
-		int left  = static_cast<f32>(target.MinBB.x);
-		int right = static_cast<f32>(target.MaxBB.x);
-		int top   = static_cast<f32>(target.MaxBB.y);
-		int btm   = static_cast<f32>(target.MinBB.y);
+		int left  = static_cast<int>(target.MinBB.x);
+		int right = static_cast<int>(target.MaxBB.x);
+		int top   = static_cast<int>(target.MaxBB.y);
+		int btm   = static_cast<int>(target.MinBB.y);
 		AEVec2* pos = &target.RenderSett.t.pos;
 		if (left < 0) {
 			pos->x = 0 + target.Size.x;

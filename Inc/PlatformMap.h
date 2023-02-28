@@ -12,6 +12,7 @@ public:
 
 	std::vector<GameObject> GameObjectList;
 	AM::RenderSetting floorY = {};
+	AM::RenderSetting P1 = {};
 	std::vector<AM::RenderSetting> GameObjectSettings;
 	void Load() override;
 	void Unload() override;
