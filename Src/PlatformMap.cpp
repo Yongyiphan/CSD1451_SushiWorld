@@ -32,7 +32,7 @@ void PlatformMap::Init() {
 	);
 	P1 = AM::RenderSetting(
 		AM::Transform{
-			400, 400.f,
+			400, 200.f,
 			150, 50.f },
 		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
 	);
@@ -57,18 +57,16 @@ void PlatformMap::Update(f64 dt) {
 	m_context->Player->Vel.x = 0;
 	m_context->Player->PlayerControl(StateName);
 	for (auto& i : GameObjectSettings) {
-		if (utils::AABBCollision(*m_context->Player.get(), i.t)) {
-			//m_context->Player->SaveLoadPlayerPos(false);
-		}
+		utils::AABBCollision(*m_context->Player.get(), i.t);
 	}
 	
 }
 void PlatformMap::Draw() {
-	m_context->Player->DrawPlayer(m_context->render);
-	m_context->Player->DrawHPBar( m_context->render, 50, winh * 0.85f);
 	for (auto& i : GameObjectSettings) {
 		m_context->render->RenderRect(&i);
 	}
+	m_context->Player->DrawPlayer(m_context->render);
+	m_context->Player->DrawHPBar( m_context->render, 50, winh * 0.85f);
 
 }
 

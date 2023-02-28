@@ -102,7 +102,7 @@ void EPlayer::PlayerControl(std::string SN) {
 	ApplyGravity();
 	//Vel.x = 0;
 	if (SN == "PlatformMap") {
-		if (AEInputCheckTriggered(AEVK_UP) && CanJump) {
+		if (AEInputCheckCurr(AEVK_UP) && CanJump) {
 			Vel.y += 1500;
 			CanJump = false;
 		}

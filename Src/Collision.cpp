@@ -41,7 +41,7 @@ namespace utils {
 			IF BTM   > a.y = b.min.y - a.h/2
 			TO Check if 
 			*/
-			if (a.MinBB.y <= bMax.y) {
+			if (a.MinBB.y <= bMax.y && (a.MaxBB.x > bMin.x || a.MinBB.x < bMax.x)) {
 				a.RenderSett.t.pos.y = bMax.y + a.Size.y;
 				a.Vel.y = 0;
 				D = TOP;
