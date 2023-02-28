@@ -31,6 +31,7 @@ void PlatformMap::Init() {
 		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
 	);
 	GameObjectSettings.push_back(floorY);
+	m_context->Player->UpdateSize();
 	//Player's details will be calculated differently (cus unique pointer)
 }
 
@@ -48,10 +49,9 @@ void PlatformMap::Update(f64 dt) {
 	m_context->Player->Vel.x = 0;
 	m_context->Player->PlayerControl(StateName);
 	
-	
 	for (auto& i : GameObjectSettings) {
-		if (utils::AABBCollision(m_context->Player->RenderSett.t, i.t)) {
-			//m_context->Player->SaveLoadPlayerPos(false);
+		if (utils::AABBCollision(*m_context->Player.get(), i.t)) {
+			m_context->Player->SaveLoadPlayerPos(false);
 		}
 	}
 	

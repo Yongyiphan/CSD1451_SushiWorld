@@ -6,7 +6,7 @@ namespace GM {
 		std::unique_ptr<GM::Engine> gman;
 		std::shared_ptr<AM::Renderer> render;
 		std::shared_ptr<AM::AssetManager> assets;
-		std::unique_ptr<EPlayer> Player;
+		std::shared_ptr<EPlayer> Player;
 
 		Context() {
 			gman = std::make_unique<GM::Engine>();

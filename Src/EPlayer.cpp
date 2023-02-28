@@ -37,7 +37,7 @@ void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetM
 		for loop, to iterate through frames
 	*/
 	TM = TextureMesh(320, 160, 2, 1, 2, 5, 5, 6, 6, 7, 8);
-	TM = AM->LoadTexture(location, TM, ANIMATION);
+	TM = AM->LoadTexture(location, TM);
 	AnimationFrames = TM.AFrames;
 }
 
@@ -53,7 +53,7 @@ void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	if (frameCounter % 30 == 0) {
 		currentFrame++;
 	}
-	std::cout << RenderSett.t.pos.x << " | " << RenderSett.t.pos.y << std::endl;
+	//std::cout << RenderSett.t.pos.x << " | " << RenderSett.t.pos.y << std::endl;
 	RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
 	render->RenderRect(&RenderSett, TM.texture);
 }
@@ -102,8 +102,9 @@ void EPlayer::PlayerControl(std::string SN) {
 	ApplyGravity();
 	//Vel.x = 0;
 	if (SN == "PlatformMap") {
-		if (AEInputCheckTriggered(AEVK_UP)) {
+		if (AEInputCheckTriggered(AEVK_UP) && CanJump) {
 			Vel.y += 1500;
+			CanJump = false;
 		}
 		if (AEInputCheckCurr(AEVK_DOWN)) {
 		}
@@ -118,8 +119,11 @@ void EPlayer::PlayerControl(std::string SN) {
 	RenderSett.t.pos.x += Vel.x * dt;
 	RenderSett.t.pos.y += Vel.y * dt;
 	
-
-	CheckWithinWindow(ct);
+	CheckWithinWindow(*this);
+	UpdateBB();
+	if (Vel.y == 0) {
+		CanJump = true;
+	}
 	
 }
 

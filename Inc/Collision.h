@@ -4,8 +4,10 @@
 
 namespace utils {
 	bool AreaClicked(AM::Transform*, s32, s32);
-	Direction AABBCollision(AM::Transform&, AM::Transform&);
+	//bool AABBCollision(AM::Transform&, AM::Transform&);
+	//Direction AABBCollision(AM::Transform&, AM::Transform&);
+	Direction AABBCollision(GameObject&, AM::Transform&);
 
-	bool CheckWithinWindow(AM::Transform*);
+	bool CheckWithinWindow(GameObject&);
 
 }

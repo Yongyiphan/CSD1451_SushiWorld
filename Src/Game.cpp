@@ -29,7 +29,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	m_context = std::make_shared<Context>();
 	//Initialize Player Here
 	//IMPORTANT Load Fonts Here
-	m_context->Player = std::make_unique<EPlayer>();
+	m_context->Player = std::make_shared<EPlayer>();
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	
@@ -45,7 +45,8 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 
 void Game::Run() {
 	int gGameRunning = 1;
-	m_context->gman->AddState(std::make_unique<MainField>(m_context));
+	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
+	//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
 	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	// Game Loop

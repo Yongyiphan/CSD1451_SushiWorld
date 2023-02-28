@@ -26,6 +26,4 @@ public:
 	//False = load from save
 	void SaveLoadPlayerPos(bool = true);
 
-	double speed = {}, jump = {};
-
 };
