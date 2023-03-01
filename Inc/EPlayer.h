@@ -11,9 +11,10 @@ public:
 	int x{}, y{}, size{};
 	u32 color{ 0xFF000000 };
 	//Max HP, Current HP
-	int maxhp{}, currhp{}, hpsize{}, hpscale{1};
-	float fullhpbar{}, currhpbar{};
-	AM::RenderSetting MaxHPRender, CurrHPRender;
+	float maxhp{}, currhp{};
+	//AM::RenderSetting MaxHPRender, CurrHPRender;
+	HPBar PHPBar;
+	
 	int AnimationFrames, currentFrame, frameCounter;
 	EPlayer();
 	~EPlayer() {};
@@ -27,3 +28,4 @@ public:
 	void SaveLoadPlayerPos(bool = true);
 
 };
+

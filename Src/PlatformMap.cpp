@@ -53,8 +53,15 @@ void PlatformMap::Update(f64 dt) {
 		m_context->gman->SetStatus(QUIT);
 	//	m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
 	}
+
+	if (AEInputCheckTriggered(AEVK_A)) {
+		m_context->Player->currhp-=10;
+	}
+	if (AEInputCheckTriggered(AEVK_D)) {
+		m_context->Player->currhp+=10;
+	}
+
 	m_context->Player->SaveLoadPlayerPos();
-	m_context->Player->Vel.x = 0;
 	m_context->Player->PlayerControl(StateName);
 	for (auto& i : GameObjectSettings) {
 		utils::AABBCollision(*m_context->Player.get(), i.t);
@@ -66,7 +73,7 @@ void PlatformMap::Draw() {
 		m_context->render->RenderRect(&i);
 	}
 	m_context->Player->DrawPlayer(m_context->render);
-	m_context->Player->DrawHPBar( m_context->render, 50, winh * 0.85f);
+	m_context->Player->DrawHPBar( m_context->render, 150, winh * 0.85f);
 
 }
 
