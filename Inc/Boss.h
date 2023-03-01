@@ -1,29 +1,18 @@
 #pragma once
 #include "pch.h"
 
-class Boss {
+class Boss : public GameObject{
 private:
 	
 public:
-	int x, y, size;
-	u32 color;
 	//Max HP, Current HP
-	int maxhp, currhp, hpsize, hpscale;
-	float fullhpbar, currhpbar;
+	float maxhp, currhp;
 
-	AM::RenderSetting BossRender, MaxHPRender, CurrHPRender;
+	AM::RenderSetting BossRender;
+	HPBar BHPBar;
 	AEGfxTexture* PTexture;
 
-	Boss() {
-		x = y = size = 0;
-		maxhp = currhp = hpsize = 0;
-		hpscale = 1;
-		fullhpbar = currhpbar = 0.f;
-		color = 0xFFFFFFFF;
-		BossRender = AM::RenderSetting{};
-		MaxHPRender = CurrHPRender = AM::RenderSetting{};
-		PTexture = nullptr;
-	};
+	Boss();
 
 	~Boss() {};
 	void InitBossStats(int, int);
