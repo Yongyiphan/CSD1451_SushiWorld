@@ -15,7 +15,6 @@ public:
 	//AM::RenderSetting MaxHPRender, CurrHPRender;
 	HPBar PHPBar;
 	
-	int AnimationFrames, currentFrame, frameCounter;
 	EPlayer();
 	~EPlayer() {};
 	void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);

@@ -14,6 +14,7 @@ public:
 	AM::TextureMesh TM = {};
 	//Pos is contained within render sett
 	AM::RenderSetting RenderSett = {};
+	int AnimationFrames{}, currentFrame{}, frameCounter{};
 	GameObject();
 	~GameObject();
 	void ApplyGravity(double gravity = 9.81);

@@ -2,7 +2,7 @@
 
 #include "Game.h"
 #include "PlatformMap.h"
-#include "TestMap.h"
+#include "ArrowMap.h"
 
 Game::Game()  {}
 Game::~Game() {
@@ -29,8 +29,10 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	m_context = std::make_shared<Context>();
 	//Initialize Player Here
 	//IMPORTANT Load Fonts Here
+	m_context->Boss = std::make_shared<Boss>();
 	m_context->Player = std::make_shared<EPlayer>();
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
+	m_context->Boss->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	
 	// reset the system modules
@@ -40,15 +42,14 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	wosx = winw / 2;
 	wosy = winh / 2;
 
-	//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
 }
 
 void Game::Run() {
 	int gGameRunning = 1;
 	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
-	//m_context->gman->AddState(std::make_unique<TestMap>(m_context));
-	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
-	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+	m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
+	//m_context->gman->AddState(std::make_unique<MainMenu>("MainMenu", m_context));
+	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{

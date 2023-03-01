@@ -39,7 +39,7 @@ namespace AM {
 		*/
 		TextureMesh(
 			float sw, float sh, 
-			int acol = 1, int arow = 1, int timg = 1,
+			int acol = 1, int arow = 1, int timg = 0,
 			int scaleX = 1, int scaleY = 1,
 			int l = 0, int r = 0, int t = 0, int b = 0
 			) {

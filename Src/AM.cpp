@@ -56,7 +56,7 @@ namespace AM {
 		if (TextureDict.find(location) == TextureDict.end()) {
 			TM.texture = AEGfxTextureLoad(location.c_str());
 			int r{}, c{}; //<- iterate through rows then col of sprite sheet
-			int noframe = TM.ARow * TM.ACol < TM.TImg ? TM.ARow * TM.ACol : TM.TImg;
+			int noframe = !TM.TImg ? TM.ACol * TM.ARow : TM.TImg;
 			TM.animationframes.reserve(noframe);
 			while (r < TM.ARow) {
 				c = 0;

@@ -34,6 +34,7 @@ using namespace utils;
 #include "MainMenu.h"
 #include "MainField.h"
 #include "PlatformMap.h"
+#include "ArrowMap.h"
 
 
 #endif// PCH_H

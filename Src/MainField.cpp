@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "MainField.h"
-#include "TestMap.h"
 
+#include "MapChooseScreen.h"
 
 MainField::MainField(const std::shared_ptr<Context>& context){
 	StateName = "MainField";
@@ -116,7 +116,7 @@ void MainField::EnterRoom() {
 	MiniRoom *c = &Room.at(currentRoom);
 	if (!c->Explored) {
 		c->Explored = true;
-		m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+		m_context->gman->AddState(std::make_unique<MapChooseScreen>(m_context));
 	}
 }
 
