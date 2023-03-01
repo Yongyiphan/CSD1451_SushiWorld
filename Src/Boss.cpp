@@ -9,7 +9,7 @@ Boss::Boss() {
 
 void Boss::InitBossStats(int StartingHP, int HPsize) {
 	this->maxhp = this->currhp = StartingHP;
-	BHPBar = HPBar(maxhp, currhp, 250, 30);
+	BHPBar = HPBar(f32(maxhp), f32(currhp), 250.f, 30.f);
 }
 
 void Boss::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager>& AM) {

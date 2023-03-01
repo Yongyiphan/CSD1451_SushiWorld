@@ -11,7 +11,11 @@ public:
 	~MapChooseScreen() {};
 
 	
+	AM::RenderSetting BGBlur = {};
 
+	RoomMap RoomA{}, RoomB{};
+	AM::RenderSetting ChoiceA = {}, ChoiceB = {};
+	bool RoomCreated{ false };
 
 	void Load() override;
 	void Unload() override;
@@ -22,6 +26,7 @@ public:
 	s8 *FontID;
 	//Mouse x and y
 	s32 mx, my;
+	void Redirect(RoomMap);
 	
 	
 };

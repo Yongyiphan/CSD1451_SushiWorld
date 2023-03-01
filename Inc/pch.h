@@ -30,11 +30,12 @@ using namespace utils;
 
 //Game States include
 #include "Game.h"
-#include "PauseScreen.h"
 #include "MainMenu.h"
 #include "MainField.h"
 #include "PlatformMap.h"
 #include "ArrowMap.h"
+#include "MapChooseScreen.h"
+#include "PauseScreen.h"
 
 
 #endif// PCH_H

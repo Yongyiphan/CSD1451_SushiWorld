@@ -2,7 +2,7 @@
 #include "pch.h"
 
 struct Arrow {
-	Direction d;
+	Direction d = {};
 	bool dead;
 	Arrow() {
 		//d = LEFT;

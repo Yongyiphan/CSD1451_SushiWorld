@@ -15,6 +15,8 @@ struct MiniRoom {
 };
 
 
+//IMPORTANT, UPDATE HERE WHEN ADDING NEW STATE
+
 class MainField : public GM::State {
 private:
 
@@ -47,3 +49,4 @@ public:
 	void CheckFieldBound(AM::Transform *);
 	void EnterRoom();
 };
+
