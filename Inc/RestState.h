@@ -29,7 +29,8 @@ private:
 public:
 	//Variables
 	s32 mouseX, mouseY;
-	u32 red,blue,green;
+	u32 red, blue, green;
+	AM::Color itemavail;
 	render healbutton,upgradebutton, upgradebackground;
 	std::vector<render> upgradechoices;
 	mode MODE;
@@ -38,8 +39,11 @@ public:
 	float timepassed = 0;
 	float upgradenum = 0;
 	bool pass;
+	bool noitems = 1;
 	bool upgraded = 1;
 	std::string selecteditem;
+	AM::TextureMesh healicon,upgradeicon;
+
 	int selectedID;
 	///Methods
 
