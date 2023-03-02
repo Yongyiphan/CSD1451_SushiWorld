@@ -138,7 +138,7 @@ void ArrowMap::Draw() {
 	m_context->Boss->DrawHPBar(m_context->render, posx + 450, posy);
 
 	if (m_context->Boss->currhp == 0) {
-		//utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
+		utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
 	}
 
 	for (auto& i : this->box) {
