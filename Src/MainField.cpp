@@ -91,19 +91,19 @@ void MainField::Draw() {
 void MainField::CheckFieldBound(AM::Transform *target) {
 	int PrevRoomI{ currentRoom }, NextRoomI{};
 	bool IfClick = false;
-	if (AEInputCheckTriggered(AEVK_A)) {
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
 		NextRoomI = currentRoom - RoomRow;
 		IfClick = true;
 	}
-	if (AEInputCheckTriggered(AEVK_D)) {
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
 		NextRoomI = currentRoom + RoomRow;
 		IfClick = true;
 	}
-	if (AEInputCheckTriggered(AEVK_W)) {
+	if (AEInputCheckTriggered(AEVK_UP)) {
 		NextRoomI = currentRoom + 1;
 		IfClick = true;
 	}
-	if (AEInputCheckTriggered(AEVK_S)) {
+	if (AEInputCheckTriggered(AEVK_DOWN)) {
 		NextRoomI = currentRoom - 1;
 		IfClick = true;
 	}
