@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ArrowMap.h"
 #include "time.h"
+#include <chrono>
 
 ArrowMap::ArrowMap(const std::shared_ptr<Context>& context)
 {
@@ -55,54 +56,32 @@ void ArrowMap::Update(f64 deltaTime) {
 			isEmpty = true;
 			damage = true;
 		}
-		if (isEmpty == false) {
-			if (AEInputCheckTriggered(AEVK_ESCAPE)) {
-				m_context->gman->SetStatus(QUIT);
-			}
+		if (!isEmpty) {
 			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 				AEInputGetCursorPosition(&mx, &my);
 				Transform temp = m_context->Player->RenderSett.t;
 				std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
 			}
+
 			//up = blue
 			if (AEInputCheckTriggered(AEVK_UP)) {
-				if (this->box.front().ID == 1) {
-					dmg_count++;
-					this->box.erase(this->box.begin());
-					std::cout << dmg_count << std::endl;
-				}
-				else { isEmpty = true; damage = false;}
+				CheckArrowKeysPressed(UP_KEY);
 			}
 			//down = red
 			if (AEInputCheckTriggered(AEVK_DOWN)) {
-				if (this->box.front().ID == 2) {
-					dmg_count++;
-					this->box.erase(this->box.begin());
-					std::cout << dmg_count << std::endl;
-				}
-				else { isEmpty = true; damage = false;}
+				CheckArrowKeysPressed(DOWN_KEY);
 			}
 			//left = green
 			if (AEInputCheckTriggered(AEVK_LEFT)) {
-				if (this->box.front().ID == 0) {
-					dmg_count++;
-					this->box.erase(this->box.begin());
-					std::cout << dmg_count << std::endl;
-				}
-				else { isEmpty = true; damage = false;}
+				CheckArrowKeysPressed(LEFT_KEY);
 			}
 			//right = yellow
 			if (AEInputCheckTriggered(AEVK_RIGHT)) {
-				if (this->box.front().ID == 3) {
-					dmg_count++;
-					this->box.erase(this->box.begin());
-					std::cout << dmg_count << std::endl;
-				}
-				else { isEmpty = true; damage = false;}
+				CheckArrowKeysPressed(RIGHT_KEY);
 			}
 		}
-		else if (isEmpty == true) {
-			if (damage == false) {
+		else{
+			if (!damage) {
 				dmg_count = 1;
 				if (m_context->Player->currhp >= dmg_count) {
 					m_context->Player->currhp -= dmg_count;
@@ -155,8 +134,8 @@ void ArrowMap::Draw() {
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
 	str = std::to_string(m_context->Boss->currhp);
-	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 400, posy + baroffset, 1, Color{ 0,0,0 });
-	m_context->Boss->DrawHPBar(m_context->render, posx + 400, posy);
+	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 450, posy + baroffset, 1, Color{ 0,0,0 });
+	m_context->Boss->DrawHPBar(m_context->render, posx + 450, posy);
 
 	if (m_context->Boss->currhp == 0) {
 		//utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
@@ -171,7 +150,7 @@ void ArrowMap::Draw() {
 	m_context->render->RenderRect(&totaltime.rs);
 
 	str = std::to_string((int)totaltime.dt);
-	utils::UDrawText(FontID, str, 350.f, 450.f, 1, Color{ 255,255,255 });
+	utils::UDrawText(FontID, str, 400.f, 450.f, 1, Color{ 255,255,255 });
 
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Boss->DrawBoss(m_context->render);
@@ -180,6 +159,7 @@ void ArrowMap::Draw() {
 
 void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	u32 rcolour[] = { red,green,blue,yellow };
+	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
 	totaltime.dt = 15.f;
@@ -188,18 +168,29 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 		checkbox cb;
 		cb.ID = random;
 		cb.dead = 0;
+		float offset = i * 60.f;
 		cb.rs = AM::RenderSetting(AM::Transform{
-			125.f + (i * 60.f) , 400.f,
+			400.f - ((new_arrow - 1) * 30.f) + offset,
+			400.f,
 			50.f , 50.f
 			}, AM::GfxSetting{ rcolour[random] });
 		box.push_back(cb);
 	}
 	totaltime.rs = AM::RenderSetting(AM::Transform{
-		350.f , 450.f,
+		400.f , 450.f,
 		30.f * totaltime.dt , 30.f
 		}, AM::GfxSetting{ blue });
 	/*totaltime.crs = AM::RenderSetting(AM::Transform{
 		380.f , 450.f,
 		30.f * totaltime.ct , 30.f
 		}, AM::GfxSetting{ red });*/
+}
+
+void ArrowMap::CheckArrowKeysPressed(int id) {
+	if (box.front().ID == id) {
+		dmg_count++;
+		box.erase(box.begin());
+		std::cout << dmg_count << std::endl;
+	}
+	else { isEmpty = true; damage = false; }
 }

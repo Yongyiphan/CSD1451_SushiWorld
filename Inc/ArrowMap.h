@@ -21,6 +21,13 @@ struct timebox {
 	AM::RenderSetting rs;
 };
 
+enum arrowkeys {
+	LEFT_KEY,
+	UP_KEY,
+	DOWN_KEY,
+	RIGHT_KEY
+};
+
 class ArrowMap : public GM::State {
 private:
 	std::vector<checkbox> box;
@@ -47,5 +54,5 @@ public:
 	void Draw()override;
 
 	void GenerateArrowKeys(int);
-
+	void CheckArrowKeysPressed(int);
 };
