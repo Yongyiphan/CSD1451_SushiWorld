@@ -17,7 +17,6 @@ public:
 	s8* FontID;
 	int choice1, choice2;
 	//ItemManager IM;
-	s32 mousex, mousey;
 	int noshopbuttons;
 	void RenderRandomItemChoices();
 	

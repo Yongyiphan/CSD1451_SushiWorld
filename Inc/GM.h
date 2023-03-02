@@ -4,10 +4,10 @@
 
 //IMPORTANT Global variables, possibly useful
 //Window width, height
-extern int winw, winh;
+extern f32 winw, winh;
 
 //window offset x and y
-extern int wosx, wosy;
+extern f32 wosx, wosy;
 
 //Framerate cannot drop below this value
 extern int FR;
@@ -46,7 +46,7 @@ namespace GM {
 		SHOP,
 		REST
 	};
-	static int TotalRooms{ 3 - 1};
+	static int TotalRooms{ 3 - 1 };
 	static std::vector < std::string> RoomNames = {
 		"Arrow Battle", 
 		//"Platform Battle",
@@ -57,6 +57,8 @@ namespace GM {
 		bool pause = false;
 		std::shared_ptr<Context> m_context;
 		//IMPORTANT: Change within State constructor when initializing transit state
+
+		s32 mousex{}, mousey{};
 	public:
 		//Variables
 		std::string StateName;

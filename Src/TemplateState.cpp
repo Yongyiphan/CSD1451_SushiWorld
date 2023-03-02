@@ -7,14 +7,13 @@ TemplateState::TemplateState(const std::shared_ptr<Context>&context) {
 }
 
 void TemplateState::Load() {
-	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 }
 void TemplateState::Unload(){
 }
 
 void TemplateState::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	SetBackground(255, 127, 80);	
 }
 
 void TemplateState::Free() {
@@ -24,11 +23,14 @@ void TemplateState::Free() {
 void TemplateState::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
-		//m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
-		m_context->gman->AddState(std::make_unique<MainField>(m_context));
+		//m_context->gman->AddState(std::make_unique<MainField>(m_context));
+		//m_context->gman->SetStatus(QUIT);
+		//m_context->gman->SetStatus(QUIT, true);
+	}
+	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+		m_context->gman->SetStatus(QUIT);
 	}
 }
 void TemplateState::Draw() {
-	SetBackground(255, 127, 80);
 	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 }

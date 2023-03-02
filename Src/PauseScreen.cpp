@@ -13,16 +13,16 @@ void PauseScreen::Load() {
 	//Resume Button
 	int buttonOffsetH = 80;
 	ResumeGfx = AM::RenderSetting{
-		AM::Transform{f32(wosx), f32(wosy + buttonOffsetH), 150, 50},
+		AM::Transform{wosx, wosy + buttonOffsetH, 150, 50},
 		AM::GfxSetting{utils::RGBAtoHex(100,100,100)}
 	};
 	//Return to main menu button
 	MMGfx= AM::RenderSetting{
-		AM::Transform{f32(wosx), f32(wosy - buttonOffsetH), 150, 50},
+		AM::Transform{wosx, wosy - buttonOffsetH, 150, 50},
 		AM::GfxSetting{utils::RGBAtoHex(100,100,100)}
 	};
 	PauseScreenBorderGfx = AM::RenderSetting{
-		AM::Transform{f32(wosx), f32(wosy), 250, 350},
+		AM::Transform{wosx, wosy, 250, 350},
 		AM::GfxSetting{utils::RGBAtoHex(50,150,50)}
 	};
 }
@@ -39,17 +39,17 @@ void PauseScreen::Free() {
 }
 
 void PauseScreen::Update(f64 deltaTime) {
-	AEInputGetCursorPosition(&mx, &my);
+	AEInputGetCursorPosition(&mousex, &mousey);
 	
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		//m_context->gman->AddState(std::make_unique<PlatformMap>("PlatformMap", m_context));
 		m_context->gman->SetStatus(RESUME);
 	}
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-		if (utils::AreaClicked(&ResumeGfx.t, mx, my)) {
+		if (utils::AreaClicked(&ResumeGfx.t, mousex, mousey)) {
 			m_context->gman->SetStatus(RESUME);
 		}
-		if (utils::AreaClicked(&MMGfx.t, mx, my)) {
+		if (utils::AreaClicked(&MMGfx.t, mousex, mousey)) {
 			m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
 		}
 	}

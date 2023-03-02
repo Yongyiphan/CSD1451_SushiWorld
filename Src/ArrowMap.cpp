@@ -58,9 +58,9 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 		if (!isEmpty) {
 			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-				AEInputGetCursorPosition(&mx, &my);
+				AEInputGetCursorPosition(&mousex, &mousey);
 				Transform temp = m_context->Player->RenderSett.t;
-				std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+				std::cout << "X: " << "(" << mousex << ")" << " | Y: " << "(" << mousey << ")" << std::endl;
 			}
 
 			//up = blue
@@ -118,9 +118,9 @@ void ArrowMap::Update(f64 deltaTime) {
 			totaltime.dt += 1.f;
 		}
 		if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-			AEInputGetCursorPosition(&mx, &my);
+			AEInputGetCursorPosition(&mousex, &mousey);
 			Transform temp = m_context->Player->RenderSett.t;
-			std::cout << "X: " << "(" << mx << ")" << " | Y: " << "(" << my << ")" << std::endl;
+			std::cout << "X: " << "(" << mousex << ")" << " | Y: " << "(" << mousey << ")" << std::endl;
 		}
 	}
 }

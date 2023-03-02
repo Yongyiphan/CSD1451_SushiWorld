@@ -64,7 +64,7 @@ void MainField::Free() {
 };
 void MainField::Update(f64 dt) {
 	
-	AEInputGetCursorPosition(&mx, &my);
+	AEInputGetCursorPosition(&mousex, &mousey);
 	CheckFieldBound(&m_context->Player->RenderSett.t);
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {

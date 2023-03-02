@@ -12,7 +12,8 @@ Game::~Game() {
 
 
 
-int winw, winh, wosx, wosy, FR;
+float winw, winh, wosx, wosy;
+int FR;
 void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	hInstance = hI; 
 	nCmdShow = scmd;
@@ -38,17 +39,17 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 
 	// reset the system modules
 	AESysReset();
-	winw = AEGetWindowWidth();
-	winh = AEGetWindowHeight();
-	wosx = winw / 2;
-	wosy = winh / 2;
+	winw = static_cast<f32>(AEGetWindowWidth());
+	winh = static_cast<f32>(AEGetWindowHeight());
+	wosx = winw / 2.f;
+	wosy = winh / 2.f;
 
 }
 
 void Game::Run() {
 	int gGameRunning = 1;
-	m_context->gman->AddState(std::make_unique<MainField>(m_context));
-	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
+	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
+	m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
 	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<RestState>(m_context));
 	// Game Loop

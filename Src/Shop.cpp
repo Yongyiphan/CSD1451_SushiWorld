@@ -15,7 +15,6 @@ void Shop::Unload() {
 
 void Shop::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	SetBackground(100, 127, 123);
 	
 	float startposx = static_cast<float>(winw - (2* (winw / 3)));
 	for (int i{}; i < 2; i++) {
@@ -40,8 +39,6 @@ void Shop::Update(f64 deltaTime) {
 		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 		m_context->gman->SetStatus(QUIT);
 	}	
-	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, AM::Color(), 0.f, 100.f, 1.0f);
-	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, AM::Color(), 0.f, 100.f, 1.0f);
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		if (AreaClicked(&shopbuttons.at(0).t, mousex, mousey)) {
 			Item *s1= &m_context->Items->items.at(choice1);
@@ -72,6 +69,8 @@ void Shop::Draw() {
 	/*for (int i{ 0 }; i < NUM_ITEMS; i++) {
 	  	UDrawButton(m_context->render, &shopbuttons.at(i), FontID, itemnames.at(i), AM::Color(), 0.f, 100.f, 1.0f);
 	}*/
+	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, AM::Color(), 0.f, 100.f, 1.0f);
+	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, AM::Color(), 0.f, 100.f, 1.0f);
 }
 
 void Shop::RenderRandomItemChoices() {

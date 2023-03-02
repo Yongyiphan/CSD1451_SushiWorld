@@ -21,19 +21,19 @@ void MapChooseScreen::Unload(){
 void MapChooseScreen::Init() {
 	u32 grey = utils::RGBAtoHex(110, 110, 110);
 	BGBlur.t = AM::Transform(
-		f32(wosx), f32(wosy),
-		f32(winw), f32(winh)
+		wosx, wosy,
+		winw, winh
 	);
 	BGBlur.gfx.transparency = 0.5f;
 	float ChoiceWidth = 150, ChoiceHeight = 300;
 	ChoiceA.t = AM::Transform(
-		winw / 3.f, f32(wosy),
+		winw / 3.f, wosy,
 		ChoiceWidth, ChoiceHeight
 	);
 	ChoiceA.gfx.Color = grey;
 
 	ChoiceB.t = AM::Transform(
-		2 * winw / 3.f, f32(wosy),
+		2 * winw / 3.f, wosy,
 		ChoiceWidth, ChoiceHeight
 	);
 	ChoiceB.gfx.Color = grey;
@@ -47,18 +47,18 @@ void MapChooseScreen::Free() {
 }
 
 void MapChooseScreen::Update(f64 deltaTime) {
-	AEInputGetCursorPosition(&mx, &my);
+	AEInputGetCursorPosition(&mousex, &mousey);
 	
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(RESUME);
 	}
 
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-		AEInputGetCursorPosition(&mx, &my);
-		if (utils::AreaClicked(&ChoiceA.t, mx, my)) {
+		AEInputGetCursorPosition(&mousex, &mousey);
+		if (utils::AreaClicked(&ChoiceA.t, mousex, mousey)) {
 			Redirect(RoomA);
 		}
-		if (utils::AreaClicked(&ChoiceB.t, mx, my)) {
+		if (utils::AreaClicked(&ChoiceB.t, mousex, mousey)) {
 			Redirect(RoomB);
 		}
 	}

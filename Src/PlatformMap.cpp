@@ -18,7 +18,6 @@ void PlatformMap::Init() {
 	GameObjectList.clear();
 	GameObjectList.reserve(500);
 	std::cout << "Init " << StateName << std::endl;
-	SetBackground(255, 127, 80);
 
 	AM::Transform t = AM::Transform{
 		150,150,100,100
@@ -26,8 +25,8 @@ void PlatformMap::Init() {
 	m_context->Player->RenderSett.t = t;
 	floorY = AM::RenderSetting(
 		AM::Transform{
-			f32(wosx), 25.f,
-			f32(winw), 50.f },
+			wosx, 25.f,
+			winw, 50.f },
 		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
 	);
 	P1 = AM::RenderSetting(

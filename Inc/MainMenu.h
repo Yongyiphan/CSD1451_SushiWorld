@@ -6,6 +6,11 @@ private:
 public:
 	//Variables
 	///Methods
+	enum MMButtonID {
+		Play,
+		Tutorial,
+		Exit
+	};
 
 	MainMenu(const std::shared_ptr<GM::Context>&);
 	~MainMenu() {};
@@ -20,10 +25,9 @@ public:
 	int NoButtons;
 	std::vector<AM::RenderSetting> MMButtons;
 	std::vector<std::string> MMButtonName;
-	s32 mousex, mousey;
-	enum MMButtonID {
-		Play,
-		Settings,
-		Exit
-	};
+
+	AM::RenderSetting CurrButton;
+	int CurrSelection{};
+
+	void Redirect(MMButtonID);
 };	

@@ -44,15 +44,15 @@ namespace AM {
 	AEMtx33 Renderer::TransformMatrix(Transform* t) {
 		AEMtx33 scale = { 0 };
 		AEMtx33 rotate = { 0 }, translate = { 0 }, transform = { 0 };
-		AEMtx33Scale(&scale, f32(t->w), f32(t->h));
+		AEMtx33Scale(&scale, t->w, t->h);
 
-		AEMtx33Rot(&rotate, f32(t->RotA));
+		AEMtx33Rot(&rotate, t->RotA);
 		switch (t->tos) {
 		case DEFAULT:
-			AEMtx33Trans(&translate, f32(t->pos.x -wosx), f32(t->pos.y -wosy));
+			AEMtx33Trans(&translate, t->pos.x -wosx, t->pos.y -wosy);
 			break;
 		case OFF:
-			AEMtx33Trans(&translate, f32(t->pos.x + t->ox), f32(t->pos.y + t->oy));
+			AEMtx33Trans(&translate, t->pos.x + t->ox, t->pos.y + t->oy);
 			break;
 		}
 

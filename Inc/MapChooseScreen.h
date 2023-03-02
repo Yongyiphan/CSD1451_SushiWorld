@@ -24,7 +24,6 @@ public:
 	void Draw()override;
 	s8 *FontID;
 	//Mouse x and y
-	s32 mx, my;
 	void Redirect(RoomMap);
 	void GenerateRoomChoice();
 	

@@ -10,7 +10,7 @@ namespace GM {
 		std::shared_ptr<Boss> Boss;
 		std::shared_ptr<RoomTracker> RT;
 		std::shared_ptr<ItemManager> Items;
-
+		bool Tutorial{ false };
 		Context() {
 			gman = std::make_unique<GM::Engine>();
 			render = std::make_shared<AM::Renderer>();

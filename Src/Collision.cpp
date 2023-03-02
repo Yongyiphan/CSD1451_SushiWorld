@@ -4,7 +4,7 @@
 namespace utils {
 
 	bool AreaClicked(AM::Transform* target, s32 mx, s32 my) {
-		my = winh - my;
+		my = static_cast<s32>(winh)- my;
 		float leftLimit = target->pos.x - target->w / 2.f;
 		float rightLimit = target->pos.x + target->w / 2.f;
 

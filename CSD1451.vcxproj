@@ -23,6 +23,7 @@
     <ClCompile Include="Src\RestState.cpp" />
     <ClCompile Include="Src\Shop.cpp" />
     <ClCompile Include="Src\TemplateState.cpp" />
+    <ClCompile Include="Src\Instructions.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
     <ClCompile Include="Src\Game.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Inc\RestState.h" />
     <ClInclude Include="Inc\Shop.h" />
     <ClInclude Include="Inc\TemplateState.h" />
+    <ClInclude Include="Inc\Instructions.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />
     <ClInclude Include="Inc\Game.h" />

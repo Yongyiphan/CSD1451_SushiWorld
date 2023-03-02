@@ -35,7 +35,6 @@ public:
 	ArrowMap(const std::shared_ptr<Context>&);
 	~ArrowMap() {};
 	u32 red, green, blue, yellow;
-	s32 mx, my;
 	//std::shared_ptr<s8> FontID;
 	s8* FontID;
 	//AEGfxTexture lrarrow;
