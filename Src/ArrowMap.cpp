@@ -129,11 +129,11 @@ void ArrowMap::Draw() {
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
-	str = std::to_string(m_context->Player->currhp);
+	str = std::to_string(static_cast<int>(m_context->Player->currhp));
 	utils::UDrawText(FontID, "Player's HP:" + str, posx, posy + baroffset, 1, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
-	str = std::to_string(m_context->Boss->currhp);
+	str = std::to_string(static_cast<int>(m_context->Boss->currhp));
 	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 450, posy + baroffset, 1, Color{ 0,0,0 });
 	m_context->Boss->DrawHPBar(m_context->render, posx + 450, posy);
 

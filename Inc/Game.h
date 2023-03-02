@@ -9,6 +9,7 @@ namespace GM {
 		std::shared_ptr<EPlayer> Player;
 		std::shared_ptr<Boss> Boss;
 		std::shared_ptr<RoomTracker> RT;
+		std::shared_ptr<ItemManager> Items;
 
 		Context() {
 			gman = std::make_unique<GM::Engine>();
@@ -16,6 +17,7 @@ namespace GM {
 			assets = std::make_shared<AM::AssetManager>();
 			RT = std::make_shared<RoomTracker>();
 			//Player = std::make_unique<EPlayer>();
+			Items = std::make_shared<ItemManager>();
 		}
 	};
 }

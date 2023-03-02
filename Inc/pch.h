@@ -12,7 +12,8 @@
 #include <unordered_map>
 #include <map>
 #include <tuple>
-
+#include <ctime>
+#include <random>
 //Custom Includes
 #include "AEEngine.h"
 #include "GM.h"
@@ -23,6 +24,7 @@
 #include "Collision.h"
 #include "EPlayer.h"
 #include "Boss.h"
+#include "ItemManager.h"
 
 using namespace GM;
 using namespace AM;
@@ -36,7 +38,8 @@ using namespace utils;
 #include "ArrowMap.h"
 #include "MapChooseScreen.h"
 #include "PauseScreen.h"
-
+#include "RestState.h"
+#include "Shop.h"
 
 #endif// PCH_H
 

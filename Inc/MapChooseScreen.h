@@ -15,7 +15,6 @@ public:
 
 	RoomMap RoomA{}, RoomB{};
 	AM::RenderSetting ChoiceA = {}, ChoiceB = {};
-	bool RoomCreated{ false };
 
 	void Load() override;
 	void Unload() override;
@@ -27,6 +26,7 @@ public:
 	//Mouse x and y
 	s32 mx, my;
 	void Redirect(RoomMap);
+	void GenerateRoomChoice();
 	
 	
 };

@@ -70,6 +70,9 @@ void MainField::Update(f64 dt) {
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT, true);
 	}
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<Shop>(m_context));
+	}
 
 	
 
@@ -107,7 +110,6 @@ void MainField::CheckFieldBound(AM::Transform *target) {
 	if (IfClick) {
 		currentRoom = NextRoomI >= 0 && NextRoomI < Room.size() ? NextRoomI : PrevRoomI;
 		m_context->Player->RenderSett.t.pos = Room.at(currentRoom).RS.t.pos;
-		std::cout << currentRoom << std::endl;
 		EnterRoom();
 	}
 }

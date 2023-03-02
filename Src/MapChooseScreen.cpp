@@ -19,7 +19,6 @@ void MapChooseScreen::Unload(){
 }
 
 void MapChooseScreen::Init() {
-	std::cout << "Init " << StateName << std::endl;
 	u32 grey = utils::RGBAtoHex(110, 110, 110);
 	BGBlur.t = AM::Transform(
 		f32(wosx), f32(wosy),
@@ -39,6 +38,8 @@ void MapChooseScreen::Init() {
 	);
 	ChoiceB.gfx.Color = grey;
 	srand(static_cast<unsigned int>(time(NULL)));
+	GenerateRoomChoice();
+	std::cout << "Init " << StateName << std::endl;
 }
 
 void MapChooseScreen::Free() {
@@ -50,18 +51,6 @@ void MapChooseScreen::Update(f64 deltaTime) {
 	
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(RESUME);
-	}
-	if (!RoomCreated) {
-		int noRooms{ 3 };
-		do {
-			RoomA = RoomMap(rand() % noRooms);
-		} while (m_context->RT->ExplorableRooms.at(RoomA) == 0);
-
-		do {
-			RoomB = RoomMap(rand() % noRooms);
-		} while (m_context->RT->ExplorableRooms.at(RoomB) == 0);
-
-		RoomCreated = true;
 	}
 
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
@@ -93,7 +82,33 @@ void MapChooseScreen::Redirect(RoomMap Selection) {
 	case ARROW:
 		m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
 		break;
+	//case PLATFORM:
+	//	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+	//	break;
+	case REST:
+		m_context->gman->AddState(std::make_unique<RestState>(m_context));
+		break;
+	case SHOP:
+		m_context->gman->AddState(std::make_unique<Shop>(m_context));
+		break;
 	}
 	m_context->RT->ExplorableRooms.at(Selection)--;
 	m_context->RT->ExploredRooms.at(Selection)++;
+}
+
+void MapChooseScreen::GenerateRoomChoice() {
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(0, GM::TotalRooms);
+
+	std::vector<RoomMap> choices;
+	while (choices.size() < 2) {
+		RoomMap choice = RoomMap(dis(gen));
+		if (std::find(choices.begin(), choices.end(), choice) == choices.end()) {
+			choices.emplace_back(choice);
+		}
+	}
+	RoomA = choices[0];
+	RoomB = choices[1];
 }

@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "PlatformMap.h"
+#include "RestState.h"
 #include "ArrowMap.h"
 
 Game::Game()  {}
@@ -34,7 +35,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->Boss->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	
+
 	// reset the system modules
 	AESysReset();
 	winw = AEGetWindowWidth();
@@ -47,9 +48,9 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 void Game::Run() {
 	int gGameRunning = 1;
 	m_context->gman->AddState(std::make_unique<MainField>(m_context));
-	//m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
 	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+	//m_context->gman->AddState(std::make_unique<RestState>(m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())
 	{

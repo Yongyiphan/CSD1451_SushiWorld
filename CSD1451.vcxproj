@@ -16,9 +16,12 @@
     <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\MapChooseScreen.cpp" />
     <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\ItemManager.cpp" />
     <ClCompile Include="Src\PauseScreen.cpp" />
     <ClCompile Include="Src\PlatformMap.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
+    <ClCompile Include="Src\RestState.cpp" />
+    <ClCompile Include="Src\Shop.cpp" />
     <ClCompile Include="Src\TemplateState.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
@@ -45,9 +48,12 @@
     <ClInclude Include="Inc\Collision.h" />
     <ClInclude Include="Inc\MapChooseScreen.h" />
     <ClInclude Include="Inc\Object.h" />
+    <ClInclude Include="Inc\ItemManager.h" />
     <ClInclude Include="Inc\PauseScreen.h" />
     <ClInclude Include="Inc\PlatformMap.h" />
     <ClInclude Include="Inc\Renderer.h" />
+    <ClInclude Include="Inc\RestState.h" />
+    <ClInclude Include="Inc\Shop.h" />
     <ClInclude Include="Inc\TemplateState.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />
