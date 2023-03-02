@@ -44,7 +44,12 @@ void Instructions::Update(f64 deltaTime) {
 		
 	}
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
-		m_context->gman->SetStatus(QUIT);
+		if (DisplayInstructions) {
+			DisplayInstructions = false;
+		}
+		else {
+			m_context->gman->SetStatus(QUIT);
+		}
 	}
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&mousex, &mousey);
@@ -59,10 +64,20 @@ void Instructions::Update(f64 deltaTime) {
 }
 void Instructions::Draw() {
 	SetBackground(255, 127, 80);
+	
+	if (DisplayInstructions) {
 
-	for (int i{}; i < Buttons.size(); i++) {
-		utils::UDrawButton(m_context->render, &Buttons.at(i),
-			FontID, RoomNames.at(i), AM::Color());
+	}
+	else {
+
+		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 1.8f, AM::Color());
+
+
+		for (int i{}; i < Buttons.size(); i++) {
+			utils::UDrawButton(m_context->render, &Buttons.at(i),
+				FontID, RoomNames.at(i), AM::Color());
+		}
 	}
 
 }
+
