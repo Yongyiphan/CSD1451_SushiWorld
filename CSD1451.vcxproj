@@ -13,7 +13,16 @@
   <ItemGroup>
     <ClCompile Include="Src\AM.cpp" />
     <ClCompile Include="Src\Boss.cpp" />
+    <ClCompile Include="Src\Collision.cpp" />
+    <ClCompile Include="Src\MapChooseScreen.cpp" />
+    <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\ItemManager.cpp" />
+    <ClCompile Include="Src\PauseScreen.cpp" />
+    <ClCompile Include="Src\PlatformMap.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
+    <ClCompile Include="Src\RestState.cpp" />
+    <ClCompile Include="Src\Shop.cpp" />
+    <ClCompile Include="Src\TemplateState.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
     <ClCompile Include="Src\Game.cpp" />
@@ -31,12 +40,21 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="Src\TestMap.cpp" />
+    <ClCompile Include="Src\ArrowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\AM.h" />
     <ClInclude Include="Inc\Boss.h" />
+    <ClInclude Include="Inc\Collision.h" />
+    <ClInclude Include="Inc\MapChooseScreen.h" />
+    <ClInclude Include="Inc\Object.h" />
+    <ClInclude Include="Inc\ItemManager.h" />
+    <ClInclude Include="Inc\PauseScreen.h" />
+    <ClInclude Include="Inc\PlatformMap.h" />
     <ClInclude Include="Inc\Renderer.h" />
+    <ClInclude Include="Inc\RestState.h" />
+    <ClInclude Include="Inc\Shop.h" />
+    <ClInclude Include="Inc\TemplateState.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />
     <ClInclude Include="Inc\Game.h" />
@@ -44,7 +62,7 @@
     <ClInclude Include="Inc\MainField.h" />
     <ClInclude Include="Inc\MainMenu.h" />
     <ClInclude Include="Inc\pch.h" />
-    <ClInclude Include="Inc\TestMap.h" />
+    <ClInclude Include="Inc\ArrowMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -57,13 +75,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

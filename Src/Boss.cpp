@@ -1,81 +1,43 @@
 #include "pch.h"
 #include "Boss.h"
 
-void Boss::InitBossStats(int StartingHP, int HPsize) {
-	this->maxhp = this->currhp = StartingHP;
-	this->hpsize = HPsize;
-	this->hpscale = this->hpsize / this->maxhp;
-	fullhpbar = float(maxhp * hpscale);
-	currhpbar = float(currhp * hpscale);
-	float barheight = 30.f;
-	MaxHPRender.t = AM::Transform{
-		fullhpbar / 2.f, 0,
-		fullhpbar ,barheight,
-		-wosx, -wosy
-	};
-	MaxHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(150,0,0) };
-	CurrHPRender.t = AM::Transform{
-		currhpbar / 2.f, 0,
-		currhpbar, barheight,
-		-wosx, -wosy
-	};
-	CurrHPRender.gfx = AM::GfxSetting{ utils::RGBAtoHex(0,150,0) };
+Boss::Boss() {
+	ObjectType = "Boss";
+	maxhp = currhp = 0;
+	Gravity = true;
 }
 
-/*TODO Load in sprite texture
-	Map texture to mesh
-	Custom mesh for every animation
-*/
-void Boss::LoadTexture(std::string location) {
-	/*Define Sprite sheet parameters
-		width/height -> normalize
-	*/
+void Boss::InitBossStats(int StartingHP, int HPsize) {
+	this->maxhp = this->currhp = StartingHP;
+	BHPBar = HPBar(f32(maxhp), f32(currhp), 250.f, 30.f);
+}
 
+void Boss::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager>& AM) {
+	BossTexture = TextureMesh(320, 160, 2, 1, 5, 5, 6, 6, 7, 8);
+	BossTexture = AM->LoadTexture(location, BossTexture);
+	AnimationFrames = BossTexture.AFrames;
 }
 
 void Boss::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
-	BossRender.t = t;
-	BossRender.gfx = s;
+	RenderSett.t = t;
+	RenderSett.gfx = s;
 }
 
 void Boss::DrawBoss(const std::shared_ptr<AM::Renderer>& render) {
 
 	//Draw Rect;
-	render->RenderRect(&BossRender);
-
+	int f = currentFrame % AnimationFrames;
+	//std::cout << f << std::endl;
+	if (this->frameCounter % 30 == 0) {
+		currentFrame++;
+	}
+	this->RenderSett.gfx.mesh = this->BossTexture.animationframes.at(currentFrame % AnimationFrames);
+	render->RenderRect(&RenderSett, this->BossTexture.texture);
 }
 
 void Boss::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float posx, float posy) {
-	/*
-	Planning:
-	requirements:
-		length of hp bar (pixels)
-		value of max hp bar
-		value of current hp bar
-		x, y coordinates of hp bar (assuming drawn from center of rect)
 
-	Formula:
-	pos = desired location of hp bar
-		for current hp bar:
-			h = current hp * hp scale
-			x = h/2 + pos
-			y = pos
-		for max hp bar:
-			x = 0 + pos;
-			y = pos;
-		w = hp's value
-	*/
-	/*Implementation*/
-	fullhpbar = float(maxhp * hpscale);
-	MaxHPRender.t.x = posx + fullhpbar / 2.f;
-	MaxHPRender.t.y = posy;
-	currhpbar = float(currhp * hpscale);
-	CurrHPRender.t.x = posx + currhpbar / 2.f;
-	CurrHPRender.t.y = posy;
-	CurrHPRender.t.w = currhpbar;
-	render->RenderRect(&MaxHPRender);
-	render->RenderRect(&CurrHPRender);
-	//std::cout << "X: " << "(" << posx << ")" << " | Y: " << "(" << posy << ")" << std::endl;
-
+	BHPBar.SetPos(posx, posy);
+	BHPBar.DrawHPBar(render, maxhp, currhp);
 
 }

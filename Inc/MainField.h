@@ -15,9 +15,10 @@ struct MiniRoom {
 };
 
 
+//IMPORTANT, UPDATE HERE WHEN ADDING NEW STATE
+
 class MainField : public GM::State {
 private:
-	std::shared_ptr<Context> m_context;
 
 	std::vector<MiniRoom> Room;
 
@@ -27,11 +28,13 @@ public:
 	u32 black, white, blue, red;
 	//While border, player's boundary
 	MiniRoom Border;
+	int RoomCol, RoomRow;	
 	float rmw, rmh;
 	s8 font;
+	int currentRoom = 0;
 	AM::RenderSetting SavePlayerSettings;
 	
-	MainField(std::string, const std::shared_ptr<Context>&);
+	MainField(const std::shared_ptr<GM::Context>&);
 	~MainField();
 
 	void Load() override;
@@ -43,6 +46,7 @@ public:
 	void Resume() override;
 	void Pause() override;
 
-	bool CheckFieldBound(AM::Transform *, Direction, float);
-	void RoomCheck();
+	void CheckFieldBound(AM::Transform *);
+	void EnterRoom();
 };
+

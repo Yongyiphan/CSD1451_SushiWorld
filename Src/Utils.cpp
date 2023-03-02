@@ -11,24 +11,30 @@ namespace utils {
 		AEGfxSetBackgroundColor(f32(r / 255.f), f32(g / 255.f), f32(b / 255.f));
 	}
 
-	void UDrawText(s8 Font, std::string string, f32 screenX, f32 screenY, f32 scale, AM::Color c) {
+	void UDrawText(s8 *Font, std::string string, f32 screenX, f32 screenY, f32 scale, AM::Color c) {
 		f32 percX = screenX / winw * 2 - 1;
 		f32 percY = screenY / winh * 2 - 1;
+		f32 strWidth, strHeight;
+		AEGfxGetPrintSize(*Font, const_cast<s8*>(string.c_str()), scale, strWidth, strHeight);
 		AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-		AEGfxPrint(Font, _strdup(string.c_str()), percX, percY, scale, c.r, c.g, c.b);
+		AEGfxPrint(*Font, _strdup(string.c_str()), percX - strWidth / 2.f, percY - strHeight/2.f, scale, c.r, c.g, c.b);
 	}
 
-	bool AreaClicked(AM::Transform* target, s32 mx, s32 my) {
-		my = winh - my;
-		float leftLimit = target->x - target->w / 2.f;
-		float rightLimit = target->x + target->w / 2.f;
-
-		float topLimit = target->y + target->h / 2.f;
-		float btmLimit = target->y - target->h / 2.f;
-		if (leftLimit < mx && mx < rightLimit && btmLimit < my && my < topLimit) {
-			return true;
-		}
-		return false;
+	void UDrawButton(const std::shared_ptr<AM::Renderer>& renderer, AM::RenderSetting* sett,
+		s8* Font, std::string string,AM::Color c, f32 x, f32 y, f32 scale, AEGfxTexture *texture) {
+		renderer->RenderRect(sett, texture);
+		float textx = sett->t.pos.x + x;
+		float texty = sett->t.pos.y + y;
+		UDrawText(Font, string, textx, texty, scale, c);
+		UDrawText(Font, string, sett->t.pos.x, sett->t.pos.y, scale, c);
 	}
+
+	f64 UGetDT() {
+		f64 dt = AEFrameRateControllerGetFrameTime();
+		f64 limitdt = 1.f / FR;
+		return dt > limitdt ? limitdt : dt;
+
+	}
+
 	
 }
