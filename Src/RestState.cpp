@@ -15,6 +15,7 @@ void RestState::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150); 
 	green = utils::RGBAtoHex(0, 150, 0);
 
+
 	MODE = ROOM;
 
 	healbutton.RS = AM::RenderSetting(AM::Transform{
@@ -45,7 +46,7 @@ void RestState::Load() {
 	for (int i{}; i < 5; i++) {
 		render choices;
 		 choices.RS = AM::RenderSetting{
-			AM::Transform(100 + (i * (winw / 4)), f32(300.f), 150, 150),
+			AM::Transform(100 + (i * (winw / 4.f)), 300.f, 150, 150),
 			AM::GfxSetting(utils::RGBAtoHex(230,70,100))
 		};
 		upgradechoices.push_back(choices);
@@ -130,8 +131,8 @@ void RestState::Update(f64 deltaTime) {
 			if (timepassed >= 5 && timepassed <10) {
 				//constant decrese	
 				while (upgradebar.currrender.t.w > 0) {
-					upgradebar.currrender.t.w -= 0.05 * upgradebar.fullrender.t.w / upgradebar.fullbar;
-					upgradebar.currrender.t.pos.x -= 0.05 * upgradebar.fullrender.t.w / upgradebar.fullbar / 2.f;
+					upgradebar.currrender.t.w -= 0.05f * upgradebar.fullrender.t.w / upgradebar.fullbar;
+					upgradebar.currrender.t.pos.x -= 0.05f * upgradebar.fullrender.t.w / upgradebar.fullbar / 2.f;
 					break;
 				}
 				//spacebar

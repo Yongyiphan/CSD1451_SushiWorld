@@ -8,7 +8,7 @@ Boss::Boss() {
 }
 
 void Boss::InitBossStats(int StartingHP, int HPsize) {
-	this->maxhp = this->currhp = StartingHP;
+	this->maxhp = this->currhp = static_cast<f32>(StartingHP);
 	BHPBar = HPBar(f32(maxhp), f32(currhp), 250.f, 30.f);
 }
 
