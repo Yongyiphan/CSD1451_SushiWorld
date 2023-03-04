@@ -8,6 +8,7 @@ public:
 	std::vector<AM::RenderSetting> shopbuttons;
 	Shop(const std::shared_ptr<GM::Context>&);
 	~Shop() {};
+	bool ItemBought{ false };
 	void Load() override;
 	void Unload() override;
 	void Init() override;
@@ -19,6 +20,7 @@ public:
 	//ItemManager IM;
 	int noshopbuttons;
 	void RenderRandomItemChoices();
+	void ConfirmPurchase();
 	
 };
 

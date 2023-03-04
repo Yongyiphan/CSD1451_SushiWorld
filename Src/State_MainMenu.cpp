@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "MainMenu.h"
-#include "Instructions.h"
+#include "State_MainMenu.h"
+#include "State_Instructions.h"
 
 MainMenu::MainMenu(const std::shared_ptr<Context>& context) {
 	StateName = "MainMenu";

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "PauseScreen.h"
+#include "State_PauseScreen.h"
 PauseScreen::PauseScreen(const std::shared_ptr<Context>&context) {
 	StateName = "PauseScreen";
 	m_context = context;

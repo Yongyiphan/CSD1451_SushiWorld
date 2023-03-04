@@ -16,8 +16,8 @@
 #include <random>
 //Custom Includes
 #include "AEEngine.h"
-#include "GM.h"
-#include "AM.h"
+#include "GameManager.h"
+#include "AssetManager.h"
 #include "Renderer.h"
 #include "Utils.h"
 #include "Object.h"
@@ -32,14 +32,14 @@ using namespace utils;
 
 //Game States include
 #include "Game.h"
-#include "MainMenu.h"
-#include "MainField.h"
-#include "PlatformMap.h"
-#include "ArrowMap.h"
-#include "MapChooseScreen.h"
-#include "PauseScreen.h"
-#include "RestState.h"
-#include "Shop.h"
+#include "State_MainMenu.h"
+#include "Room_MainField.h"
+#include "Room_Platform.h"
+#include "Room_Arrow.h"
+#include "Room_Rest.h"
+#include "Room_Shop.h"
+#include "State_MapChoose.h"
+#include "State_PauseScreen.h"
 
 #endif// PCH_H
 

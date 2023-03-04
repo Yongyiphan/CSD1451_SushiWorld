@@ -11,26 +11,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\AM.cpp" />
+    <ClCompile Include="Src\AssetManager.cpp" />
     <ClCompile Include="Src\Boss.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
-    <ClCompile Include="Src\MapChooseScreen.cpp" />
+    <ClCompile Include="Src\State_MapChoose.cpp" />
     <ClCompile Include="Src\Object.cpp" />
     <ClCompile Include="Src\ItemManager.cpp" />
-    <ClCompile Include="Src\PauseScreen.cpp" />
-    <ClCompile Include="Src\PlatformMap.cpp" />
+    <ClCompile Include="Src\State_PauseScreen.cpp" />
+    <ClCompile Include="Src\Room_Platform.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
-    <ClCompile Include="Src\RestState.cpp" />
-    <ClCompile Include="Src\Shop.cpp" />
+    <ClCompile Include="Src\Room_Rest.cpp" />
+    <ClCompile Include="Src\Room_Shop.cpp" />
     <ClCompile Include="Src\TemplateState.cpp" />
-    <ClCompile Include="Src\Instructions.cpp" />
+    <ClCompile Include="Src\State_Instsructions.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
     <ClCompile Include="Src\EPlayer.cpp" />
     <ClCompile Include="Src\Game.cpp" />
-    <ClCompile Include="Src\GM.cpp" />
+    <ClCompile Include="Src\GameManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
-    <ClCompile Include="Src\MainField.cpp" />
-    <ClCompile Include="Src\MainMenu.cpp" />
+    <ClCompile Include="Src\Room_Main.cpp" />
+    <ClCompile Include="Src\State_MainMenu.cpp" />
     <ClCompile Include="Src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -41,30 +41,30 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="Src\ArrowMap.cpp" />
+    <ClCompile Include="Src\Room_Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Inc\AM.h" />
+    <ClInclude Include="Inc\AssetManager.h" />
     <ClInclude Include="Inc\Boss.h" />
     <ClInclude Include="Inc\Collision.h" />
-    <ClInclude Include="Inc\MapChooseScreen.h" />
+    <ClInclude Include="Inc\State_MapChoose.h" />
     <ClInclude Include="Inc\Object.h" />
     <ClInclude Include="Inc\ItemManager.h" />
-    <ClInclude Include="Inc\PauseScreen.h" />
-    <ClInclude Include="Inc\PlatformMap.h" />
+    <ClInclude Include="Inc\State_PauseScreen.h" />
+    <ClInclude Include="Inc\Room_Platform.h" />
     <ClInclude Include="Inc\Renderer.h" />
-    <ClInclude Include="Inc\RestState.h" />
-    <ClInclude Include="Inc\Shop.h" />
+    <ClInclude Include="Inc\Room_Rest.h" />
+    <ClInclude Include="Inc\Room_Shop.h" />
     <ClInclude Include="Inc\TemplateState.h" />
-    <ClInclude Include="Inc\Instructions.h" />
+    <ClInclude Include="Inc\State_Instructions.h" />
     <ClInclude Include="Inc\Utils.h" />
     <ClInclude Include="Inc\EPlayer.h" />
     <ClInclude Include="Inc\Game.h" />
-    <ClInclude Include="Inc\GM.h" />
-    <ClInclude Include="Inc\MainField.h" />
-    <ClInclude Include="Inc\MainMenu.h" />
+    <ClInclude Include="Inc\GameManager.h" />
+    <ClInclude Include="Inc\Room_MainField.h" />
+    <ClInclude Include="Inc\State_MainMenu.h" />
     <ClInclude Include="Inc\pch.h" />
-    <ClInclude Include="Inc\ArrowMap.h" />
+    <ClInclude Include="Inc\Room_Arrow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

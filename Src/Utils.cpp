@@ -26,7 +26,7 @@ namespace utils {
 		float textx = sett->t.pos.x + x;
 		float texty = sett->t.pos.y + y;
 		UDrawText(Font, string, textx, texty, scale, c);
-		UDrawText(Font, string, sett->t.pos.x, sett->t.pos.y, scale, c);
+		//UDrawText(Font, string, sett->t.pos.x, sett->t.pos.y, scale, c);
 	}
 
 	f64 UGetDT() {

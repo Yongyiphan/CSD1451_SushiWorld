@@ -1,9 +1,9 @@
 #include "pch.h"
 
 #include "Game.h"
-#include "PlatformMap.h"
-#include "RestState.h"
-#include "ArrowMap.h"
+#include "Room_Platform.h"
+#include "Room_Rest.h"
+#include "Room_Arrow.h"
 
 Game::Game()  {}
 Game::~Game() {

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "MapChooseScreen.h"
+#include "State_MapChoose.h"
 //MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context, int*kek) {
 MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context) {
 	StateName = "MapChooseScreen";

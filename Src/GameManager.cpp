@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#include "GM.h"
+#include "GameManager.h"
 
 namespace GM {
 

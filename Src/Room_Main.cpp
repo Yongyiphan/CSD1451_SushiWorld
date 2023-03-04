@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "MainField.h"
+#include "Room_MainField.h"
 
-#include "MapChooseScreen.h"
+#include "State_MapChoose.h"
 
 MainField::MainField(const std::shared_ptr<Context>& context){
 	StateName = "MainField";
@@ -16,7 +16,7 @@ void MainField::Load() {
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
 	//No. of rows, col in grid
-	RoomRow = 6, RoomCol = 8;
+	RoomRow = 3, RoomCol = 4;
 	//Might be redundant if using sprite
 	int BorderMargin = 50, RoomMargin = 4;
 	Border.ID = ID++;

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "RestState.h"
+#include "Room_Rest.h"
 //#include "Eplayer.h"
 
 //IMPORTANT Template/ Guide to create new state
@@ -60,7 +60,7 @@ void RestState::Load() {
 	upgradebutton.RS.gfx.mesh = upgradeicon.animationframes.at(0);
 
 
-	m_context->Items->items.at(1).level = 1;
+	//m_context->Items->items.at(1).level = 1;
 
 }
 void RestState::Unload(){
