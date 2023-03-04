@@ -46,25 +46,20 @@ void ArrowMap::Free() {
 }
 
 void ArrowMap::Update(f64 deltaTime) {
-	timer = (float)AEFrameRateControllerGetFrameTime();
-	totaltime.dt -= timer;
+	timer = static_cast<f32>(UGetDT());
+	if(!GameEnd)
+		totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
 		GenerateArrowKeys(arrows);
 		m_context->Player->currhp -= dmg_count;
 	}
-	if (totaltime.dt) {
+	if (totaltime.dt && !GameEnd) {
 		if (this->box.empty()) {
 			std::cout << "empty" << std::endl;
 			isEmpty = true;
 			damage = true;
 		}
 		if (!isEmpty) {
-			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-				AEInputGetCursorPosition(&mousex, &mousey);
-				Transform temp = m_context->Player->RenderSett.t;
-				std::cout << "X: " << "(" << mousex << ")" << " | Y: " << "(" << mousey << ")" << std::endl;
-			}
-
 			//up = blue
 			if (AEInputCheckTriggered(AEVK_UP)) {
 				CheckArrowKeysPressed(UP_KEY);
@@ -92,6 +87,7 @@ void ArrowMap::Update(f64 deltaTime) {
 					m_context->Player->currhp = 0;
 					totaltime.dt = 0;
 					check = PLAYER_DEAD;
+					GameEnd = true;
 				}
 			}
 			else {
@@ -103,6 +99,7 @@ void ArrowMap::Update(f64 deltaTime) {
 					m_context->Boss->currhp = 0;
 					totaltime.dt = 0;
 					check = BOSS_DEAD;
+					GameEnd = true;
 				}
 			}
 			ArrowMap::GenerateArrowKeys(arrows);
@@ -122,23 +119,24 @@ void ArrowMap::Update(f64 deltaTime) {
 			}
 		}
 
+		//if (AEInputCheckTriggered(AEVK_A)) {
+		//	m_context->Player->currhp -= 1;
+		//	totaltime.dt -= 1.f;
+		//}
+		//if (AEInputCheckTriggered(AEVK_D)) {
+		//	m_context->Player->currhp += 1;
+		//	totaltime.dt += 1.f;
+		//}
+		//if (AEInputCheckTriggered(AEVK_LBUTTON)) {
+		//	AEInputGetCursorPosition(&mousex, &mousey);
+		//	Transform temp = m_context->Player->RenderSett.t;
+		//	std::cout << "X: " << "(" << mousex << ")" << " | Y: " << "(" << mousey << ")" << std::endl;
+		//}
+	}
+	if(GameEnd)
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
 		}
-		if (AEInputCheckTriggered(AEVK_A)) {
-			m_context->Player->currhp -= 1;
-			totaltime.dt -= 1.f;
-		}
-		if (AEInputCheckTriggered(AEVK_D)) {
-			m_context->Player->currhp += 1;
-			totaltime.dt += 1.f;
-		}
-		if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-			AEInputGetCursorPosition(&mousex, &mousey);
-			Transform temp = m_context->Player->RenderSett.t;
-			std::cout << "X: " << "(" << mousex << ")" << " | Y: " << "(" << mousey << ")" << std::endl;
-		}
-	}
 }
 void ArrowMap::Draw() {
 	utils::SetBackground(150,150,150);
@@ -146,12 +144,12 @@ void ArrowMap::Draw() {
 	float posx = 50, posy = 500, baroffset = 20;
 	
 	str = std::to_string(static_cast<int>(m_context->Player->currhp));
-	utils::UDrawText(FontID, "Player's HP:" + str, posx, posy + baroffset, 1, Color{ 0,0,0 });
+	utils::UDrawText(FontID, "Player's HP:" + str, posx + 55.f, posy + baroffset, 1, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
 	str = std::to_string(static_cast<int>(m_context->Boss->currhp));
-	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 450, posy + baroffset, 1, Color{ 0,0,0 });
-	m_context->Boss->DrawHPBar(m_context->render, posx + 450, posy);
+	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 500.f, posy + baroffset, 1, Color{ 0,0,0 });
+	m_context->Boss->DrawHPBar(m_context->render, posx + 450.f, posy);
 
 	if (m_context->Boss->currhp == 0) {
 		utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
@@ -216,12 +214,13 @@ void ArrowMap::CheckArrowKeysPressed(int id) {
 void ArrowMap::CheckDead(int id) {
 	if (id == 0) {
 		//player dead
+
 		AM::RenderSetting ConfirmScreen = AM::RenderSetting(
 			AM::Transform(wosx, wosy, winw, winh),
 			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
 		);
-		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 150.f, 1.f);
-		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy + 110, 1.f, AM::Color());
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 50.f, 1.f);
+		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy, 1.f, AM::Color());
 	}
 	else if (id == 1) {
 		//boss dead
@@ -229,7 +228,7 @@ void ArrowMap::CheckDead(int id) {
 			AM::Transform(wosx, wosy, winw, winh),
 			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
 		);
-		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 150.f, 1.f);
-		UDrawText(FontID, "Press Esc to return to map", wosx, wosy + 110, 1.f, AM::Color());
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 50.f, 1.f);
+		UDrawText(FontID, "Press Esc to return to map", wosx, wosy, 1.f, AM::Color());
 	}
 }

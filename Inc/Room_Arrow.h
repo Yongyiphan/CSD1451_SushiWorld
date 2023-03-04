@@ -45,7 +45,7 @@ public:
 	s8* FontID;
 	//AEGfxTexture lrarrow;
 	int dmg_count, arrows, check;
-	bool isEmpty, damage;
+	bool isEmpty, damage, GameEnd;
 	float timer;
 	timebox totaltime;
 	AM::TextureMesh ArrowMesh;
