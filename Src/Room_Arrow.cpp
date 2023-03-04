@@ -31,6 +31,7 @@ void ArrowMap::Unload(){
 void ArrowMap::Init() {
 	std::cout << "Init " << StateName << std::endl;
 	dmg_count = 0;
+	check = 2;
 	isEmpty = false;
 	damage = true;
 	arrows = 5;
@@ -48,7 +49,8 @@ void ArrowMap::Update(f64 deltaTime) {
 	timer = (float)AEFrameRateControllerGetFrameTime();
 	totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
-		totaltime.dt = 0;
+		GenerateArrowKeys(arrows);
+		m_context->Player->currhp -= dmg_count;
 	}
 	if (totaltime.dt) {
 		if (this->box.empty()) {
@@ -82,13 +84,14 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 		else{
 			if (!damage) {
-				dmg_count = 1;
+				dmg_count = dmg_count / 2 + 2;
 				if (m_context->Player->currhp >= dmg_count) {
 					m_context->Player->currhp -= dmg_count;
 				}
 				else if (m_context->Player->currhp <= dmg_count) {
 					m_context->Player->currhp = 0;
 					totaltime.dt = 0;
+					check = PLAYER_DEAD;
 				}
 			}
 			else {
@@ -99,11 +102,24 @@ void ArrowMap::Update(f64 deltaTime) {
 				else if (m_context->Boss->currhp <= dmg_count) {
 					m_context->Boss->currhp = 0;
 					totaltime.dt = 0;
+					check = BOSS_DEAD;
 				}
 			}
 			ArrowMap::GenerateArrowKeys(arrows);
 			dmg_count = 0;
 			isEmpty = false;
+		}
+		if (totaltime.dt == 0) {
+			if (check == 0) {
+				if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+					m_context->gman->SetStatus(QUIT);
+				}
+			}
+			else if (check == 1) {
+				if (AEInputCheckTriggered(AEVK_ESCAPE) || AEInputCheckTriggered(AEVK_LBUTTON)) {
+					m_context->gman->SetStatus(QUIT);
+				}
+			}
 		}
 
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
@@ -154,6 +170,8 @@ void ArrowMap::Draw() {
 
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Boss->DrawBoss(m_context->render);
+
+	CheckDead(check);
 }
 
 
@@ -162,7 +180,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
-	totaltime.dt = 15.f;
+	totaltime.dt = 10.f;
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
@@ -193,4 +211,25 @@ void ArrowMap::CheckArrowKeysPressed(int id) {
 		std::cout << dmg_count << std::endl;
 	}
 	else { isEmpty = true; damage = false; }
+}
+
+void ArrowMap::CheckDead(int id) {
+	if (id == 0) {
+		//player dead
+		AM::RenderSetting ConfirmScreen = AM::RenderSetting(
+			AM::Transform(wosx, wosy, winw, winh),
+			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
+		);
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 150.f, 1.f);
+		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy + 110, 1.f, AM::Color());
+	}
+	else if (id == 1) {
+		//boss dead
+		AM::RenderSetting ConfirmScreen = AM::RenderSetting(
+			AM::Transform(wosx, wosy, winw, winh),
+			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
+		);
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 150.f, 1.f);
+		UDrawText(FontID, "Press Esc to return to map", wosx, wosy + 110, 1.f, AM::Color());
+	}
 }

@@ -28,6 +28,12 @@ enum arrowkeys {
 	RIGHT_KEY
 };
 
+enum dead
+{
+	PLAYER_DEAD,
+	BOSS_DEAD
+};
+
 class ArrowMap : public GM::State {
 private:
 	std::vector<checkbox> box;
@@ -38,7 +44,7 @@ public:
 	//std::shared_ptr<s8> FontID;
 	s8* FontID;
 	//AEGfxTexture lrarrow;
-	int dmg_count, arrows;
+	int dmg_count, arrows, check;
 	bool isEmpty, damage;
 	float timer;
 	timebox totaltime;
@@ -54,4 +60,5 @@ public:
 
 	void GenerateArrowKeys(int);
 	void CheckArrowKeysPressed(int);
+	void CheckDead(int);
 };
