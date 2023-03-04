@@ -51,7 +51,7 @@ void ArrowMap::Update(f64 deltaTime) {
 		totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
 		GenerateArrowKeys(arrows);
-		m_context->Player->currhp -= dmg_count;
+		m_context->Player->currhp -= dmg_count / 2 + 2;
 	}
 	if (totaltime.dt && !GameEnd) {
 		if (this->box.empty()) {
@@ -79,9 +79,8 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 		else{
 			if (!damage) {
-				dmg_count = dmg_count / 2 + 2;
 				if (m_context->Player->currhp >= dmg_count) {
-					m_context->Player->currhp -= dmg_count;
+					m_context->Player->currhp -= dmg_count / 2 + 2;
 				}
 				else if (m_context->Player->currhp <= dmg_count) {
 					m_context->Player->currhp = 0;
