@@ -7,7 +7,7 @@ TemplateState::TemplateState(const std::shared_ptr<Context>&context) {
 }
 
 void TemplateState::Load() {
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 }
 void TemplateState::Unload(){
 }

@@ -13,7 +13,7 @@ void Boss::InitBossStats(int StartingHP, int HPsize) {
 }
 
 void Boss::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager>& AM) {
-	BossTexture = TextureMesh(320, 160, 2, 1, 5, 5, 6, 6, 7, 8);
+	BossTexture = TextureMesh(1024, 966);
 	BossTexture = AM->LoadTexture(location, BossTexture);
 	AnimationFrames = BossTexture.AFrames;
 }

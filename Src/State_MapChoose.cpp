@@ -11,8 +11,8 @@ MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context) {
 }
 
 void MapChooseScreen::Load() {
-	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	//Resume Button
 }
 void MapChooseScreen::Unload(){
@@ -68,10 +68,10 @@ void MapChooseScreen::Update(f64 deltaTime) {
 
 
 void MapChooseScreen::Draw() {
-	utils::UDrawText(FontID, "Choose Room Type to Enter", f32(wosx), winh * 0.8f, 2.f, AM::Color(0,0,0));
+	utils::UDrawText(FontID, "Choose Room Type to Enter", f32(wosx), winh * 0.8f, 0.3f, AM::Color(0,0,0));
 	m_context->render->RenderRect(&BGBlur);
-	utils::UDrawButton(m_context->render,&ChoiceA, FontID, GM::RoomNames.at(RoomA), AM::Color(0, 0, 0));
-	utils::UDrawButton(m_context->render,&ChoiceB, FontID, GM::RoomNames.at(RoomB), AM::Color(0, 0, 0));
+	utils::UDrawButton(m_context->render, &ChoiceA, FontID, GM::RoomNames.at(RoomA), AM::Color(0, 0, 0), 0, 0, 0.15f);
+	utils::UDrawButton(m_context->render, &ChoiceB, FontID, GM::RoomNames.at(RoomB), AM::Color(0, 0, 0), 0, 0, 0.15f);
 	
 	
 }
@@ -94,6 +94,10 @@ void MapChooseScreen::Redirect(RoomMap Selection) {
 	}
 	m_context->RT->ExplorableRooms.at(Selection)--;
 	m_context->RT->ExploredRooms.at(Selection)++;
+		
+	if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
+		m_context->GameClear = true;
+	}
 }
 
 void MapChooseScreen::GenerateRoomChoice() {

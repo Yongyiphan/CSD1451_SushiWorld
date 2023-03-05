@@ -6,6 +6,11 @@ private:
 public:
 	
 	std::vector<AM::RenderSetting> shopbuttons;
+	AM::RenderSetting shop_bg;
+	AM::TextureMesh bg,ingredients,board;
+	std::vector<AM::TextureMesh> upgradesT;
+	AM::Color black;
+
 	Shop(const std::shared_ptr<GM::Context>&);
 	~Shop() {};
 	bool ItemBought{ false };

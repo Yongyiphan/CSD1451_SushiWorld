@@ -15,11 +15,21 @@ void ArrowMap::Load() {
 	blue = utils::RGBAtoHex(0, 0, 150);
 	yellow = utils::RGBAtoHex(150, 150, 0);
 	
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	ArrowMesh = AM::TextureMesh(512,128,4);
 	ArrowMesh = m_context->assets->LoadTexture("./Assets/Arrow.png", ArrowMesh);
 	
 	//GenerateArrowKeys(5);
+
+	//bg
+	arrow_bg = AM::RenderSetting{
+		AM::Transform{wosx, wosy, winw, winh},
+		AM::GfxSetting(utils::RGBAtoHex(50,50,200))
+	};
+	bg = AM::TextureMesh(winw, winh);
+	bg = m_context->assets->LoadTexture("./Assets/Audition Room.png", bg);
+	arrow_bg.gfx.mesh = bg.animationframes.at(0);
+
 
 }
 
@@ -138,21 +148,17 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 }
 void ArrowMap::Draw() {
-	utils::SetBackground(150,150,150);
+	m_context->render->RenderRect(&arrow_bg, bg.texture);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
 	str = std::to_string(static_cast<int>(m_context->Player->currhp));
-	utils::UDrawText(FontID, "Player's HP:" + str, posx + 55.f, posy + baroffset, 1, Color{ 0,0,0 });
+	utils::UDrawText(FontID, "Player's HP:" + str, posx + 55.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
 	str = std::to_string(static_cast<int>(m_context->Boss->currhp));
-	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 500.f, posy + baroffset, 1, Color{ 0,0,0 });
+	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 500.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Boss->DrawHPBar(m_context->render, posx + 450.f, posy);
-
-	if (m_context->Boss->currhp == 0) {
-		utils::UDrawText(FontID, "Congratulations", 400, 400, 1, Color{ 255,255,255 });
-	}
 
 	for (auto& i : this->box) {
 		i.rs.gfx.mesh = ArrowMesh.animationframes.at(i.ID);
@@ -163,7 +169,7 @@ void ArrowMap::Draw() {
 	m_context->render->RenderRect(&totaltime.rs);
 
 	str = std::to_string((int)totaltime.dt);
-	utils::UDrawText(FontID, str, 400.f, 450.f, 1, Color{ 255,255,255 });
+	utils::UDrawText(FontID, str, 400.f, 450.f, 0.15f, Color{});
 
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Boss->DrawBoss(m_context->render);
@@ -177,7 +183,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
-	totaltime.dt = 10.f;
+	totaltime.dt = 5.f;
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
@@ -218,8 +224,8 @@ void ArrowMap::CheckDead(int id) {
 			AM::Transform(wosx, wosy, winw, winh),
 			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
 		);
-		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 50.f, 1.f);
-		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy, 1.f, AM::Color());
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 50.f, 0.15f);
+		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy, 0.15f, AM::Color());
 		if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
 			m_context->GameClear = true;
 		}
@@ -235,5 +241,7 @@ void ArrowMap::CheckDead(int id) {
 		if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
 			m_context->GameClear = true;
 		}
+		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 50.f, 0.15f);
+		UDrawText(FontID, "Press Esc to return to map", wosx, wosy, 0.15f, AM::Color());
 	}
 }

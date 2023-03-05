@@ -8,7 +8,7 @@ Instructions::Instructions(const std::shared_ptr<Context>&context) {
 }
 
 void Instructions::Load() {
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 }
 void Instructions::Unload(){
 	std::cout << "Unload " << StateName << std::endl;
@@ -69,32 +69,33 @@ void Instructions::Draw() {
 	SetBackground(255, 127, 80);
 	
 	if (DisplayInstructions) {
-		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 1.8f, AM::Color());
+		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 0.27f, AM::Color());
 		std::string ToPrint{};
 		switch (CurrSelection) {
 		case 0:
 			ToPrint = "Use UP, DOWN, LEFT, RIGHT arrow keys to navigate";
 			break;
 		case 1:
+			ToPrint = "Use UP, DOWN, LEFT, RIGHT arrow keys to clear the arrow keys";
 
 			break;
 		}
-		utils::UDrawText(FontID, const_cast<s8*>(ToPrint.c_str()), wosx, wosy, 1.8f, AM::Color());
+		utils::UDrawText(FontID, const_cast<s8*>(ToPrint.c_str()), wosx, wosy, 0.27f, AM::Color());
 
 		
 	}
 	else {
 
 
-		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 1.8f, AM::Color());
+		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 0.27f, AM::Color());
 
 		for (int i{}; i < Buttons.size(); i++) {
 			if (i == 0)
 				utils::UDrawButton(m_context->render, &Buttons.at(i),
-				FontID, "Main Field", AM::Color());
+				FontID, "Main Field", AM::Color(),0,0,0.15f);
 			else
 			utils::UDrawButton(m_context->render, &Buttons.at(i),
-				FontID, RoomNames.at(i-1), AM::Color());
+				FontID, RoomNames.at(i-1), AM::Color(),0,0,0.15f);
 		}
 	}
 

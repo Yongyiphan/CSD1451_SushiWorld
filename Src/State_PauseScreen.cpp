@@ -8,8 +8,8 @@ PauseScreen::PauseScreen(const std::shared_ptr<Context>&context) {
 }
 
 void PauseScreen::Load() {
-	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	//Resume Button
 	int buttonOffsetH = 80;
 	ResumeGfx = AM::RenderSetting{

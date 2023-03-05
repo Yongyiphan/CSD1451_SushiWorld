@@ -9,7 +9,7 @@ MainField::MainField(const std::shared_ptr<Context>& context){
 }
 MainField::~MainField() {};
 void MainField::Load() {
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	black = utils::RGBAtoHex(0, 0, 0, 255);
 	white = utils::RGBAtoHex(255,255, 255, 255);
 	red	  = utils::RGBAtoHex(150, 0, 0, 255);
@@ -52,6 +52,14 @@ void MainField::Load() {
 	kek.t.h /= 2;
 	m_context->Player->RenderSett = kek;
 	
+	//bg
+	mainfield_bg = AM::RenderSetting{
+		AM::Transform{wosx, wosy, winw, winh},
+		AM::GfxSetting(utils::RGBAtoHex(50,50,200))
+	};
+	bg = AM::TextureMesh(winw, winh);
+	bg = m_context->assets->LoadTexture("./Assets/Main Field.png", bg);
+	mainfield_bg.gfx.mesh = bg.animationframes.at(0);
 
 };
 void MainField::Unload() {};
@@ -80,12 +88,13 @@ void MainField::Update(f64 dt) {
 
 };
 void MainField::Draw() {
-	utils::SetBackground(0,0,0);
 	if (m_context->GameClear) {
-		UDrawText(FontID, "Congradulations for defeating the final Boss", wosx, wosy + 50, 1.f, AM::Color(255,255,255));
-		UDrawText(FontID, "Press Esc to return to main menu.", wosx, wosy, 1.f, AM::Color(255,255,255));
+		utils::SetBackground(0,0,0);
+		UDrawText(FontID, "Congradulations for clearing the game", wosx, wosy + 50, 0.3f, AM::Color(255,255,255));
+		UDrawText(FontID, "Press Esc to return to main menu.", wosx, wosy, 0.3f, AM::Color(255,255,255));
 	}
 	else {
+		m_context->render->RenderRect(&mainfield_bg, bg.texture);
 		m_context->render->RenderRect(&Border.RS);
 		for (auto &i : Room) {
 			if (i.Explored) {

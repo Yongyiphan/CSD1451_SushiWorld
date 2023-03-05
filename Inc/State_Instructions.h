@@ -13,7 +13,7 @@ public:
 	~Instructions() {};
 
 	std::vector<AM::RenderSetting> Buttons;
-	AM::RenderSetting CurrButton;
+	//AM::RenderSetting CurrButton;
 	//Use RoomMaps
 	int CurrSelection;
 	bool DisplayInstructions{ false };
