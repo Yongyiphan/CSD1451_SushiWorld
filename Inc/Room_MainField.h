@@ -30,8 +30,9 @@ public:
 	float rmw, rmh;
 	s8 font;
 	int currentRoom = 0;
-	AM::RenderSetting SavePlayerSettings;
-	
+	AM::RenderSetting SavePlayerSettings,mainfield_bg;
+	AM::TextureMesh bg;
+
 	MainField(const std::shared_ptr<GM::Context>&);
 	~MainField();
 

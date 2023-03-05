@@ -29,8 +29,8 @@ public:
 	//Variables
 	s32 mouseX, mouseY;
 	u32 red, blue, green;
-	AM::Color itemavail;
-	render healbutton,upgradebutton, upgradebackground;
+	AM::Color itemavail,black;
+	render healbutton,upgradebutton, upgradebackground,bg;
 	std::vector<render> upgradechoices;
 	mode MODE;
 	bar upgradebar;
@@ -41,7 +41,8 @@ public:
 	bool noitems = 1;
 	bool upgraded = 1;
 	std::string selecteditem;
-	AM::TextureMesh healicon,upgradeicon;
+	AM::TextureMesh healicon,upgradeicon,board,rest_bg,ingredients;
+	std::vector<AM::TextureMesh> upgradesT;
 
 	int selectedID;
 	///Methods

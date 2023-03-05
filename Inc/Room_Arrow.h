@@ -48,7 +48,8 @@ public:
 	bool isEmpty, damage, GameEnd;
 	float timer;
 	timebox totaltime;
-	AM::TextureMesh ArrowMesh;
+	AM::RenderSetting arrow_bg;
+	AM::TextureMesh ArrowMesh,bg;
 	std::string str;
 
 	void Load() override;

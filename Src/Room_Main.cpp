@@ -50,6 +50,14 @@ void MainField::Load() {
 	kek.t.h /= 2;
 	m_context->Player->RenderSett = kek;
 	
+	//bg
+	mainfield_bg = AM::RenderSetting{
+		AM::Transform{wosx, wosy, winw, winh},
+		AM::GfxSetting(utils::RGBAtoHex(50,50,200))
+	};
+	bg = AM::TextureMesh(winw, winh);
+	bg = m_context->assets->LoadTexture("./Assets/Main Field.png", bg);
+	mainfield_bg.gfx.mesh = bg.animationframes.at(0);
 
 };
 void MainField::Unload() {};
@@ -78,7 +86,7 @@ void MainField::Update(f64 dt) {
 
 };
 void MainField::Draw() {
-	utils::SetBackground(0,0,0);
+	m_context->render->RenderRect(&mainfield_bg, bg.texture);
 	m_context->render->RenderRect(&Border.RS);
 	for (auto &i : Room) {
 		if (i.Explored) {

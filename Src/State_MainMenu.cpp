@@ -8,23 +8,37 @@ MainMenu::MainMenu(const std::shared_ptr<Context>& context) {
 }
 
 void MainMenu::Load() {
-	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	MMButtons.clear();
 	NoButtons = 3;
 	float StartPosY = 350.f;
 	MMButtonName = { "Start Game", "Tutorial", "Exit" };
 	for (int i{}; i < NoButtons; i++) {
 		AM::RenderSetting m = AM::RenderSetting{
-			AM::Transform{wosx, StartPosY - (i * 100), 150, 50},
+			AM::Transform{winw/4.f *3.f, StartPosY - (i * 100), 200, 75},
 			AM::GfxSetting(utils::RGBAtoHex(50,50,200))
 		};
+		Buttons = AM::TextureMesh(274, 84);
+		Buttons = m_context->assets->LoadTexture("./Assets/button.png", Buttons);
+		m.gfx.mesh = Buttons.animationframes.at(0);
 		MMButtons.push_back(m);
 	}
 	CurrButton = MMButtons.at(0);
 	CurrButton.t.w += 10.f;
 	CurrButton.t.h += 10.f;
-	CurrButton.gfx.Color = utils::RGBAtoHex(110, 110, 255);
+	u32 c = utils::RGBAtoHex(100, 100, 100);
+	CurrButton.gfx.Color = c;
 
+	//bg
+	bg = AM::RenderSetting{
+		AM::Transform{wosx, wosy, winw, winh},
+		AM::GfxSetting(utils::RGBAtoHex(50,50,200))
+	};
+	Menu_bg = AM::TextureMesh(winw, winh);
+	Menu_bg = m_context->assets->LoadTexture("./Assets/Main Menu.png", Menu_bg);
+	bg.gfx.mesh = Menu_bg.animationframes.at(0);
+
+	//buttons
 
 }
 void MainMenu::Unload() {
@@ -32,7 +46,6 @@ void MainMenu::Unload() {
 
 void MainMenu::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	SetBackground(255, 127, 80);
 }
 
 void MainMenu::Free() {
@@ -67,14 +80,14 @@ void MainMenu::Update(f64 deltaTime) {
 
 }
 void MainMenu::Draw() {
-	SetBackground(255, 127, 80);
-	UDrawText(FontID, "Sushi World", wosx, 450.f, 5.f, AM::Color());
+	//bg
+	m_context->render->RenderRect(&bg, Menu_bg.texture);
 	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 	// draw main menu buttons
 	CurrButton.t.pos = MMButtons.at(CurrSelection).t.pos;
 	m_context->render->RenderRect(&CurrButton);
 	for (int i{}; i < NoButtons;i++) {
-		UDrawButton(m_context->render, &MMButtons.at(i), FontID, MMButtonName.at(i), AM::Color(), 1.f);
+		UDrawButton(m_context->render, &MMButtons.at(i), FontID, MMButtonName.at(i), AM::Color(), 0,0,0.15f,Buttons.texture);
 		//m_context->render->RenderRect(&i);
 	}
 }
