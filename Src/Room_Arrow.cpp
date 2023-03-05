@@ -236,8 +236,6 @@ void ArrowMap::CheckDead(int id) {
 			AM::Transform(wosx, wosy, winw, winh),
 			AM::GfxSetting(utils::RGBAtoHex(100, 100, 100), 0.8f)
 		);
-		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 50.f, 1.f);
-		UDrawText(FontID, "Press Esc to return to map", wosx, wosy, 1.f, AM::Color());
 		if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
 			m_context->GameClear = true;
 		}
