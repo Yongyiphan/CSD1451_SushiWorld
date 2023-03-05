@@ -220,6 +220,9 @@ void ArrowMap::CheckDead(int id) {
 		);
 		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Game Over, You Lose", AM::Color(), 0.f, 50.f, 1.f);
 		UDrawText(FontID, "Press Esc to return to main menu", wosx, wosy, 1.f, AM::Color());
+		if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
+			m_context->GameClear = true;
+		}
 	}
 	else if (id == 1) {
 		//boss dead
@@ -229,5 +232,8 @@ void ArrowMap::CheckDead(int id) {
 		);
 		UDrawButton(m_context->render, &ConfirmScreen, FontID, "Congratulations", AM::Color(), 0.f, 50.f, 1.f);
 		UDrawText(FontID, "Press Esc to return to map", wosx, wosy, 1.f, AM::Color());
+		if (m_context->RT->cRoom == m_context->RT->TotalRoom - 1) {
+			m_context->GameClear = true;
+		}
 	}
 }

@@ -35,7 +35,12 @@ namespace GM {
 	struct RoomTracker {
 		std::vector<int> ExplorableRooms;
 		std::vector<int> ExploredRooms;
+		int cRoom{}, TotalRoom{};
 		RoomTracker() {
+			ExplorableRooms = { 1,1,1,1 };
+			ExploredRooms = { 0,0,0,0 };
+		}
+		void Reset() {
 			ExplorableRooms = { 1,1,1,1 };
 			ExploredRooms = { 0,0,0,0 };
 		}
@@ -59,6 +64,7 @@ namespace GM {
 		//IMPORTANT: Change within State constructor when initializing transit state
 
 		s32 mousex{}, mousey{};
+		s8* FontID{};
 	public:
 		//Variables
 		std::string StateName;

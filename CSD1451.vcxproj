@@ -29,7 +29,7 @@
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
-    <ClCompile Include="Src\Room_Main.cpp" />
+    <ClCompile Include="Src\Room_MainField.cpp" />
     <ClCompile Include="Src\State_MainMenu.cpp" />
     <ClCompile Include="Src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -15,12 +15,10 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	s8* FontID;
 	int choice1, choice2;
 	//ItemManager IM;
 	int noshopbuttons;
 	void RenderRandomItemChoices();
-	void ConfirmPurchase();
 	
 };
 

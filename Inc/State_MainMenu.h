@@ -21,7 +21,6 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	s8* FontID;
 	int NoButtons;
 	std::vector<AM::RenderSetting> MMButtons;
 	std::vector<std::string> MMButtonName;

@@ -23,7 +23,7 @@ void MainMenu::Load() {
 	CurrButton = MMButtons.at(0);
 	CurrButton.t.w += 10.f;
 	CurrButton.t.h += 10.f;
-	CurrButton.gfx.Color = utils::RGBAtoHex(110, 110, 255);
+	CurrButton.gfx.Color = utils::RGBAtoHex(100,100,100);
 
 
 }

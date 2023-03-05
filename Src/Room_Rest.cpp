@@ -85,16 +85,16 @@ void RestState::Free() {
 
 void RestState::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
-	AEInputGetCursorPosition(&mouseX, &mouseY);
+	AEInputGetCursorPosition(&mousex, &mousey);
 	switch (MODE) {
 		case ROOM:
 			//check click
 			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-				if (utils::AreaClicked(&healbutton.RS.t,mouseX,mouseY)) {
+				if (utils::AreaClicked(&healbutton.RS.t,mousex,mousey)) {
 					std::cout << "CLCIKED on heal" << std::endl;
 					MODE = HEALING;
 				}
-				if (utils::AreaClicked(&upgradebutton.RS.t, mouseX, mouseY)) {
+				if (utils::AreaClicked(&upgradebutton.RS.t, mousex, mousey)) {
 					if (noitems == FALSE) {
 						std::cout << "upgrading" << std::endl;
 						MODE = UPGRADEchoice;
@@ -118,7 +118,7 @@ void RestState::Update(f64 deltaTime) {
 		case UPGRADEchoice:
 			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 				for (int i = 0; i < 4; i++) {
-					if (utils::AreaClicked(&upgradechoices.at(i).RS.t, mouseX, mouseY)) {
+					if (utils::AreaClicked(&upgradechoices.at(i).RS.t, mousex, mousey)) {
 						if (m_context->Items->items.at(i).level > 0) {
 							selecteditem = m_context->Items->itemnames.at(i);
 							selectedID = i;

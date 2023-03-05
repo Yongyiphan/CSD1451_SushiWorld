@@ -28,7 +28,6 @@ public:
 	MiniRoom Border;
 	int RoomCol, RoomRow;	
 	float rmw, rmh;
-	s8 font;
 	int currentRoom = 0;
 	AM::RenderSetting SavePlayerSettings;
 	

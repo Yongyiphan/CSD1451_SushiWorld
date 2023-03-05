@@ -76,6 +76,7 @@ void Instructions::Draw() {
 			ToPrint = "Use UP, DOWN, LEFT, RIGHT arrow keys to navigate";
 			break;
 		case 1:
+
 			break;
 		}
 		utils::UDrawText(FontID, const_cast<s8*>(ToPrint.c_str()), wosx, wosy, 1.8f, AM::Color());

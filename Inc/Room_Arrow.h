@@ -42,7 +42,6 @@ public:
 	~ArrowMap() {};
 	u32 red, green, blue, yellow;
 	//std::shared_ptr<s8> FontID;
-	s8* FontID;
 	//AEGfxTexture lrarrow;
 	int dmg_count, arrows, check;
 	bool isEmpty, damage, GameEnd;

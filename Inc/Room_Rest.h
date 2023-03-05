@@ -27,7 +27,6 @@ private:
 
 public:
 	//Variables
-	s32 mouseX, mouseY;
 	u32 red, blue, green;
 	AM::Color itemavail;
 	render healbutton,upgradebutton, upgradebackground;
@@ -48,7 +47,6 @@ public:
 
 	RestState(const std::shared_ptr<Context>&);
 	~RestState() {};
-	s8* FontID;
 
 	void Load() override;
 	void Unload() override;

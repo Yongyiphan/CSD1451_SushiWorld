@@ -9,6 +9,7 @@ MainField::MainField(const std::shared_ptr<Context>& context){
 }
 MainField::~MainField() {};
 void MainField::Load() {
+	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Medium.ttf", 15);
 	black = utils::RGBAtoHex(0, 0, 0, 255);
 	white = utils::RGBAtoHex(255,255, 255, 255);
 	red	  = utils::RGBAtoHex(150, 0, 0, 255);
@@ -16,7 +17,8 @@ void MainField::Load() {
 	//AE draw origin (0,0) <=> centre of screen
 	int ID = 0;
 	//No. of rows, col in grid
-	RoomRow = 3, RoomCol = 4;
+	RoomRow = 6, RoomCol = 8;
+	m_context->RT->TotalRoom = RoomRow * RoomCol;
 	//Might be redundant if using sprite
 	int BorderMargin = 50, RoomMargin = 4;
 	Border.ID = ID++;
@@ -79,13 +81,20 @@ void MainField::Update(f64 dt) {
 };
 void MainField::Draw() {
 	utils::SetBackground(0,0,0);
-	m_context->render->RenderRect(&Border.RS);
-	for (auto &i : Room) {
-		if (i.Explored) {
-			m_context->render->RenderRect(&i.RS);
-		}
+	if (m_context->GameClear) {
+		UDrawText(FontID, "Congradulations for defeating the final Boss", wosx, wosy + 50, 1.f, AM::Color(255,255,255));
+		UDrawText(FontID, "Press Esc to return to main menu.", wosx, wosy, 1.f, AM::Color(255,255,255));
 	}
-	m_context->Player->DrawPlayer(m_context->render);
+	else {
+		m_context->render->RenderRect(&Border.RS);
+		for (auto &i : Room) {
+			if (i.Explored) {
+				m_context->render->RenderRect(&i.RS);
+			}
+		}
+		m_context->Player->DrawPlayer(m_context->render);
+
+	}
 };
 
 void MainField::CheckFieldBound(AM::Transform *target) {
@@ -115,9 +124,13 @@ void MainField::CheckFieldBound(AM::Transform *target) {
 }
 
 void MainField::EnterRoom() {
+	std::cout << currentRoom << std::endl;
 	MiniRoom *c = &Room.at(currentRoom);
-	if (!c->Explored) {
+	m_context->RT->cRoom = currentRoom;
+	if (!c->Explored || currentRoom == Room.size() - 1) {
 		c->Explored = true;
+		if(currentRoom == Room.size()-1)
+			m_context->RT->ExplorableRooms = { 1,1,0,0 };
 		m_context->gman->AddState(std::make_unique<MapChooseScreen>(m_context));
 	}
 }
