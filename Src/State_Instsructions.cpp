@@ -19,8 +19,8 @@ void Instructions::Init() {
 	int TRooms = TotalRooms + 1;
 	Buttons.reserve(TRooms);
 	u32 buttonColor = utils::RGBAtoHex(100, 100, 100);
-	float Cols = TRooms + 1.f;
-	for (int i{}; i < TRooms; i++) {
+	float Cols = TRooms + 2.f;
+	for (int i{}; i < TRooms + 1; i++) {
 		float BX = (i + 1) * winw / (Cols);
 		AM::RenderSetting B = AM::RenderSetting(
 			AM::Transform(
@@ -32,6 +32,8 @@ void Instructions::Init() {
 		std::cout << BX << std::endl;
 		Buttons.emplace_back(B);
 	}
+	
+	
 }
 
 void Instructions::Free() {
@@ -53,9 +55,10 @@ void Instructions::Update(f64 deltaTime) {
 	}
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&mousex, &mousey);
-		for (auto& i : Buttons) {
-			if (utils::AreaClicked(&i.t, mousex, mousey)) {
+		for (int i{}; i < Buttons.size();i++) {
+			if (utils::AreaClicked(&Buttons.at(i).t, mousex, mousey)) {
 				DisplayInstructions = true;
+				CurrSelection = i;
 			}
 		}
 
@@ -66,16 +69,31 @@ void Instructions::Draw() {
 	SetBackground(255, 127, 80);
 	
 	if (DisplayInstructions) {
+		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 1.8f, AM::Color());
+		std::string ToPrint{};
+		switch (CurrSelection) {
+		case 0:
+			ToPrint = "Use UP, DOWN, LEFT, RIGHT arrow keys to navigate";
+			break;
+		case 1:
+			break;
+		}
+		utils::UDrawText(FontID, const_cast<s8*>(ToPrint.c_str()), wosx, wosy, 1.8f, AM::Color());
 
+		
 	}
 	else {
 
+
 		utils::UDrawText(FontID, "Press Esc to return to previous view", wosx, winh * 0.85f, 1.8f, AM::Color());
 
-
 		for (int i{}; i < Buttons.size(); i++) {
+			if (i == 0)
+				utils::UDrawButton(m_context->render, &Buttons.at(i),
+				FontID, "Main Field", AM::Color());
+			else
 			utils::UDrawButton(m_context->render, &Buttons.at(i),
-				FontID, RoomNames.at(i), AM::Color());
+				FontID, RoomNames.at(i-1), AM::Color());
 		}
 	}
 

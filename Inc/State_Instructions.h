@@ -12,7 +12,6 @@ public:
 	Instructions(const std::shared_ptr<Context>&);
 	~Instructions() {};
 
-
 	std::vector<AM::RenderSetting> Buttons;
 	AM::RenderSetting CurrButton;
 	//Use RoomMaps

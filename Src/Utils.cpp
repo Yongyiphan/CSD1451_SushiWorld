@@ -17,6 +17,7 @@ namespace utils {
 		f32 strWidth, strHeight;
 		AEGfxGetPrintSize(*Font, const_cast<s8*>(string.c_str()), scale, strWidth, strHeight);
 		AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+
 		AEGfxPrint(*Font, _strdup(string.c_str()), percX - strWidth / 2.f, percY - strHeight/2.f, scale, c.r, c.g, c.b);
 	}
 

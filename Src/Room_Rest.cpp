@@ -105,7 +105,10 @@ void RestState::Update(f64 deltaTime) {
 		case HEALING:
 			//add health
 			
-			m_context->Player->currhp += 182390;
+			m_context->Player->currhp += 10;
+			if (m_context->Player->currhp >= m_context->Player->maxhp) {
+				m_context->Player->currhp = m_context->Player->maxhp;
+			}
 			//go back map
 			if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 				//m_context->gman->AddState(std::make_unique<MainField>(m_context));
