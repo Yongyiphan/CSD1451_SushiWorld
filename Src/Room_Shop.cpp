@@ -106,23 +106,23 @@ void Shop::Update(f64 deltaTime) {
 	
 void Shop::Draw() {
 	m_context->render->RenderRect(&shop_bg, bg.texture);
-	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8, black);
+	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8f, black);
 	m_context->render->RenderRect(&shopbuttons.at(0), board.texture);
 	m_context->render->RenderRect(&shopbuttons.at(1), board.texture);
 	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, black, 0.f, 100.f, 0.15f,upgradesT.at(choice1).texture);
 	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, black, 0.f, 100.f, 0.15f, upgradesT.at(choice2).texture);
 
 	if (m_context->Items->items.at(choice1).level == 0) {
-		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15, black);
+		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
 	}
 	else {
-		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice1).level), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15, black);
+		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice1).level), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
 	}
 	if (m_context->Items->items.at(choice2).level == 0) {
-		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15, black);
+		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
 	}
 	else {
-		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice2).level), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15, black);
+		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice2).level), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
 
 	}
 
