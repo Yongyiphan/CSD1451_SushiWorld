@@ -190,8 +190,7 @@ void RestState::Update(f64 deltaTime) {
 				}
 
 				if (AEInputCheckTriggered(AEVK_ESCAPE)) {
-					m_context->gman->AddState(std::make_unique<MainField>(m_context));
-					//m_context->gman->SetStatus(QUIT);
+					m_context->gman->SetStatus(QUIT);
 				}
 			}
 			break;
@@ -200,7 +199,7 @@ void RestState::Update(f64 deltaTime) {
 }
 void RestState::Draw() {
 	m_context->render->RenderRect(&bg.RS, rest_bg.texture);
-	utils::UDrawText(FontID, "REST ROOM", wosx, winh / 13.4f *11.5f, 0.8,black);
+	utils::UDrawText(FontID, "REST ROOM", wosx, winh / 13.4f *11.5f, 0.8f,black);
 
 	switch (MODE) {
 		case ROOM:
@@ -211,13 +210,13 @@ void RestState::Draw() {
 			m_context->render->RenderRect(&healbutton.RS,board.texture);
 			m_context->render->RenderRect(&healbutton.RS,healicon.texture);
 			if (noitems) {
-				utils::UDrawText(FontID, "NO ITEMS TO UPGRADE", upgradebutton.RS.t.pos.x , upgradebutton.RS.t.pos.y - upgradebutton.RS.t.h, 0.15, black);
+				utils::UDrawText(FontID, "NO ITEMS TO UPGRADE", upgradebutton.RS.t.pos.x , upgradebutton.RS.t.pos.y - upgradebutton.RS.t.h, 0.15f, black);
 			}
 			break;
 		case HEALING:
 			m_context->Player->DrawHPBar( m_context->render, 50.f, 250.f);
 			m_context->Player->DrawPlayer(m_context->render);
-			utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f, 0.15, black);
+			utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f, 0.15f, black);
 
 			break;
 		case UPGRADEchoice:
@@ -231,7 +230,7 @@ void RestState::Draw() {
 					upgradechoices.at(i).RS.gfx.Color = blue;
 					m_context->render->RenderRect(&upgradechoices.at(i).RS, board.texture);
 					UDrawButton(m_context->render, &upgradechoices.at(i).RS, FontID, m_context->Items->itemnames.at(i), black, 0.f, 100.f, 0.15f,upgradesT.at(i).texture);
-					UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(i).level), upgradechoices.at(i).RS.t.pos.x, upgradechoices.at(i).RS.t.pos.y - upgradechoices.at(i).RS.t.h / 2.f - 50.f, 0.15, black);
+					UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(i).level), upgradechoices.at(i).RS.t.pos.x, upgradechoices.at(i).RS.t.pos.y - upgradechoices.at(i).RS.t.h / 2.f - 50.f, 0.15f, black);
 				}
 				
 			}
@@ -260,8 +259,8 @@ void RestState::Draw() {
 					utils::UDrawText(FontID, m_context->Items->itemnames.at(selectedID) + " is still level " + std::to_string(m_context->Items->items.at(selectedID).level), winw / 2.f, winh / 2.f, 0.15f, black);
 
 				}
-				utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, black);
-				utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, black);
+				utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, AM::Color(255,255, 255));
+				//utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, AM::Color(255,255, 255));
 			}
 			break;
 	}

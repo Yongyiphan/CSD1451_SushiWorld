@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "State_MapChoose.h"
-//MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context, int*kek) {
 MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context) {
 	StateName = "MapChooseScreen";
 	m_context = context;
@@ -11,7 +10,6 @@ MapChooseScreen::MapChooseScreen(const std::shared_ptr<Context>&context) {
 }
 
 void MapChooseScreen::Load() {
-	//FontID = *m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	//Resume Button
 }
@@ -49,9 +47,9 @@ void MapChooseScreen::Free() {
 void MapChooseScreen::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mousex, &mousey);
 	
-	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
-		m_context->gman->SetStatus(RESUME);
-	}
+	//if (AEInputCheckTriggered(AEVK_ESCAPE)) {
+	//	m_context->gman->SetStatus(RESUME);
+	//}
 
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&mousex, &mousey);
@@ -109,8 +107,11 @@ void MapChooseScreen::GenerateRoomChoice() {
 	std::vector<RoomMap> choices;
 	while (choices.size() < 2) {
 		RoomMap choice = RoomMap(dis(gen));
-		if (std::find(choices.begin(), choices.end(), choice) == choices.end()) {
-			choices.emplace_back(choice);
+		if (m_context->RT->ExplorableRooms.at(choice) == 1) {
+			if (std::find(choices.begin(), choices.end(), choice) == choices.end()) {
+				choices.emplace_back(choice);
+			}
+
 		}
 	}
 	RoomA = choices[0];

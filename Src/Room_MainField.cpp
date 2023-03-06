@@ -10,6 +10,7 @@ MainField::MainField(const std::shared_ptr<Context>& context){
 MainField::~MainField() {};
 void MainField::Load() {
 	m_context->GameClear = false;
+	m_context->RT->ExplorableRooms = { 1,1,1,1 };
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	black = utils::RGBAtoHex(0, 0, 0, 255);
 	white = utils::RGBAtoHex(255,255, 255, 255);
@@ -139,8 +140,11 @@ void MainField::EnterRoom() {
 	m_context->RT->cRoom = currentRoom;
 	if (!c->Explored || currentRoom == Room.size() - 1) {
 		c->Explored = true;
-		if(currentRoom == Room.size()-1)
+		if(currentRoom == m_context->RT->TotalRoom - 1)
 			m_context->RT->ExplorableRooms = { 1,1,0,0 };
+		else
+			m_context->RT->ExplorableRooms = { 1,1,1,1 };
+			
 		m_context->gman->AddState(std::make_unique<MapChooseScreen>(m_context));
 	}
 }

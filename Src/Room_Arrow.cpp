@@ -183,7 +183,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
-	totaltime.dt = 5.f;
+	totaltime.dt = 10.f;
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;

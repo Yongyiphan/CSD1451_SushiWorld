@@ -24,8 +24,9 @@ void MainMenu::Load() {
 		MMButtons.push_back(m);
 	}
 	CurrButton = MMButtons.at(0);
-	CurrButton.t.w += 10.f;
-	CurrButton.t.h += 10.f;
+	CurrButton.t.w += 0.5f;
+	CurrButton.t.h += 0.5f;
+	CurrButton.gfx.mesh = NULL;
 	u32 c = utils::RGBAtoHex(100, 100, 100);
 	CurrButton.gfx.Color = c;
 
