@@ -1,18 +1,32 @@
 #pragma once
 #include "pch.h"
 
-struct Context {
-	std::unique_ptr<GM::Engine> gman;
-
-	Context() {
-		gman = std::make_unique<GM::Engine>();
-	}
-};
+namespace GM {
+	struct Context {
+		std::unique_ptr<GM::Engine> gman;
+		std::shared_ptr<AM::Renderer> render;
+		std::shared_ptr<AM::AssetManager> assets;
+		std::shared_ptr<EPlayer> Player;
+		std::shared_ptr<Boss> Boss;
+		std::shared_ptr<RoomTracker> RT;
+		std::shared_ptr<ItemManager> Items;
+		bool Tutorial{ false };
+		bool GameClear{ false };
+		Context() {
+			gman = std::make_unique<GM::Engine>();
+			render = std::make_shared<AM::Renderer>();
+			assets = std::make_shared<AM::AssetManager>();
+			RT = std::make_shared<RoomTracker>();
+			//Player = std::make_unique<EPlayer>();
+			Items = std::make_shared<ItemManager>();
+		}
+	};
+}
 
 class Game
 {
 private:
-	std::shared_ptr<Context> m_context;
+	std::shared_ptr<GM::Context> m_context;
 
 public:
 	HINSTANCE hInstance = 0;
