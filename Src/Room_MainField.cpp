@@ -96,11 +96,11 @@ void MainField::Draw() {
 		UDrawText(FontID, "Press Esc to return to main menu.", wosx, wosy, 0.3f, AM::Color(255,255,255));
 	}
 	else {
-		m_context->render->RenderRect(&mainfield_bg, bg.texture);
-		m_context->render->RenderRect(&Border.RS);
+		m_context->render->RenderMesh(&mainfield_bg, bg.texture);
+		m_context->render->RenderMesh(&Border.RS);
 		for (auto &i : Room) {
 			if (i.Explored) {
-				m_context->render->RenderRect(&i.RS);
+				m_context->render->RenderMesh(&i.RS);
 			}
 		}
 		m_context->Player->DrawPlayer(m_context->render);

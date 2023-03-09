@@ -7,6 +7,9 @@ private:
 protected:
 public:
 	std::string ObjectType;
+	//Flag whether current object is active
+	bool Flag{ false };
+
 	bool Gravity = { false };
 	bool CanJump{ true };
 	AEVec2 Vel = {};
@@ -18,9 +21,16 @@ public:
 	GameObject();
 	~GameObject();
 	void ApplyGravity(double gravity = 9.81);
+
+	//Update size = width/height divide 2
 	void UpdateSize();
+	//Update Bounding box;
 	void UpdateBB();
-	void UpdatePosition(AEVec2);
+
+	void UpdatePos(f32 dt);
+
+	void SetPosition(AEVec2);
+	void Draw(const std::shared_ptr<AM::Renderer>&);
 
 };
 

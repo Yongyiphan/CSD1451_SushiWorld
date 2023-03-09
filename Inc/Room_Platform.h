@@ -21,5 +21,9 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 	
+	AM::RenderSetting TestCircle{};
+	
+	void CreateBullets();
+
 	
 };

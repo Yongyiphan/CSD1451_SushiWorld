@@ -105,10 +105,10 @@ void Shop::Update(f64 deltaTime) {
 }
 	
 void Shop::Draw() {
-	m_context->render->RenderRect(&shop_bg, bg.texture);
+	m_context->render->RenderMesh(&shop_bg, bg.texture);
 	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8f, black);
-	m_context->render->RenderRect(&shopbuttons.at(0), board.texture);
-	m_context->render->RenderRect(&shopbuttons.at(1), board.texture);
+	m_context->render->RenderMesh(&shopbuttons.at(0), board.texture);
+	m_context->render->RenderMesh(&shopbuttons.at(1), board.texture);
 	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, black, 0.f, 100.f, 0.15f,upgradesT.at(choice1).texture);
 	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, black, 0.f, 100.f, 0.15f, upgradesT.at(choice2).texture);
 

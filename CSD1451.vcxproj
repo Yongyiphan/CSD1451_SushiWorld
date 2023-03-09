@@ -12,10 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AssetManager.cpp" />
-    <ClCompile Include="Src\Boss.cpp" />
+    <ClCompile Include="Src\GO_Boss.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
+    <ClCompile Include="Src\GO_Bullet.cpp" />
     <ClCompile Include="Src\State_MapChoose.cpp" />
-    <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\GO_Object.cpp" />
     <ClCompile Include="Src\ItemManager.cpp" />
     <ClCompile Include="Src\State_PauseScreen.cpp" />
     <ClCompile Include="Src\Room_Platform.cpp" />
@@ -25,7 +26,7 @@
     <ClCompile Include="Src\TemplateState.cpp" />
     <ClCompile Include="Src\State_Instsructions.cpp" />
     <ClCompile Include="Src\Utils.cpp" />
-    <ClCompile Include="Src\EPlayer.cpp" />
+    <ClCompile Include="Src\GO_Player.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
@@ -45,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\AssetManager.h" />
-    <ClInclude Include="Inc\Boss.h" />
+    <ClInclude Include="Inc\GO_Boss.h" />
     <ClInclude Include="Inc\Collision.h" />
+    <ClInclude Include="Inc\GO_Bullet.h" />
     <ClInclude Include="Inc\State_MapChoose.h" />
-    <ClInclude Include="Inc\Object.h" />
+    <ClInclude Include="Inc\GO_Object.h" />
     <ClInclude Include="Inc\ItemManager.h" />
     <ClInclude Include="Inc\State_PauseScreen.h" />
     <ClInclude Include="Inc\Room_Platform.h" />
@@ -58,7 +60,7 @@
     <ClInclude Include="Inc\TemplateState.h" />
     <ClInclude Include="Inc\State_Instructions.h" />
     <ClInclude Include="Inc\Utils.h" />
-    <ClInclude Include="Inc\EPlayer.h" />
+    <ClInclude Include="Inc\GO_Player.h" />
     <ClInclude Include="Inc\Game.h" />
     <ClInclude Include="Inc\GameManager.h" />
     <ClInclude Include="Inc\Room_MainField.h" />

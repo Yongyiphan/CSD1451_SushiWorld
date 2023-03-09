@@ -148,7 +148,7 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 }
 void ArrowMap::Draw() {
-	m_context->render->RenderRect(&arrow_bg, bg.texture);
+	m_context->render->RenderMesh(&arrow_bg, bg.texture);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
@@ -162,11 +162,11 @@ void ArrowMap::Draw() {
 
 	for (auto& i : this->box) {
 		i.rs.gfx.mesh = ArrowMesh.animationframes.at(i.ID);
-		m_context->render->RenderRect(&i.rs, ArrowMesh.texture);
+		m_context->render->RenderMesh(&i.rs, ArrowMesh.texture);
 	}
 	
 	totaltime.rs.t.w = 30.f * totaltime.dt;
-	m_context->render->RenderRect(&totaltime.rs);
+	m_context->render->RenderMesh(&totaltime.rs);
 
 	str = std::to_string((int)totaltime.dt);
 	utils::UDrawText(FontID, str, 400.f, 450.f, 0.15f, Color{});

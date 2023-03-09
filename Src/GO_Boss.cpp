@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Boss.h"
+#include "GO_Boss.h"
 
 Boss::Boss() {
 	ObjectType = "Boss";
@@ -32,7 +32,7 @@ void Boss::DrawBoss(const std::shared_ptr<AM::Renderer>& render) {
 		currentFrame++;
 	}
 	this->RenderSett.gfx.mesh = this->BossTexture.animationframes.at(currentFrame % AnimationFrames);
-	render->RenderRect(&RenderSett, this->BossTexture.texture);
+	render->RenderMesh(&RenderSett, this->BossTexture.texture);
 }
 
 void Boss::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float posx, float posy) {

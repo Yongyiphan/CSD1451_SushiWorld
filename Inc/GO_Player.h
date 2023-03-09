@@ -4,7 +4,7 @@
 enum PlayerStat {
 	HP
 };
-class EPlayer : public GameObject{
+class Player : public GameObject{
 private:
 	AM::Transform prevT;
 public:
@@ -15,8 +15,8 @@ public:
 	//AM::RenderSetting MaxHPRender, CurrHPRender;
 	HPBar PHPBar;
 	
-	EPlayer();
-	~EPlayer() {};
+	Player();
+	~Player() {};
 	void LoadTexture(std::string, const std::shared_ptr<AM::AssetManager>&);
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);

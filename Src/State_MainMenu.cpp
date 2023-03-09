@@ -82,11 +82,11 @@ void MainMenu::Update(f64 deltaTime) {
 }
 void MainMenu::Draw() {
 	//bg
-	m_context->render->RenderRect(&bg, Menu_bg.texture);
+	m_context->render->RenderMesh(&bg, Menu_bg.texture);
 	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 	// draw main menu buttons
 	CurrButton.t.pos = MMButtons.at(CurrSelection).t.pos;
-	m_context->render->RenderRect(&CurrButton);
+	m_context->render->RenderMesh(&CurrButton);
 	for (int i{}; i < NoButtons;i++) {
 		UDrawButton(m_context->render, &MMButtons.at(i), FontID, MMButtonName.at(i), AM::Color(), 0,0,0.15f,Buttons.texture);
 		//m_context->render->RenderRect(&i);

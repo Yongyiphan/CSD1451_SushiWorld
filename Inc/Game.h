@@ -6,7 +6,7 @@ namespace GM {
 		std::unique_ptr<GM::Engine> gman;
 		std::shared_ptr<AM::Renderer> render;
 		std::shared_ptr<AM::AssetManager> assets;
-		std::shared_ptr<EPlayer> Player;
+		std::shared_ptr<Player> Player;
 		std::shared_ptr<Boss> Boss;
 		std::shared_ptr<RoomTracker> RT;
 		std::shared_ptr<ItemManager> Items;

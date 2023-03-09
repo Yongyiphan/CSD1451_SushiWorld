@@ -1,13 +1,14 @@
 #include "pch.h"
-#include "EPlayer.h"
+#include "GO_Player.h"
 
-EPlayer::EPlayer() {
+Player::Player() {
 
 	this->ObjectType = "Player";
-	Gravity = true;
+	Flag = Gravity = true;
 	AnimationFrames = currentFrame = frameCounter = 0;
 	maxhp = currhp = 100;
 	PHPBar = HPBar(maxhp, currhp, 250.f, 30.f, utils::RGBAtoHex(150, 0, 0), utils::RGBAtoHex(0, 150, 0));
+	
 }
 
 
@@ -15,7 +16,7 @@ EPlayer::EPlayer() {
 	Map texture to mesh
 	Custom mesh for every animation
 */
-void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager> &AM) {
+void Player::LoadTexture(std::string location, const std::shared_ptr<AM::AssetManager> &AM) {
 	/*Define Sprite sheet parameters
 		width/height -> normalize
 		for loop, to iterate through frames
@@ -25,13 +26,13 @@ void EPlayer::LoadTexture(std::string location, const std::shared_ptr<AM::AssetM
 	AnimationFrames = TM.AFrames;
 }
 
-void EPlayer::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
+void Player::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 	RenderSett.t = t;
 	RenderSett.gfx = s;
 	
 }
 
-void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
+void Player::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	
 	//Draw Rect;
 	if (frameCounter % 30 == 0) {
@@ -39,16 +40,16 @@ void EPlayer::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 	}
 	//std::cout << RenderSett.t.pos.x << " | " << RenderSett.t.pos.y << std::endl;
 	RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
-	render->RenderRect(&RenderSett, TM.texture);
+	Draw(render);
 }
 
-void EPlayer::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
+void Player::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
 	PHPBar.SetPos(posx, posy);
 	PHPBar.DrawHPBar(render, maxhp, currhp);
 
 }
 
-void EPlayer::PlayerControl(std::string SN) {
+void Player::PlayerControl(std::string SN) {
 	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
 	f32 dt = f32(utils::UGetDT());
 	ApplyGravity();
@@ -68,9 +69,7 @@ void EPlayer::PlayerControl(std::string SN) {
 		Vel.x += 300;
 	}
 	
-	RenderSett.t.pos.x += Vel.x * dt;
-	RenderSett.t.pos.y += Vel.y * dt;
-	
+	UpdatePos(dt);
 	CheckWithinWindow(*this);
 	UpdateBB();
 	if (Vel.y == 0) {
@@ -79,11 +78,9 @@ void EPlayer::PlayerControl(std::string SN) {
 	
 }
 
-void EPlayer::SaveLoadPlayerPos(bool save) {
-	if (save) {
+void Player::SaveLoadPlayerPos(bool save) {
+	if (save) 
 		prevT = RenderSett.t;
-	}
-	else {
+	else 
 		RenderSett.t = prevT;
-	}
 }

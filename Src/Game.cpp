@@ -32,7 +32,7 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 	//Initialize Player Here
 	//IMPORTANT Load Fonts Here
 	m_context->Boss = std::make_shared<Boss>();
-	m_context->Player = std::make_shared<EPlayer>();
+	m_context->Player = std::make_shared<Player>();
 	m_context->Player->LoadTexture("./Assets/SushiRiceBall.png", m_context->assets);
 	m_context->Boss->LoadTexture("./Assets/Enemy 1.png", m_context->assets);
 	m_context->assets->LoadFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
@@ -49,8 +49,8 @@ void Game::Init(HINSTANCE hI, int scmd, const s8 *name){
 void Game::Run() {
 	int gGameRunning = 1;
 	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
-	m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
-	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
+	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())

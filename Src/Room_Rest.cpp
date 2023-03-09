@@ -198,17 +198,17 @@ void RestState::Update(f64 deltaTime) {
 
 }
 void RestState::Draw() {
-	m_context->render->RenderRect(&bg.RS, rest_bg.texture);
+	m_context->render->RenderMesh(&bg.RS, rest_bg.texture);
 	utils::UDrawText(FontID, "REST ROOM", wosx, winh / 13.4f *11.5f, 0.8f,black);
 
 	switch (MODE) {
 		case ROOM:
 			m_context->Player->DrawHPBar(m_context->render, 50.f, 165.f);
 			m_context->Player->DrawPlayer(m_context->render);
-			m_context->render->RenderRect(&upgradebutton.RS,board.texture);
-			m_context->render->RenderRect(&upgradebutton.RS,upgradeicon.texture);
-			m_context->render->RenderRect(&healbutton.RS,board.texture);
-			m_context->render->RenderRect(&healbutton.RS,healicon.texture);
+			m_context->render->RenderMesh(&upgradebutton.RS,board.texture);
+			m_context->render->RenderMesh(&upgradebutton.RS,upgradeicon.texture);
+			m_context->render->RenderMesh(&healbutton.RS,board.texture);
+			m_context->render->RenderMesh(&healbutton.RS,healicon.texture);
 			if (noitems) {
 				utils::UDrawText(FontID, "NO ITEMS TO UPGRADE", upgradebutton.RS.t.pos.x , upgradebutton.RS.t.pos.y - upgradebutton.RS.t.h, 0.15f, black);
 			}
@@ -228,7 +228,7 @@ void RestState::Draw() {
 				}
 				else {
 					upgradechoices.at(i).RS.gfx.Color = blue;
-					m_context->render->RenderRect(&upgradechoices.at(i).RS, board.texture);
+					m_context->render->RenderMesh(&upgradechoices.at(i).RS, board.texture);
 					UDrawButton(m_context->render, &upgradechoices.at(i).RS, FontID, m_context->Items->itemnames.at(i), black, 0.f, 100.f, 0.15f,upgradesT.at(i).texture);
 					UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(i).level), upgradechoices.at(i).RS.t.pos.x, upgradechoices.at(i).RS.t.pos.y - upgradechoices.at(i).RS.t.h / 2.f - 50.f, 0.15f, black);
 				}
@@ -236,9 +236,9 @@ void RestState::Draw() {
 			}
 			break;
 		case UPGRADE:
-			m_context->render->RenderRect(&upgradebackground.RS,board.texture);
-			m_context->render->RenderRect(&upgradebar.fullrender);
-			m_context->render->RenderRect(&upgradebar.currrender);
+			m_context->render->RenderMesh(&upgradebackground.RS,board.texture);
+			m_context->render->RenderMesh(&upgradebar.fullrender);
+			m_context->render->RenderMesh(&upgradebar.currrender);
 			utils::UDrawText(FontID, std::to_string((int)(upgradenum * 100)) + "%", upgradebar.currrender.t.pos.x + upgradebar.currrender.t.w/2.f, upgradebar.fullrender.t.pos.y+upgradebar.fullrender.t.h, 0.15f, black);
 			//5s to get ready
 			if (timepassed < 3) {

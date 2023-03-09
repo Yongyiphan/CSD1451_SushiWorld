@@ -60,7 +60,7 @@ void PauseScreen::Update(f64 deltaTime) {
 
 
 void PauseScreen::Draw() {
-	m_context->render->RenderRect(&PauseScreenBorderGfx);
+	m_context->render->RenderMesh(&PauseScreenBorderGfx);
 	UDrawButton(m_context->render, &ResumeGfx, FontID, "Resume Game", AM::Color{150,0,10});
 	UDrawButton(m_context->render, &MMGfx, FontID, "Main Menu", AM::Color{150,0,10});
 }

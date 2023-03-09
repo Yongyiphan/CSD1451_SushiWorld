@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Object.h"
+#include "GO_Object.h"
 #include <math.h>
 
 GameObject::GameObject() {
@@ -17,11 +17,13 @@ void GameObject::ApplyGravity(double gravity) {
 	}
 	//Vel.y = Vel.y <= effect ? effect : Vel.y + effect;
 	Vel.y += effect;
-	std::cout << t->pos.y << ", " << Vel.y << ", " << effect << std::endl;
+	//std::cout << t->pos.y << ", " << Vel.y << ", " << effect << std::endl;
 }
 
-void GameObject::UpdatePosition(AEVec2 npos) {
-	RenderSett.t.pos = npos;
+
+void GameObject::UpdatePos(f32 dt) {
+	RenderSett.t.pos.x += Vel.x * dt;
+	RenderSett.t.pos.y += Vel.y * dt;
 }
 
 void GameObject::UpdateSize() {
@@ -33,6 +35,22 @@ void GameObject::UpdateBB() {
 	AEVec2Set(&MaxBB, pos.x + Size.x, pos.y + Size.y);
 	AEVec2Set(&MinBB, pos.x - Size.x, pos.y - Size.y);
 }
+
+void GameObject::SetPosition(AEVec2 npos) {
+	RenderSett.t.pos = npos;
+}
+
+void GameObject::Draw(const std::shared_ptr<AM::Renderer>& render) {
+	render->RenderMesh(&RenderSett, TM.texture);
+}
+
+
+
+
+
+
+
+
 
 HPBar::HPBar(float Max, float Curr, float barWidth, float barHeight, u32 MHPColor, u32 CHPColor) {
 	
@@ -102,7 +120,7 @@ void HPBar::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float MaxHP, 
 	currhpbar = float(CurrHP * BarScale);
 	CurrHPRS.t.pos.x += currhpbar / 2.f;
 	CurrHPRS.t.w = currhpbar;
-	render->RenderRect(&MaxHPRS);
-	render->RenderRect(&CurrHPRS);
+	render->RenderMesh(&MaxHPRS);
+	render->RenderMesh(&CurrHPRS);
 	
 }

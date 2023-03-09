@@ -2,7 +2,9 @@
 #include "Renderer.h"
 
 namespace AM {
-	Renderer::Renderer() {}
+	Renderer::Renderer() {
+		SetCirclePartitions();
+	}
 	Renderer::~Renderer() {
 		//TODO
 		//Free VertexList from Map MeshMap
@@ -17,12 +19,15 @@ namespace AM {
 		switch (stype) {
 		case RECT:
 			return CreateRectMesh(Color);
+		case CIRCLE:
+			return CreateCircleMesh(Color);
 		}
+
 
 		return nullptr;
 	}
 
-	void Renderer::RenderRect(RenderSetting *sett,AEGfxTexture *texture) {
+	void Renderer::RenderMesh(RenderSetting *sett,AEGfxTexture *texture) {
 		AEGfxSetBlendMode(sett->gfx.BM);
 		if (texture)
 			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
@@ -37,7 +42,7 @@ namespace AM {
 			AEGfxMeshDraw(sett->gfx.mesh, sett->gfx.MDM);
 		}
 		else {
-			AEGfxMeshDraw(FindMesh(RECT, sett->gfx.Color), sett->gfx.MDM);
+			AEGfxMeshDraw(FindMesh(sett->gfx.shape, sett->gfx.Color), sett->gfx.MDM);
 		}
 	}
 
@@ -79,20 +84,22 @@ namespace AM {
 		return AEGfxMeshEnd();
 	}
 
-	//TODO Redundant: Possible Removal
-	AEGfxVertexList* Renderer::CreateRectMesh(u32 p0, u32 p1, u32 p2, u32 p3, u32 p4, u32 p5) {
+	
+	AEGfxVertexList* Renderer::CreateCircleMesh(u32 p0) {
 		AEGfxMeshStart();
-		AEGfxTriAdd(
-		-0.5f, -0.5f, p0, 0.0f, 0.0f,
-		 0.5f, -0.5f, p1, 1.0f, 0.0f,
-		-0.5f,  0.5f, p2, 0.0f, 1.0f);
-		AEGfxTriAdd(
-		 0.5f, -0.5f, p3, 1.0f, 0.0f,
-		 0.5f,  0.5f, p4, 1.0f, 1.0f,
-		-0.5f,  0.5f, p5, 0.0f, 1.0f);
+		int Parts = CirclePartitions;
+		for(float i = 0; i < Parts; ++i)
+		{
+			AEGfxTriAdd(
+			0.0f, 0.0f,													p0, 0.0f, 0.0f, 
+			cosf(i*2*PI/Parts)*0.5f,  sinf(i*2*PI/Parts)*0.5f,			p0, 0.0f, 0.0f, 
+			cosf((i+1)*2*PI/Parts)*0.5f,  sinf((i+1)*2*PI/Parts)*0.5f,	p0, 0.0f, 0.0f);
+		}
 		return AEGfxMeshEnd();
 	}
 
+
+	
 
 
 	
@@ -115,4 +122,7 @@ namespace AM {
 		return MeshMap[s][Color];
 	}
 
+	void Renderer::SetCirclePartitions(int partitions) {
+		CirclePartitions = partitions;
+	}
 }

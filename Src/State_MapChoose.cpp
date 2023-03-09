@@ -67,7 +67,7 @@ void MapChooseScreen::Update(f64 deltaTime) {
 
 void MapChooseScreen::Draw() {
 	utils::UDrawText(FontID, "Choose Room Type to Enter", f32(wosx), winh * 0.8f, 0.3f, AM::Color(0,0,0));
-	m_context->render->RenderRect(&BGBlur);
+	m_context->render->RenderMesh(&BGBlur);
 	utils::UDrawButton(m_context->render, &ChoiceA, FontID, GM::RoomNames.at(RoomA), AM::Color(0, 0, 0), 0, 0, 0.15f);
 	utils::UDrawButton(m_context->render, &ChoiceB, FontID, GM::RoomNames.at(RoomB), AM::Color(0, 0, 0), 0, 0, 0.15f);
 	

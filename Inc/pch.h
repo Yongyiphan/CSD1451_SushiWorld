@@ -20,10 +20,11 @@
 #include "AssetManager.h"
 #include "Renderer.h"
 #include "Utils.h"
-#include "Object.h"
+#include "GO_Object.h"
 #include "Collision.h"
-#include "EPlayer.h"
-#include "Boss.h"
+#include "GO_Bullet.h"
+#include "GO_Player.h"
+#include "GO_Boss.h"
 #include "ItemManager.h"
 
 using namespace GM;

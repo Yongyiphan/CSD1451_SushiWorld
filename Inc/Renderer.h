@@ -48,6 +48,7 @@ namespace AM {
 	};
 
 	struct GfxSetting {
+		Shape shape = RECT;
 		AEGfxBlendMode BM = AE_GFX_BM_BLEND;
 		AEGfxRenderMode RM = AE_GFX_RM_COLOR;
 		AEGfxMeshDrawMode MDM = AE_GFX_MDM_TRIANGLES;
@@ -55,13 +56,15 @@ namespace AM {
 		u32 Color = 0xFF000000;
 		AEGfxVertexList* mesh = nullptr;
 		GfxSetting() {}
-		GfxSetting(u32 c, float t = 1.0f, AEGfxVertexList* m = nullptr) {
-			transparency = t;
-			mesh = m;
-			Color = c;
+		GfxSetting(u32 c, float t = 1.0f, AEGfxVertexList* m = nullptr, Shape s = RECT) {
+			transparency	= t;
+			mesh			= m;
+			Color			= c;
+			shape			= s;
 		}
-		GfxSetting(AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm, u32 c,
+		GfxSetting(Shape s, AEGfxBlendMode ibm, AEGfxRenderMode irm, AEGfxMeshDrawMode imdm, u32 c,
 			float it = 1.0f, AEGfxVertexList* m = nullptr) {
+			shape = s;
 			BM = ibm;
 			RM = irm;
 			transparency = it;
@@ -94,7 +97,7 @@ namespace AM {
 		*/
 		std::unordered_map<Shape, std::unordered_map<u32, AEGfxVertexList*>> MeshMap;
 		std::unordered_map<std::string, AEGfxVertexList*> CustomMesh;
-
+		int CirclePartitions{};
 	public:
 		Renderer(); //Constructor
 		~Renderer();	//Destructor
@@ -102,10 +105,12 @@ namespace AM {
 		AEGfxVertexList* GenerateMesh(Shape, u32);
 		AEGfxVertexList* FindMesh(Shape s, u32 = 0xFFFFFFFF);
 		AEGfxVertexList* CreateRectMesh(u32 = 0x00FFFFFF);
-		AEGfxVertexList* CreateRectMesh(u32, u32, u32, u32, u32, u32);
+		AEGfxVertexList* CreateCircleMesh(u32 = 0x00FFFFFF);
+	
+		void SetCirclePartitions(int = 12);
 
 
-		void RenderRect(RenderSetting*, AEGfxTexture* = nullptr);
+		void RenderMesh(RenderSetting*, AEGfxTexture* = nullptr);
 
 
 		AEMtx33 TransformMatrix(Transform*);
