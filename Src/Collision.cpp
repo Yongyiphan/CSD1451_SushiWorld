@@ -61,32 +61,18 @@ namespace utils {
 
 	//clamps position to along border
 	//bool CheckWithinWindow(AM::Transform* target) {
-	bool CheckWithinWindow(GameObject&target) {
-		//int left  = int(target->pos.x - target->w/2);
-		//int right = int(target->pos.x + target->w/2);
-		//int top	  = int(target->pos.y + target->h/2);
-		//int btm	  = int(target->pos.y - target->h/2);
-		int left  = static_cast<int>(target.MinBB.x);
-		int right = static_cast<int>(target.MaxBB.x);
-		int top   = static_cast<int>(target.MaxBB.y);
-		int btm   = static_cast<int>(target.MinBB.y);
+	bool CheckWithinBoundary(GameObject&target, int left, int right, int btm, int top) {
 		AEVec2* pos = &target.RenderSett.t.pos;
-		if (left < 0) {
-			pos->x = 0 + target.Size.x;
+		int minx = static_cast<int>(floor(target.MinBB.x));
+		int miny = static_cast<int>(floor(target.MinBB.y));
+		int maxx = static_cast<int>(ceil( target.MaxBB.x));
+		int maxy = static_cast<int>(ceil( target.MaxBB.y));
+		if ((minx > left && maxx < right) &&
+			(miny > btm  && maxy < top)) {
+			return true;
 		}
-
-		if (right > winw) {
-			pos->x = winw - target.Size.x;
-		}
-		if (btm < 0) {
-			pos->y = 0 + target.Size.y;
-			target.Vel.y = 0;
-		}
-		if (top > winh) {
-			pos->y = winh - target.Size.y;
-			target.Vel.y = 0;
-		}
-
-		return true;
+		return false;
 	}
+
+	
 }

@@ -70,7 +70,10 @@ void Player::PlayerControl(std::string SN) {
 	}
 	
 	UpdatePos(dt);
-	CheckWithinWindow(*this);
+	if (!CheckWithinBoundary(*this)) {
+		ct->pos.x = AEClamp(ct->pos.x, Size.x, winw - Size.x);
+		ct->pos.y = AEClamp(ct->pos.y, Size.y, winh - Size.y);
+	}
 	UpdateBB();
 	if (Vel.y == 0) {
 		CanJump = true;

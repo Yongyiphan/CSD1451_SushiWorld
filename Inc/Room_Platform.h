@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include <list>
 class PlatformMap : public GM::State {
 private:
 
@@ -10,9 +11,10 @@ public:
 	PlatformMap(const std::shared_ptr<Context>&);
 	~PlatformMap() {};
 
-	std::vector<GameObject> GameObjectList;
-	AM::RenderSetting floorY = {};
-	AM::RenderSetting P1 = {};
+	//Game Objects
+	std::list<GameObject> GameObjectList;
+
+	//Environment (BG..etc)
 	std::vector<AM::RenderSetting> GameObjectSettings;
 	void Load() override;
 	void Unload() override;
@@ -21,7 +23,6 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 	
-	AM::RenderSetting TestCircle{};
 	
 	void CreateBullets();
 

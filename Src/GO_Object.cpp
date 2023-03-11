@@ -2,12 +2,9 @@
 #include "GO_Object.h"
 #include <math.h>
 
-GameObject::GameObject() {
-}
+GameObject::GameObject() {}
 
-GameObject::~GameObject() {
-
-}
+GameObject::~GameObject() {}
 
 void GameObject::ApplyGravity(double gravity) {
 	AM::Transform* t = &RenderSett.t;
@@ -24,6 +21,7 @@ void GameObject::ApplyGravity(double gravity) {
 void GameObject::UpdatePos(f32 dt) {
 	RenderSett.t.pos.x += Vel.x * dt;
 	RenderSett.t.pos.y += Vel.y * dt;
+	UpdateBB();
 }
 
 void GameObject::UpdateSize() {
@@ -44,7 +42,15 @@ void GameObject::Draw(const std::shared_ptr<AM::Renderer>& render) {
 	render->RenderMesh(&RenderSett, TM.texture);
 }
 
-
+bool operator==(const GameObject & lhs,const GameObject & rhs) {
+	if (lhs.ObjectType == rhs.ObjectType) {
+		if (lhs.RenderSett.t.pos.x == rhs.RenderSett.t.pos.x &&
+			lhs.RenderSett.t.pos.y == rhs.RenderSett.t.pos.y)
+			return true;
+	}
+	return false;
+				
+}
 
 
 

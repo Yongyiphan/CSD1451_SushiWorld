@@ -16,36 +16,25 @@ void PlatformMap::Unload(){
 
 void PlatformMap::Init() {
 	GameObjectList.clear();
-	GameObjectList.reserve(500);
+	//GameObjectList.reserve(1500);
 	std::cout << "Init " << StateName << std::endl;
 
 	m_context->Player->RenderSett.t = AM::Transform{
-		150,150,100,100
+		150,150,50,50
 	};
 
 
-	floorY = AM::RenderSetting(
+	AM::RenderSetting floorY = AM::RenderSetting(
 		AM::Transform{
 			wosx, 25.f,
 			winw, 50.f },
 		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
 	);
-	P1 = AM::RenderSetting(
-		AM::Transform{
-			400, 200.f,
-			150, 50.f },
-		AM::GfxSetting(utils::RGBAtoHex(110, 110, 110))
-	);
 	
 	GameObjectSettings.emplace_back(floorY);
-	GameObjectSettings.emplace_back(P1);
 	m_context->Player->UpdateSize();
 	//Player's details will be calculated differently (cus unique pointer)
 
-	TestCircle = AM::RenderSetting(
-		AM::Transform(wosx, wosy, 100, 100),
-		AM::GfxSetting(utils::RGBAtoHex(0, 0, 0), 1.f, nullptr, CIRCLE)
-	);
 
 
 }
@@ -61,7 +50,7 @@ void PlatformMap::Update(f64 dt) {
 		//m_context->gman->AddState(std::make_unique<MainField>(m_context));
 	}
 
-	if (AEInputCheckTriggered(AEVK_C)) {
+	if (AEInputCheckCurr(AEVK_C)) {
 		CreateBullets();
 	}
 
@@ -70,14 +59,21 @@ void PlatformMap::Update(f64 dt) {
 	for (auto& i : GameObjectSettings) {
 		utils::AABBCollision(*m_context->Player.get(), i.t);
 	}
+	
+
+	//Check conditions for gameobject deletion
+	//Update active flag (bool)
 	for (auto& i : GameObjectList) {
 		i.UpdatePos(static_cast<f32>(dt));
-		if (!CheckWithinWindow(i)) {
-
+		if (!CheckWithinBoundary(i)) {
+			i.Flag = false;
 		}
 	}
+
+	GameObjectList.remove_if([](GameObject go) {return !go.Flag; });
 	
 }
+
 void PlatformMap::Draw() {
 	SetBackground(150, 150, 150);
 	for (auto& i : GameObjectSettings) {
@@ -86,7 +82,6 @@ void PlatformMap::Draw() {
 	for (auto& i : GameObjectList) {
 		i.Draw(m_context->render);
 	}
-	//m_context->render->RenderMesh(&TestCircle);
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Player->DrawHPBar( m_context->render, 150, winh * 0.85f);
 
@@ -97,6 +92,6 @@ void PlatformMap::CreateBullets() {
 	AM::Transform pt = m_context->Player->RenderSett.t;
 	AEVec2 pSize = m_context->Player->Size;
 	AEVec2 bPos{ pt.pos.x + pSize.x, pt.pos.y };
-	GameObjectList.emplace_back(Bullet(50, bPos, 250));
-	std::cout << "Create Bullet" << std::endl;
+	GameObjectList.emplace_front(Bullet(25, bPos, 550));
+	std::cout << "Create Bullet: at " << GameObjectList.size() << std::endl;
 }

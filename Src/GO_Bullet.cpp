@@ -2,6 +2,7 @@
 #include "GO_Bullet.h"
 
 Bullet::Bullet(int size, AEVec2 pos, int Speed) {
+	ObjectType = "Bullet0";
 	RenderSett.t.pos = pos;
 	RenderSett.t.w = RenderSett.t.h = size;
 	AEVec2Set(&Vel, Speed, 0);
@@ -9,6 +10,9 @@ Bullet::Bullet(int size, AEVec2 pos, int Speed) {
 		utils::RGBAtoHex(0, 0, 0),
 		1.f, nullptr, CIRCLE
 	);
+	Flag = true;
+	UpdateBB();
+	UpdateSize();
 
 }
 

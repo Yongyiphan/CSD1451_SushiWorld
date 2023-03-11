@@ -8,6 +8,6 @@ namespace utils {
 	//Direction AABBCollision(AM::Transform&, AM::Transform&);
 	Direction AABBCollision(GameObject&, AM::Transform&);
 
-	bool CheckWithinWindow(GameObject&);
+	bool CheckWithinBoundary(GameObject&, int = 0, int = winw, int = 0, int = winh);
 
 }

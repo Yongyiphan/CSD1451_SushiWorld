@@ -3,7 +3,7 @@
 
 namespace AM {
 	Renderer::Renderer() {
-		SetCirclePartitions();
+		SetCirclePartitions(36);
 	}
 	Renderer::~Renderer() {
 		//TODO

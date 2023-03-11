@@ -7,6 +7,7 @@ private:
 protected:
 public:
 	std::string ObjectType;
+	
 	//Flag whether current object is active
 	bool Flag{ false };
 
@@ -32,7 +33,9 @@ public:
 	void SetPosition(AEVec2);
 	void Draw(const std::shared_ptr<AM::Renderer>&);
 
+
 };
+bool operator==(const GameObject& lhs, const GameObject& rhs);
 
 class HPBar {
 private:
