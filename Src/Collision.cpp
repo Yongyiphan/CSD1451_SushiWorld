@@ -17,15 +17,16 @@ namespace utils {
 	}
 	
 	//bool AABBCollision(AM::Transform& a, AM::Transform& b) {
-	void AABBCollision(GameObject& a, AM::Transform& b, bool clamp) {
+	bool AABBCollision(GameObject& a, AM::Transform& b, bool clamp) {
 		AEVec2 bSize{ b.w / 2, b.h / 2 };
 		AEVec2 bMax{ b.pos.x + bSize.x, b.pos.y + bSize.y }, bMin{ b.pos.x - bSize.x, b.pos.y - bSize.y };
 
+		bool collided{ false };
 		//a = normally player
 		//b = to compare with		
 		if ((a.MaxBB.x > bMin.x && a.MaxBB.y > bMin.y) &&
 			(bMax.x > a.MinBB.x && bMax.y > a.MinBB.y)){
-
+			collided = true;
 			/*Pseudo code flow
 			IF Collided:
 			snap current player to either face of obstacles. 
@@ -46,7 +47,7 @@ namespace utils {
 				a.RenderSett.t.pos.y = bMax.y + a.Size.y;
 			}
 		}
-
+		return collided;
 	}
 
 

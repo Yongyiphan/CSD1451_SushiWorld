@@ -6,23 +6,25 @@
 struct TimeTracker {
 	bool done{ false };
 	//Time into action (animation)
-	f32 actiondt{};
-	//Time till next action
-	f32 nextaction{};
+	f32 a_dt{};
+	//Time left till action end
+	f32 a_timeleft{};
+	//Lifetime
+	f32 a_lifetime{};
 	//Sleep
-	f32 actiondelay{};
+	f32 a_delay{};
 	void UpdateDT(f32 dt) {
-		actiondt += dt;
-		nextaction -= dt;
-		actiondelay -= dt;
+		a_dt += dt;
+		a_timeleft -= dt;
+		a_delay -= dt;
 	}
 	void sleep(f32 t) {
-		actiondelay = t;
+		a_delay = t;
 	}
 	void Reset(f32 adt = 0, f32 na = 0, f32 adelay = 0) {
-		actiondt = adt;
-		nextaction = na;
-		actiondelay = adelay;
+		this->a_dt = adt;
+		this->a_timeleft = this->a_lifetime = na;
+		this->a_delay = adelay;
 	}
 };
 class GameObject {
@@ -30,7 +32,6 @@ private:
 protected:
 public:
 	std::string ObjectType;
-	
 	//Flag whether current object is active
 	bool Flag{ false }, Friendly{ true };
 	int Collide_D{};

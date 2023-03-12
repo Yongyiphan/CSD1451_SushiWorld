@@ -62,7 +62,7 @@ bool operator==(const GameObject & lhs,const GameObject & rhs) {
 
 void FiniteState::Execute(TimeTracker& timer, f64 dt) {
 	//Force stop, when timer up
-	if (timer.nextaction <= 0 && c_state == update_s)
+	if (timer.a_timeleft <= 0 && c_state == update_s)
 		c_state = exit_s;
 	switch (c_state) {
 	case enter_s:
@@ -70,7 +70,7 @@ void FiniteState::Execute(TimeTracker& timer, f64 dt) {
 		Enter(timer);
 		break;
 	case update_s:
-		Update(dt);
+		Update(timer);
 		break;
 	case exit_s:
 		Exit(timer);

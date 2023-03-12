@@ -68,8 +68,9 @@ void PlatformMap::Update(f64 dt) {
 	}
 	
 	//For other game object (bullets, boss) collision
-
-
+	
+	m_context->Boss->PlayerInteraction();
+	//CLEAN UPS
 	//Check conditions for gameobject deletion
 	//Update active flag (bool)
 	for (auto& i : GameObjectList) {

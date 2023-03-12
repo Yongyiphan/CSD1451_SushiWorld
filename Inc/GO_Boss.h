@@ -12,11 +12,12 @@ protected:
 	std::shared_ptr<GM::Context> m_context;
 public:
 	Inner_State c_state{};
-	virtual void Enter (TimeTracker&)	= 0;
-	virtual void Update(f64)			= 0;
-	virtual void Exit  (TimeTracker&)	= 0;
+	virtual void Enter (TimeTracker&)	 = 0;
+	virtual void Update(TimeTracker&)	 = 0;
+	virtual void Exit  (TimeTracker&)	 = 0;
 	void Execute(TimeTracker&, f64);
 	void Idle();
+	virtual void DamagePlayerCondition() = 0;
 };
 
 
@@ -50,14 +51,32 @@ public:
 	void ProcessFSM(f64);
 
 	void GenerateNextAttack();
+	bool HitCondition{ false };
+	void PlayerInteraction();
 
 };
 
+//IF Player on floor during land, take hit
 class JumpAttack : public FiniteState {
 public:
 	f32 DashPower{}, JumpPower{};
 	JumpAttack(const std::shared_ptr<GM::Context>& c) { m_context = c; }
 	void Enter (TimeTracker&) override;
-	void Update(f64 dt) override;
+	void Update(TimeTracker&) override;
 	void Exit  (TimeTracker&) override;
+	void DamagePlayerCondition() override;
+};
+
+class LaserAttack :public FiniteState {
+
+public:
+	u32 blinking{}, fire{};
+	AM::RenderSetting LaserSett{};
+	f32 blink_intensity{};
+	int counter;
+	LaserAttack(const std::shared_ptr<GM::Context>& c) { m_context = c; }
+	void Enter (TimeTracker&) override;
+	void Update(TimeTracker&) override;
+	void Exit  (TimeTracker&) override;
+	void DamagePlayerCondition() override;
 };
