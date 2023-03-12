@@ -12,9 +12,7 @@ void GameObject::ApplyGravity(double gravity) {
 	if (t->pos.y > t->h/2) {
 		effect = -sqrtf(2 * f32(gravity) * (t->pos.y - t->h / 2));
 	}
-	//Vel.y = Vel.y <= effect ? effect : Vel.y + effect;
 	Vel.y += effect;
-	//std::cout << t->pos.y << ", " << Vel.y << ", " << effect << std::endl;
 }
 
 
@@ -39,6 +37,16 @@ void GameObject::SetPosition(AEVec2 npos) {
 }
 
 void GameObject::Draw(const std::shared_ptr<AM::Renderer>& render) {
+	if (AnimationFrames > 1) {
+		if (this->frameCounter % 30 == 0) {
+			currentFrame++;
+		}
+		RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
+	}
+	else {
+		RenderSett.gfx.mesh = TM.animationframes.at(0);
+	}
+
 	render->RenderMesh(&RenderSett, TM.texture);
 }
 
@@ -52,7 +60,31 @@ bool operator==(const GameObject & lhs,const GameObject & rhs) {
 				
 }
 
+void FiniteState::Execute(TimeTracker& timer, f64 dt) {
+	//Force stop, when timer up
+	if (timer.nextaction <= 0 && c_state == update_s)
+		c_state = exit_s;
+	switch (c_state) {
+	case enter_s:
+		timer.done = false;
+		Enter(timer);
+		break;
+	case update_s:
+		Update(dt);
+		break;
+	case exit_s:
+		Exit(timer);
+		timer.done = true;
+		break;
+	case idle_s:
+		Idle();
+		break;
+	}
+}
 
+void FiniteState::Idle() {
+	AEVec2Set(&m_context->Boss->Vel, 0.f, 0.f);
+}
 
 
 

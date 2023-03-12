@@ -24,7 +24,7 @@ public:
 	void Draw()override;
 	
 	
-	void CreateBullets();
+	void CreateBullets(BulletType = Default);
 
 	
 };

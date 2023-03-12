@@ -10,6 +10,7 @@ PlatformMap::PlatformMap(const std::shared_ptr<Context>& context)
 
 void PlatformMap::Load() {
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
+	m_context->Boss->StartFSM(m_context);
 }
 void PlatformMap::Unload(){
 }
@@ -35,7 +36,10 @@ void PlatformMap::Init() {
 	m_context->Player->UpdateSize();
 	//Player's details will be calculated differently (cus unique pointer)
 
-
+	m_context->Boss->RenderSett.t = AM::Transform(
+		400,130,150,150
+	);
+	m_context->Boss->UpdateSize();
 
 }
 
@@ -44,22 +48,27 @@ void PlatformMap::Free() {
 }
 
 void PlatformMap::Update(f64 dt) {
-
+	
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT);
 		//m_context->gman->AddState(std::make_unique<MainField>(m_context));
 	}
 
-	if (AEInputCheckCurr(AEVK_C)) {
+	if (AEInputCheckTriggered(AEVK_C)) {
 		CreateBullets();
 	}
 
 	m_context->Player->SaveLoadPlayerPos();
-	m_context->Player->PlayerControl(StateName);
+	m_context->Player->PlayerControl();
+	m_context->Boss->ProcessFSM(dt);
+	//For Environment collision
 	for (auto& i : GameObjectSettings) {
-		utils::AABBCollision(*m_context->Player.get(), i.t);
+		utils::AABBCollision(*m_context->Player.get(), i.t, true);
+		utils::AABBCollision(*m_context->Boss.get(), i.t, true);
 	}
 	
+	//For other game object (bullets, boss) collision
+
 
 	//Check conditions for gameobject deletion
 	//Update active flag (bool)
@@ -84,14 +93,17 @@ void PlatformMap::Draw() {
 	}
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Player->DrawHPBar( m_context->render, 150, winh * 0.85f);
+	m_context->Boss->DrawBoss(m_context->render);
 
 }
 
-void PlatformMap::CreateBullets() {
+void PlatformMap::CreateBullets(BulletType type) {
 	//Bullet Spawn Location
 	AM::Transform pt = m_context->Player->RenderSett.t;
 	AEVec2 pSize = m_context->Player->Size;
 	AEVec2 bPos{ pt.pos.x + pSize.x, pt.pos.y };
-	GameObjectList.emplace_front(Bullet(25, bPos, 550));
-	std::cout << "Create Bullet: at " << GameObjectList.size() << std::endl;
+	Bullet nBullet = Bullet(25.f, bPos, 550.f);
+	nBullet.BType = type;
+	GameObjectList.emplace_front(nBullet);
+
 }

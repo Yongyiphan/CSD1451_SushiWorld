@@ -33,13 +33,6 @@ void Player::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
 }
 
 void Player::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
-	
-	//Draw Rect;
-	if (frameCounter % 30 == 0) {
-		currentFrame++;
-	}
-	//std::cout << RenderSett.t.pos.x << " | " << RenderSett.t.pos.y << std::endl;
-	RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
 	Draw(render);
 }
 
@@ -49,18 +42,17 @@ void Player::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, 
 
 }
 
-void Player::PlayerControl(std::string SN) {
+void Player::PlayerControl() {
 	AM::Transform * ct = &RenderSett.t, before = RenderSett.t;
 	f32 dt = f32(utils::UGetDT());
 	ApplyGravity();
 	Vel.x = 0;
-	if (SN == "PlatformMap") {
-		if (AEInputCheckCurr(AEVK_UP) && CanJump) {
-			Vel.y += 1500;
-			CanJump = false;
-		}
-		if (AEInputCheckCurr(AEVK_DOWN)) {
-		}
+	if (AEInputCheckCurr(AEVK_UP) && CanJump) {
+		Vel.y += 1500;
+		Collide_D = NONE;
+		CanJump = false;
+	}
+	if (AEInputCheckCurr(AEVK_DOWN)) {
 	}
 	if (AEInputCheckCurr(AEVK_LEFT)) {
 		Vel.x -= 300;
@@ -75,7 +67,8 @@ void Player::PlayerControl(std::string SN) {
 		ct->pos.y = AEClamp(ct->pos.y, Size.y, winh - Size.y);
 	}
 	UpdateBB();
-	if (Vel.y == 0) {
+	if (Collide_D & TOP) {
+		Vel.y = 0;
 		CanJump = true;
 	}
 	

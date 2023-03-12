@@ -21,7 +21,7 @@ public:
 	void UpdateRenderSettings(AM::Transform t, AM::GfxSetting s);
 	void DrawPlayer(const std::shared_ptr<AM::Renderer>&);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
-	void PlayerControl(std::string);
+	void PlayerControl();
 	//True = save
 	//False = load from save
 	void SaveLoadPlayerPos(bool = true);

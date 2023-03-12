@@ -17,18 +17,12 @@ namespace utils {
 	}
 	
 	//bool AABBCollision(AM::Transform& a, AM::Transform& b) {
-	Direction AABBCollision(GameObject& a, AM::Transform& b) {
-		//AEVec2 aSize{ a.w / 2, a.h / 2 };
+	void AABBCollision(GameObject& a, AM::Transform& b, bool clamp) {
 		AEVec2 bSize{ b.w / 2, b.h / 2 };
-		//AEVec2 aMax{ a.pos.x + aSize.x, a.pos.y + aSize.y }, aMin{ a.pos.x - aSize.x, a.pos.y - aSize.y };
 		AEVec2 bMax{ b.pos.x + bSize.x, b.pos.y + bSize.y }, bMin{ b.pos.x - bSize.x, b.pos.y - bSize.y };
 
 		//a = normally player
-		//b = to compare with
-		bool Collided{ false };
-		Direction D{};
-		//if ((aMax.x > bMin.x && aMax.y > bMin.y) &&
-		//	(bMax.x > aMin.x && bMax.y > aMin.y)){
+		//b = to compare with		
 		if ((a.MaxBB.x > bMin.x && a.MaxBB.y > bMin.y) &&
 			(bMax.x > a.MinBB.x && bMax.y > a.MinBB.y)){
 
@@ -42,22 +36,21 @@ namespace utils {
 			TO Check if 
 			*/
 			if (a.MinBB.y <= bMax.y && (a.MaxBB.x > bMin.x || a.MinBB.x < bMax.x)) {
-				a.RenderSett.t.pos.y = bMax.y + a.Size.y;
-				a.Vel.y = 0;
-				D = TOP;
-				a.CanJump = true;
+				a.Collide_D |= TOP;
 			}
-
-
-			
 			//std::cout << "Collided: " << D << std::endl;
-			Collided = true;
 		}
 
-		//return Collided;
-		return D;
+		if (a.Collide_D && clamp) {
+			if(a.Collide_D & TOP){
+				a.RenderSett.t.pos.y = bMax.y + a.Size.y;
+			}
+		}
 
 	}
+
+
+
 
 	//clamps position to along border
 	//bool CheckWithinWindow(AM::Transform* target) {

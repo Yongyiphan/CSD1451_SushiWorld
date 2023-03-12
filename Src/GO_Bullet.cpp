@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GO_Bullet.h"
 
-Bullet::Bullet(int size, AEVec2 pos, int Speed) {
+Bullet::Bullet(f32 size, AEVec2 pos, f32 Speed) {
 	ObjectType = "Bullet0";
 	RenderSett.t.pos = pos;
 	RenderSett.t.w = RenderSett.t.h = size;

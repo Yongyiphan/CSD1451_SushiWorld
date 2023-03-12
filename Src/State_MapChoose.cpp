@@ -80,9 +80,9 @@ void MapChooseScreen::Redirect(RoomMap Selection) {
 	case ARROW:
 		m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
 		break;
-	//case PLATFORM:
-	//	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
-	//	break;
+	case PLATFORM:
+		m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+		break;
 	case REST:
 		m_context->gman->AddState(std::make_unique<RestState>(m_context));
 		break;

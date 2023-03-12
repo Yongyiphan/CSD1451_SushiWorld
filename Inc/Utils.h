@@ -3,12 +3,13 @@
 
 namespace utils {
 	enum Direction {
-		LEFT = 0,
-		TOP,
-		RIGHT,
-		BTM
-
+		NONE  = 0x00000000,
+		LEFT  = 0x00000001,
+		RIGHT = 0x00000002,
+		TOP   = 0x00000004,
+		BTM   = 0x00000008
 	};
+
 
 	u32 RGBAtoHex(int, int, int, int = 255);
 	void SetBackground(int r, int g, int b);

@@ -47,14 +47,14 @@ namespace GM {
 	};
 	enum RoomMap {
 		ARROW,
-		//PLATFORM,
+		PLATFORM,
 		SHOP,
 		REST
 	};
 	static int TotalRooms{ 3 - 1 };
 	static std::vector < std::string> RoomNames = {
 		"Arrow Battle", 
-		//"Platform Battle",
+		"Platform Battle",
 		"Shop", "Rest Room"
 	};
 	class State {
