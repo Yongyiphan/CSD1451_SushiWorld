@@ -17,6 +17,7 @@ void MapChooseScreen::Unload(){
 }
 
 void MapChooseScreen::Init() {
+
 	u32 grey = utils::RGBAtoHex(110, 110, 110);
 	BGBlur.t = AM::Transform(
 		wosx, wosy,
@@ -38,6 +39,16 @@ void MapChooseScreen::Init() {
 	srand(static_cast<unsigned int>(time(NULL)));
 	GenerateRoomChoice();
 	std::cout << "Init " << StateName << std::endl;
+
+	Buttons = AM::TextureMesh(300, 100);
+	Buttons = m_context->assets->LoadTexture("./Assets/MCbutton.png", Buttons);
+	ChoiceA.gfx.mesh = Buttons.animationframes.at(0);
+	ChoiceB.gfx.mesh = Buttons.animationframes.at(0);
+
+	CurrButton = ChoiceA;
+	CurrButton.t.w += 20;
+	CurrButton.t.h += 20;
+
 }
 
 void MapChooseScreen::Free() {
@@ -61,6 +72,19 @@ void MapChooseScreen::Update(f64 deltaTime) {
 		}
 	}
 
+
+	//keyboard
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
+		CurrButton.t.pos = ChoiceB.t.pos;
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+		CurrButton.t.pos = ChoiceA.t.pos;
+	}
+	if (AEInputCheckTriggered(AEVK_RETURN)) {
+		if (CurrButton.t.pos.x == ChoiceA.t.pos.x) Redirect(RoomA);
+		else Redirect(RoomB);
+	}
+
 }
 
 
@@ -68,8 +92,11 @@ void MapChooseScreen::Update(f64 deltaTime) {
 void MapChooseScreen::Draw() {
 	utils::UDrawText(FontID, "Choose Room Type to Enter", f32(wosx), winh * 0.8f, 0.3f, AM::Color(0,0,0));
 	m_context->render->RenderMesh(&BGBlur);
-	utils::UDrawButton(m_context->render, &ChoiceA, FontID, GM::RoomNames.at(RoomA), AM::Color(0, 0, 0), 0, 0, 0.15f);
-	utils::UDrawButton(m_context->render, &ChoiceB, FontID, GM::RoomNames.at(RoomB), AM::Color(0, 0, 0), 0, 0, 0.15f);
+
+	m_context->render->RenderMesh(&CurrButton);
+
+	utils::UDrawButton(m_context->render, &ChoiceA, FontID, GM::RoomNames.at(RoomA), AM::Color(0, 0, 0), 0, 0, 0.15f,Buttons.texture);
+	utils::UDrawButton(m_context->render, &ChoiceB, FontID, GM::RoomNames.at(RoomB), AM::Color(0, 0, 0), 0, 0, 0.15f,Buttons.texture);
 	
 	
 }

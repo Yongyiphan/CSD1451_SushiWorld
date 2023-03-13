@@ -15,18 +15,21 @@ void MainMenu::Load() {
 	MMButtonName = { "Start Game", "Tutorial", "Exit" };
 	for (int i{}; i < NoButtons; i++) {
 		AM::RenderSetting m = AM::RenderSetting{
-			AM::Transform{winw/4.f *3.f, StartPosY - (i * 100), 200, 75},
+			AM::Transform{winw/4.f *3.f, StartPosY - (i * 100), 200, 55},
 			AM::GfxSetting(utils::RGBAtoHex(50,50,200))
 		};
-		Buttons = AM::TextureMesh(274, 84);
+		Buttons = AM::TextureMesh(300, 100);
 		Buttons = m_context->assets->LoadTexture("./Assets/button.png", Buttons);
 		m.gfx.mesh = Buttons.animationframes.at(0);
 		MMButtons.push_back(m);
 	}
 	CurrButton = MMButtons.at(0);
-	CurrButton.t.w += 0.5f;
-	CurrButton.t.h += 0.5f;
-	CurrButton.gfx.mesh = NULL;
+	CurrButton.t.w += 20;
+	CurrButton.t.h += 20;
+	BSelect = AM::TextureMesh(358,358);
+	BSelect = m_context->assets->LoadTexture("./Assets/backboard.png", BSelect);
+
+	CurrButton.gfx.mesh = BSelect.animationframes.at(0);
 	u32 c = utils::RGBAtoHex(100, 100, 100);
 	CurrButton.gfx.Color = c;
 
@@ -39,7 +42,6 @@ void MainMenu::Load() {
 	Menu_bg = m_context->assets->LoadTexture("./Assets/Main Menu.png", Menu_bg);
 	bg.gfx.mesh = Menu_bg.animationframes.at(0);
 
-	//buttons
 
 }
 void MainMenu::Unload() {
@@ -55,13 +57,6 @@ void MainMenu::Free() {
 
 void MainMenu::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mousex, &mousey);
-	//if (AEInputCheckTriggered(AEVK_SPACE)) {
-	//	//m_context->gman->AddState(std::make_unique<ArrowMap>("ArrowMap", m_context));
-	//	m_context->gman->AddState(std::make_unique<MainField>(m_context));
-	//}
-	//if (AEInputCheckTriggered(AEVK_S)){
-	//	m_context->gman->AddState(std::make_unique<Shop>(m_context));
-	//}
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		for (int i = 0; i < NoButtons; i++) {
 			if (AreaClicked(&MMButtons.at(i).t, mousex, mousey)) {
@@ -86,7 +81,7 @@ void MainMenu::Draw() {
 	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 	// draw main menu buttons
 	CurrButton.t.pos = MMButtons.at(CurrSelection).t.pos;
-	m_context->render->RenderMesh(&CurrButton);
+	m_context->render->RenderMesh(&CurrButton,BSelect.texture);
 	for (int i{}; i < NoButtons;i++) {
 		UDrawButton(m_context->render, &MMButtons.at(i), FontID, MMButtonName.at(i), AM::Color(), 0,0,0.15f,Buttons.texture);
 		//m_context->render->RenderRect(&i);

@@ -12,6 +12,10 @@ public:
 
 	
 	AM::RenderSetting BGBlur = {};
+	AM::TextureMesh Buttons;
+
+	AM::RenderSetting CurrButton;
+
 
 	RoomMap RoomA{}, RoomB{};
 	AM::RenderSetting ChoiceA = {}, ChoiceB = {};
