@@ -8,7 +8,7 @@ struct render
 struct bar 
 {
 	int fullbar = 10;
-	AM::RenderSetting fullrender,currrender;
+	AM::RenderSetting fullrender, currrender;
 
 };
 
@@ -21,7 +21,6 @@ enum mode
 };
 
 
-//IMPORTANT Template/ Guide to create new state
 class RestState : public GM::State {
 private:
 
@@ -29,19 +28,20 @@ public:
 	//Variables
 	u32 red, blue, green;
 	AM::Color itemavail,black;
-	render healbutton,upgradebutton, upgradebackground,bg;
+	render healbutton, upgradebutton, upgradebackground, bg, CurrButton;
 	std::vector<render> upgradechoices;
 	mode MODE;
 	bar upgradebar;
-	float upgradetimer = 3;
-	float timepassed = 0;
-	float upgradenum = 0;
+	float upgradetimer;
+	float timepassed;
+	float upgradenum;
 	bool pass;
-	bool noitems = 1;
-	bool upgraded = 1;
+	bool noitems;
+	bool upgraded, healed;
 	std::string selecteditem;
-	AM::TextureMesh healicon,upgradeicon,board,rest_bg,ingredients;
+	AM::TextureMesh healicon, upgradeicon, board, rest_bg, ingredients;
 	std::vector<AM::TextureMesh> upgradesT;
+
 
 	int selectedID;
 	///Methods

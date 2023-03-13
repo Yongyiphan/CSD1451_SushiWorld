@@ -26,7 +26,7 @@ public:
 	std::vector<std::string> MMButtonName;
 
 	AM::RenderSetting bg;
-	AM::TextureMesh Menu_bg, Buttons;
+	AM::TextureMesh Menu_bg, Buttons, BSelect;
 
 	AM::RenderSetting CurrButton;
 	int CurrSelection{};

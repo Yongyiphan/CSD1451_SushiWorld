@@ -2,7 +2,6 @@
 #include "Room_Rest.h"
 //#include "Eplayer.h"
 
-//IMPORTANT Template/ Guide to create new state
 RestState::RestState(const std::shared_ptr<Context>&context) {
 	this->m_context = context;
 	StateName = "Restroom";
@@ -11,8 +10,8 @@ RestState::RestState(const std::shared_ptr<Context>&context) {
 
 void RestState::Load() {
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
-	red = utils::RGBAtoHex(150, 0, 0, 255);
-	blue = utils::RGBAtoHex(0, 0, 150); 
+	red = utils::RGBAtoHex(150, 0, 0);
+	blue = utils::RGBAtoHex(0, 0, 150);
 	green = utils::RGBAtoHex(0, 150, 0);
 	black = AM::Color{ 0,0,0 };
 
@@ -63,7 +62,7 @@ void RestState::Load() {
 	upgradesT.push_back(ingredients);
 	for (int i = 0; i < 4; i++){
 		upgradechoices.at(i).RS.gfx.mesh = upgradesT.at(i).animationframes.at(0);
-		//m_context->Items->items.at(i).level = 1;
+		m_context->Items->items.at(i).level = 1;
 
 	}
 
@@ -88,6 +87,11 @@ void RestState::Load() {
 	board = AM::TextureMesh(350, 350);
 	board = m_context->assets->LoadTexture("./Assets/backboard.png", board);
 
+
+	CurrButton.RS = healbutton.RS;
+	CurrButton.RS.t.w += 20;
+	CurrButton.RS.t.h += 20;
+
 }
 void RestState::Unload(){
 }
@@ -96,6 +100,9 @@ void RestState::Init() {
 	std::cout << "Init " << StateName << std::endl;
 	SetBackground(255, 127, 80);		
 	m_context->Player->RenderSett.t = AM::Transform(150, 100, 50, 50);
+	upgradetimer = 5;
+	timepassed = upgradenum = 0;
+	noitems = upgraded = healed = 1;
 
 
 	for (int i = 0; i < 4; i++) {
@@ -127,11 +134,28 @@ void RestState::Update(f64 deltaTime) {
 					}					
 				}
 			}
+
+			//keyboard
+			if (noitems == FALSE) {
+				if (AEInputCheckTriggered(AEVK_RIGHT)) {
+					CurrButton.RS.t.pos = upgradebutton.RS.t.pos;
+				}
+			}
+			if (AEInputCheckTriggered(AEVK_LEFT)) {
+				CurrButton.RS.t.pos = healbutton.RS.t.pos;
+			}
+			if (AEInputCheckTriggered(AEVK_RETURN)) {
+				if (CurrButton.RS.t.pos.x == healbutton.RS.t.pos.x) MODE = HEALING;
+				else MODE = UPGRADEchoice;
+			}
+
 			break;
 		case HEALING:
 			//add health
-			
-			m_context->Player->currhp += 10;
+			if (healed) {
+				m_context->Player->currhp += 10;
+				healed = 0; // heal once
+			}
 			if (m_context->Player->currhp >= m_context->Player->maxhp) {
 				m_context->Player->currhp = m_context->Player->maxhp;
 			}
@@ -157,7 +181,8 @@ void RestState::Update(f64 deltaTime) {
 			break;
 		case UPGRADE:
 			timepassed += static_cast<f32>(utils::UGetDT());
-			if (timepassed >= 3 && timepassed <8) {
+			//after 3s get ready
+			if (timepassed >= 3 && timepassed < 3 + upgradetimer) {
 				//constant decrese	
 				while (upgradebar.currrender.t.w > 0) {
 					upgradebar.currrender.t.w -= 0.05f * upgradebar.fullrender.t.w / upgradebar.fullbar;
@@ -176,16 +201,17 @@ void RestState::Update(f64 deltaTime) {
 						}
 					}
 				}
+				//get the ending %
 				upgradenum = upgradebar.currrender.t.w / upgradebar.fullrender.t.w;
-				//std::cout << upgradenum << std::endl;
 				pass = checksuccess(upgradenum);			
+				//std::cout << upgradenum << std::endl;
 			}
 			else {
 				if (pass) {
 					if (upgraded) {
 						m_context->Items->items.at(selectedID).level++;
 						std::cout << m_context->Items->items.at(selectedID).level << std::endl;
-						upgraded = FALSE;
+						upgraded = FALSE; // upgrade once
 					}
 				}
 
@@ -198,69 +224,156 @@ void RestState::Update(f64 deltaTime) {
 
 }
 void RestState::Draw() {
+	//draw bg
 	m_context->render->RenderRect(&bg.RS, rest_bg.texture);
 	utils::UDrawText(FontID, "REST ROOM", wosx, winh / 13.4f *11.5f, 0.8f,black);
 
 	switch (MODE) {
+		//initial room state
 		case ROOM:
 			m_context->Player->DrawHPBar(m_context->render, 50.f, 165.f);
 			m_context->Player->DrawPlayer(m_context->render);
+			m_context->render->RenderRect(&CurrButton.RS);
+
 			m_context->render->RenderRect(&upgradebutton.RS,board.texture);
 			m_context->render->RenderRect(&upgradebutton.RS,upgradeicon.texture);
 			m_context->render->RenderRect(&healbutton.RS,board.texture);
 			m_context->render->RenderRect(&healbutton.RS,healicon.texture);
+
+			//text if no items to upgrade
 			if (noitems) {
-				utils::UDrawText(FontID, "NO ITEMS TO UPGRADE", upgradebutton.RS.t.pos.x , upgradebutton.RS.t.pos.y - upgradebutton.RS.t.h, 0.15f, black);
+				utils::UDrawText(
+					FontID,
+					"NO ITEMS TO UPGRADE",
+					upgradebutton.RS.t.pos.x ,
+					upgradebutton.RS.t.pos.y - upgradebutton.RS.t.h,
+					0.15f,
+					black);
 			}
 			break;
 		case HEALING:
+			//after heal is chosen
 			m_context->Player->DrawHPBar( m_context->render, 50.f, 250.f);
 			m_context->Player->DrawPlayer(m_context->render);
-			utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f, 0.15f, black);
+			utils::UDrawText(
+				FontID, 
+				"Esc to return to map", 
+				winw / 2.f, 
+				winh / 2.f, 
+				0.15f, black);
 
 			break;
 		case UPGRADEchoice:
+			//after upgrade is chosen
 			for (int i = 0; i < 4; i++) {
-
+				//if item no avail
 				if (m_context->Items->items.at(i).level == 0) {
 					upgradechoices.at(i).RS.gfx.Color = red;
-					UDrawButton(m_context->render, &upgradechoices.at(i).RS, FontID, "Do Not Own", black, 0.f, 100.f, 0.15f);
+					UDrawButton(
+						m_context->render, 
+						&upgradechoices.at(i).RS, 
+						FontID, 
+						"Do Not Own", 
+						black, 
+						0.f, 
+						100.f, 
+						0.15f);
 				}
 				else {
 					upgradechoices.at(i).RS.gfx.Color = blue;
 					m_context->render->RenderRect(&upgradechoices.at(i).RS, board.texture);
-					UDrawButton(m_context->render, &upgradechoices.at(i).RS, FontID, m_context->Items->itemnames.at(i), black, 0.f, 100.f, 0.15f,upgradesT.at(i).texture);
-					UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(i).level), upgradechoices.at(i).RS.t.pos.x, upgradechoices.at(i).RS.t.pos.y - upgradechoices.at(i).RS.t.h / 2.f - 50.f, 0.15f, black);
+					UDrawButton(
+						m_context->render,
+						&upgradechoices.at(i).RS,
+						FontID,
+						m_context->Items->itemnames.at(i),
+						black,
+						0.f,
+						100.f,
+						0.15f,
+						upgradesT.at(i).texture);
+					UDrawText(
+						FontID,
+						"Level " + std::to_string(m_context->Items->items.at(i).level),
+						upgradechoices.at(i).RS.t.pos.x,
+						upgradechoices.at(i).RS.t.pos.y - upgradechoices.at(i).RS.t.h / 2.f - 50.f,
+						0.15f, black);
 				}
 				
 			}
 			break;
 		case UPGRADE:
+			//upgrade mech
 			m_context->render->RenderRect(&upgradebackground.RS,board.texture);
 			m_context->render->RenderRect(&upgradebar.fullrender);
 			m_context->render->RenderRect(&upgradebar.currrender);
-			utils::UDrawText(FontID, std::to_string((int)(upgradenum * 100)) + "%", upgradebar.currrender.t.pos.x + upgradebar.currrender.t.w/2.f, upgradebar.fullrender.t.pos.y+upgradebar.fullrender.t.h, 0.15f, black);
-			//5s to get ready
+			utils::UDrawText(
+				FontID,
+				std::to_string((int)(upgradenum * 100)) + "%",
+				upgradebar.currrender.t.pos.x + upgradebar.currrender.t.w / 2.f,
+				upgradebar.fullrender.t.pos.y + upgradebar.fullrender.t.h,
+				0.15f, black);
+			//3s to get ready
 			if (timepassed < 3) {
-				utils::UDrawText(FontID, "Get ready to spam spacebar to increase ", winw / 2.f, (winh /2.f) - 150 + (upgradebackground.RS.t.h / 2.f), 0.15f, black);
-				utils::UDrawText(FontID, "your chances of upgrading in " + std::to_string((int)(3 - timepassed)), winw / 2.f, (winh/2.f) - 200 + (upgradebackground.RS.t.h / 2.f), 0.15f, black);
+				utils::UDrawText(
+					FontID, 
+					"Get ready to spam spacebar to increase ", 
+					winw / 2.f, 
+					(winh /2.f) - 150 + (upgradebackground.RS.t.h / 2.f),
+					0.15f, black);
+				utils::UDrawText(
+					FontID, 
+					"your chances of upgrading in " + std::to_string((int)(3 - timepassed)),
+					winw / 2.f, 
+					(winh/2.f) - 200 + (upgradebackground.RS.t.h / 2.f),
+					0.15f, black);
 			}
 			//5s to do mech
-			else if (timepassed < 8 && timepassed >= 3) {
-				utils::UDrawText(FontID, "Ending in " + std::to_string((int)(8.f-timepassed)), winw / 2.f, winh / 2.f, 0.15f, black);
+			else if (timepassed < (upgradetimer + 3) && timepassed >= 3) {
+				utils::UDrawText(
+					FontID,
+					"Ending in " + std::to_string((int)(8.f - timepassed)),
+					winw / 2.f,
+					winh / 2.f,
+					0.15f, black);
 			}
+			//after mech
 			else {
 				if (pass) {
-					utils::UDrawText(FontID, "Congrats!", winw / 2.f, (winh / 2.f) - 150 + (upgradebackground.RS.t.h / 2.f), 0.3f, black);
-					utils::UDrawText(FontID, m_context->Items->itemnames.at(selectedID) +" is now level " + std::to_string(m_context->Items->items.at(selectedID).level), winw / 2.f, winh / 2.f, 0.15f, black);
+					utils::UDrawText(
+						FontID,
+						"Congrats!", 
+						winw / 2.f, 
+						(winh / 2.f) - 150 + (upgradebackground.RS.t.h / 2.f), 
+						0.3f, black);
+					utils::UDrawText(
+						FontID, 
+						m_context->Items->itemnames.at(selectedID) +" is now level " + std::to_string(m_context->Items->items.at(selectedID).level),
+						winw / 2.f, 
+						winh / 2.f, 
+						0.15f, black);
 				}
 				else {
-					utils::UDrawText(FontID, "Unlucky!", winw / 2.f, winh / 2.f, 0.3f, black);
-					utils::UDrawText(FontID, m_context->Items->itemnames.at(selectedID) + " is still level " + std::to_string(m_context->Items->items.at(selectedID).level), winw / 2.f, winh / 2.f, 0.15f, black);
+					utils::UDrawText(
+						FontID,
+						"Unlucky!", 
+						winw / 2.f, 
+						winh / 2.f, 
+						0.3f, black);
+					utils::UDrawText(
+						FontID, 
+						m_context->Items->itemnames.at(selectedID) + " is still level " + std::to_string(m_context->Items->items.at(selectedID).level), 
+						winw / 2.f, 
+						winh / 2.f, 
+						0.15f, black);
 
 				}
-				utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, AM::Color(255,255, 255));
-				//utils::UDrawText(FontID, "Esc to return to map", winw / 2.f, winh / 2.f - 100.f, 0.15f, AM::Color(255,255, 255));
+				utils::UDrawText(
+					FontID,
+					"Esc to return to map",
+					winw / 2.f,
+					winh / 2.f - 100.f,
+					0.15f, AM::Color(255, 255, 255));
 			}
 			break;
 	}
