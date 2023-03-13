@@ -80,3 +80,14 @@ public:
 	void Exit  (TimeTracker&) override;
 	void DamagePlayerCondition() override;
 };
+
+// charge attack. if collide, take hit
+class ChargeAttack : public FiniteState {
+public:
+	f32 ChargePower{};
+	ChargeAttack(const std::shared_ptr<GM::Context>& c) { m_context = c; }
+	void Enter(TimeTracker&) override;
+	void Update(TimeTracker&) override;
+	void Exit(TimeTracker&) override;
+	void DamagePlayerCondition() override;
+};

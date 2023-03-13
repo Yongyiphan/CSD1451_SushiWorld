@@ -166,5 +166,36 @@ void LaserAttack::DamagePlayerCondition() {
 	}
 }
 
+// charge attack
+void ChargeAttack::Enter(TimeTracker& timer) {
+	timer.Reset(0.f, 3.f);
+	ChargePower = m_context->Boss->RenderSett.t.pos.x - m_context->Player->RenderSett.t.pos.x;
+	m_context->Boss->Vel.x = -ChargePower;
+	c_state = update_s;
+	std::cout << "Start: Boss Charge Attack" << std::endl;
+}
 
+void ChargeAttack::Update(TimeTracker& timer) {
+	if (m_context->Boss->Collide_D & LEFT) {
+		c_state = exit_s;
+	}
+	m_context->Boss->PlayerInteraction();
+}
+
+void ChargeAttack::Exit(TimeTracker& timer) {
+	timer.sleep(2);
+	c_state = idle_s;
+	std::cout << "End: Boss Charge Attack" << std::endl;
+}
+
+void ChargeAttack::DamagePlayerCondition() {
+	m_context->Player->UpdateBB();
+	if (c_state == update_s) {
+		if (AABBCollision(*m_context->Player.get(), m_context->Boss->RenderSett.t)) {
+			m_context->Boss->HitCondition = true;
+			c_state = exit_s;
+			std::cout << "Hit Player" << std::endl;
+		}
+	}
+}
 
