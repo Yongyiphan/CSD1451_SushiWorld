@@ -39,6 +39,8 @@ public:
 	bool CanJump{ true };
 	AEVec2 Vel = {};
 	AEVec2 Size{}, MaxBB{}, MinBB{};
+
+	bool SpriteLoaded{ false };
 	AM::TextureMesh TM = {};
 	//Pos is contained within render sett
 	AM::RenderSetting RenderSett = {};

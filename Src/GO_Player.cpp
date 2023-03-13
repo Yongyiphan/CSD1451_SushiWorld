@@ -24,6 +24,7 @@ void Player::LoadTexture(std::string location, const std::shared_ptr<AM::AssetMa
 	TM = TextureMesh(320, 160, 2, 1, 2, 5, 5, 6, 6, 7, 8);
 	TM = AM->LoadTexture(location, TM);
 	AnimationFrames = TM.AFrames;
+	SpriteLoaded = true;
 }
 
 void Player::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {

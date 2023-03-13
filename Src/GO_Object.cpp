@@ -37,14 +37,17 @@ void GameObject::SetPosition(AEVec2 npos) {
 }
 
 void GameObject::Draw(const std::shared_ptr<AM::Renderer>& render) {
-	if (AnimationFrames > 1) {
-		if (this->frameCounter % 30 == 0) {
-			currentFrame++;
+	if (SpriteLoaded) {
+		if (AnimationFrames > 1) {
+			if (this->frameCounter % 30 == 0) {
+				currentFrame++;
+			}
+			RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
 		}
-		RenderSett.gfx.mesh = TM.animationframes.at(currentFrame % AnimationFrames);
-	}
-	else {
-		RenderSett.gfx.mesh = TM.animationframes.at(0);
+		else {
+			RenderSett.gfx.mesh = TM.animationframes.at(0);
+		}
+
 	}
 
 	render->RenderMesh(&RenderSett, TM.texture);

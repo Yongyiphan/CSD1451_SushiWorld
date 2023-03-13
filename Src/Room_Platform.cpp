@@ -37,7 +37,7 @@ void PlatformMap::Init() {
 	//Player's details will be calculated differently (cus unique pointer)
 
 	m_context->Boss->RenderSett.t = AM::Transform(
-		400,130,150,150
+		700,130,150,150
 	);
 	m_context->Boss->UpdateSize();
 
@@ -105,6 +105,6 @@ void PlatformMap::CreateBullets(BulletType type) {
 	AEVec2 bPos{ pt.pos.x + pSize.x, pt.pos.y };
 	Bullet nBullet = Bullet(25.f, bPos, 550.f);
 	nBullet.BType = type;
-	GameObjectList.emplace_front(nBullet);
+	GameObjectList.push_front(nBullet);
 
 }

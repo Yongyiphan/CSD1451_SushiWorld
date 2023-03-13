@@ -17,6 +17,7 @@ void Boss::LoadTexture(std::string location, const std::shared_ptr<AM::AssetMana
 	TM = TextureMesh(1024, 966);
 	TM = AM->LoadTexture(location, TM);
 	AnimationFrames = TM.AFrames;
+	SpriteLoaded = true;
 }
 
 void Boss::UpdateRenderSettings(AM::Transform t, AM::GfxSetting s) {
@@ -42,7 +43,7 @@ void Boss::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float posx, fl
 void Boss::StartFSM(const std::shared_ptr<GM::Context>& c) {
 	if (BossAttackLoaded)
 		return;
-	//attackpatterns.push_back(std::make_unique<JumpAttack>(c));
+	attackpatterns.push_back(std::make_unique<JumpAttack>(c));
 	attackpatterns.push_back(std::make_unique <LaserAttack>(c));
 	BossAttackLoaded = true;
 	std::cout << "Loaded attack patterns" << std::endl;
@@ -123,7 +124,7 @@ void JumpAttack::DamagePlayerCondition() {
 void LaserAttack::Enter (TimeTracker& timer){
 	timer.Reset(0.f, 3.f);
 	int Loffset = 50;
-	f32 LaserSpawnY = rand() % static_cast<int>(wosy - Loffset) + Loffset;
+	f32 LaserSpawnY = static_cast<f32>(rand() % static_cast<int>(wosy - Loffset) + Loffset);
 	blinking = utils::RGBAtoHex(200, 50, 50);
 	fire	 = utils::RGBAtoHex(200, 200, 50);
 	LaserSett = AM::RenderSetting(
@@ -143,7 +144,6 @@ void LaserAttack::Update(TimeTracker& timer){
 	if (timer.a_dt > timer.a_lifetime - 0.2) {
 		blink_intensity = 1.f;
 		LaserSett.gfx.Color = fire;
-		std::cout << counter << std::endl;
 	}
 	LaserSett.gfx.transparency = counter % 15 == 0 ? blink_intensity : 1.f;
 	m_context->render->RenderMesh(&LaserSett);
