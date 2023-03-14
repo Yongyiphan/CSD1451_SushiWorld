@@ -1,15 +1,17 @@
 #include "pch.h"
 #include "GO_Player.h"
 
-Player::Player() {
-
+Player::Player(const std::shared_ptr<ItemManager>& item_manager) {
+	this->item_manager = item_manager;
 	this->ObjectType = "Player";
 	Flag = Gravity = true;
 	AnimationFrames = currentFrame = frameCounter = 0;
 	maxhp = currhp = 100;
 	PHPBar = HPBar(maxhp, currhp, 250.f, 30.f, utils::RGBAtoHex(150, 0, 0), utils::RGBAtoHex(0, 150, 0));
-	
+	damage = (item_manager->items.at(SWORDFISH).stat / 10);
+	evasion = (item_manager->items.at(SQUID).stat);
 }
+
 
 
 /*TODO Load in sprite texture
@@ -81,3 +83,13 @@ void Player::SaveLoadPlayerPos(bool save) {
 	else 
 		RenderSett.t = prevT;
 }
+
+void Player::UpdatePlayerStat(ITEMID id) {
+	maxhp  =  100 + item_manager->items.at(static_cast<int>(id)).stat;
+}
+
+//int Player::calevasionchance() {
+//	int chance = evasion;
+//	return chance;
+//}
+

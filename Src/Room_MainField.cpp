@@ -86,7 +86,11 @@ void MainField::Update(f64 dt) {
 		m_context->gman->AddState(std::make_unique<Shop>(m_context));
 	}
 
-	
+	if (AEInputCheckTriggered(AEVK_H)) {
+		m_context->Items->items.at(SWORDFISH).level++;
+		m_context->Items->items.at(SWORDFISH).stat += 10;
+		std::cout << m_context->Items->items.at(SWORDFISH).level << std::endl << m_context->Items->items.at(SWORDFISH).stat << std::endl;
+	}
 
 };
 void MainField::Draw() {

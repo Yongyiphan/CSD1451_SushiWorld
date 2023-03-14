@@ -18,6 +18,7 @@
 #include "AEEngine.h"
 #include "GameManager.h"
 #include "AssetManager.h"
+#include "ItemManager.h"
 #include "Renderer.h"
 #include "Utils.h"
 #include "GO_Object.h"
@@ -25,7 +26,6 @@
 #include "GO_Bullet.h"
 #include "GO_Player.h"
 #include "GO_Boss.h"
-#include "ItemManager.h"
 
 using namespace GM;
 using namespace AM;

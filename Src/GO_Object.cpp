@@ -32,6 +32,8 @@ void GameObject::UpdateBB() {
 	AEVec2Set(&MinBB, pos.x - Size.x, pos.y - Size.y);
 }
 
+
+
 void GameObject::SetPosition(AEVec2 npos) {
 	RenderSett.t.pos = npos;
 }
@@ -94,10 +96,9 @@ void FiniteState::Idle() {
 
 
 HPBar::HPBar(float Max, float Curr, float barWidth, float barHeight, u32 MHPColor, u32 CHPColor) {
-	
 	MaxHP = Max;
 	CurrHP = Curr;
-
+	this->hpbarwidth = barWidth;
 	BarScale = barWidth / MaxHP;
 	float currhpbar = float(CurrHP * BarScale);
 	float barheight = 30.f;
@@ -114,7 +115,9 @@ HPBar::HPBar(float Max, float Curr, float barWidth, float barHeight, u32 MHPColo
 
 	
 }
-
+void HPBar::rescale() {
+	BarScale = this->hpbarwidth / MaxHP;
+}
 
 void HPBar::SetPos(AEVec2 nPos) {
 	MaxHPRS.t.pos = nPos;
@@ -127,7 +130,7 @@ void HPBar::SetPos(float x, float y) {
 }
 
 void HPBar::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float MaxHP, float CurrHP) {
-
+	rescale();
 	/*
 	Planning:
 	requirements:
@@ -148,6 +151,9 @@ void HPBar::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float MaxHP, 
 		w = hp's value
 	*/
 	/*Implementation*/
+
+
+
 	this->MaxHP = MaxHP;
 	fullhpbar = float(MaxHP  * BarScale);
 	MaxHPRS.t.pos.x += fullhpbar / 2.f;
@@ -164,4 +170,6 @@ void HPBar::DrawHPBar(const std::shared_ptr<AM::Renderer>& render, float MaxHP, 
 	render->RenderMesh(&MaxHPRS);
 	render->RenderMesh(&CurrHPRS);
 	
+
+
 }

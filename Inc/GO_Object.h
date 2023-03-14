@@ -58,7 +58,7 @@ public:
 
 	void SetPosition(AEVec2);
 	void Draw(const std::shared_ptr<AM::Renderer>&);
-
+	
 
 };
 bool operator==(const GameObject& lhs, const GameObject& rhs);
@@ -72,6 +72,7 @@ public:
 			u32 = 0xFF960000, u32 = 0xFF009600);
 	~HPBar() {};
 	float MaxHP{}, CurrHP{};
+	float hpbarwidth{};
 	float BarScale{ 1 };
 	float fullhpbar{}, currhpbar{};
 	AM::RenderSetting MaxHPRS = {}, CurrHPRS = {};
@@ -79,7 +80,7 @@ public:
 	void SetPos(AEVec2);
 	void SetPos(float, float);
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
-
+	void rescale();
 };
 
 
