@@ -48,7 +48,10 @@ void Shop::Load() {
 	board = AM::TextureMesh(350, 350);
 	board = m_context->assets->LoadTexture("./Assets/backboard.png", board);
 	
-	
+	CurrButton = shopbuttons.at(choice1);
+	CurrButton.t.w += 20;
+	CurrButton.t.h += 20;
+
 
 
 }
@@ -106,10 +109,46 @@ void Shop::Update(f64 deltaTime) {
 			ItemBought = true;
 		}
 	}
+	//keyboard
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
+		CurrButton.t.pos.x = shopbuttons.at(choice2).t.pos.x;
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+		CurrButton.t.pos.x = shopbuttons.at(choice1).t.pos.x;
+	}
+	if (AEInputCheckTriggered(AEVK_RETURN)) {
+		if (CurrButton.t.pos.x == shopbuttons.at(choice2).t.pos.x) {
+			Item* s2 = &m_context->Items->items.at(choice2);
+			ITEMID s2ID = ITEMID(m_context->Items->items.at(choice2).ID);
+			s2->level++;
+			s2->stat += 10;
+			std::cout <<
+				s2->name << std::endl <<
+				s2->level << std::endl <<
+				s2->stat << std::endl;
+
+			ItemBought = true;
+
+		}
+		else {
+			Item* s1 = &m_context->Items->items.at(choice1);
+			ITEMID s1ID = ITEMID(m_context->Items->items.at(choice1).ID);
+			s1->level++;
+			s1->stat += 10;
+			std::cout <<
+				s1->name << std::endl <<
+				s1->level << std::endl <<
+				s1->stat << std::endl;
+			ItemBought = true;
+
+		}
+	}
+
 }
 	
 void Shop::Draw() {
 	m_context->render->RenderRect(&shop_bg, bg.texture);
+	m_context->render->RenderRect(&CurrButton);
 	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8f, black);
 	m_context->render->RenderRect(&shopbuttons.at(0), board.texture);
 	m_context->render->RenderRect(&shopbuttons.at(1), board.texture);

@@ -25,7 +25,7 @@ public:
 	u32 red, blue, green;
 	AM::Color black;
 	AM::RenderSetting Choices, HealButton_RS, UpgradeButton_RS, Board_RS, Background, CurrButton;
-	std::vector<AM::RenderSetting> upgradechoices;
+	std::vector<AM::RenderSetting> Upgrade_Choices;
 	mode MODE;
 	BAR Upgrade_Bar;
 	float Upgrade_Timer;
@@ -35,8 +35,8 @@ public:
 	bool No_Items;
 	bool UPGRADED, HEALED;
 	std::string Selected_Item;
-	AM::TextureMesh HealButton_Texture, UpgradeButton_Texture, Board_Texture, Background_Texture, Items_Texture;
-	std::vector<AM::TextureMesh> Items_Texture_Vector;
+	AM::TextureMesh HealButton_Texture, UpgradeButton_Texture, Board_Texture, Background_Texture, Ingredients_Texture;
+	std::vector<AM::TextureMesh> Upgrades_Texture;
 
 
 	int Selected_ID;

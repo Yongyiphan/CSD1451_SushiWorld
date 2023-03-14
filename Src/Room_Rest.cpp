@@ -48,20 +48,20 @@ void RestState::Load() {
 			AM::Transform(100 + (i * (winw / 4.f)), 300.f, 150, 150),
 			AM::GfxSetting(utils::RGBAtoHex(230,70,100))
 		 };
-		upgradechoices.push_back(Choices);
+		Upgrade_Choices.push_back(Choices);
 	}
 	
-	Items_Texture = AM::TextureMesh(1024, 300);
-	Items_Texture = m_context->assets->LoadTexture("./Assets/Salmon_Hat.png", Items_Texture);
-	Items_Texture_Vector.push_back(Items_Texture);
-	Items_Texture = m_context->assets->LoadTexture("./Assets/Tuna_hat.png", Items_Texture);
-	Items_Texture_Vector.push_back(Items_Texture);
-	Items_Texture = m_context->assets->LoadTexture("./Assets/Swordfish_Hat.png", Items_Texture);
-	Items_Texture_Vector.push_back(Items_Texture);
-	Items_Texture = m_context->assets->LoadTexture("./Assets/Octopus_Hat.png", Items_Texture);
-	Items_Texture_Vector.push_back(Items_Texture);
+	Ingredients_Texture = AM::TextureMesh(1024, 300);
+	Ingredients_Texture = m_context->assets->LoadTexture("./Assets/Salmon_Hat.png", Ingredients_Texture);
+	Upgrades_Texture.push_back(Ingredients_Texture);
+	Ingredients_Texture = m_context->assets->LoadTexture("./Assets/Tuna_hat.png", Ingredients_Texture);
+	Upgrades_Texture.push_back(Ingredients_Texture);
+	Ingredients_Texture = m_context->assets->LoadTexture("./Assets/Swordfish_Hat.png", Ingredients_Texture);
+	Upgrades_Texture.push_back(Ingredients_Texture);
+	Ingredients_Texture = m_context->assets->LoadTexture("./Assets/Octopus_Hat.png", Ingredients_Texture);
+	Upgrades_Texture.push_back(Ingredients_Texture);
 	for (int i = 0; i < 4; i++){
-		upgradechoices.at(i).gfx.mesh = Items_Texture_Vector.at(i).animationframes.at(0);
+		Upgrade_Choices.at(i).gfx.mesh = Upgrades_Texture.at(i).animationframes.at(0);
 		m_context->Items->items.at(i).level = 1;
 
 	}
@@ -178,7 +178,7 @@ void RestState::Update(f64 deltaTime) {
 		case UPGRADEchoice:
 			if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 				for (int i = 0; i < 4; i++) {
-					if (utils::AreaClicked(&upgradechoices.at(i).t, mousex, mousey)) {
+					if (utils::AreaClicked(&Upgrade_Choices.at(i).t, mousex, mousey)) {
 						if (m_context->Items->items.at(i).level > 0) {
 							Selected_Item = m_context->Items->itemnames.at(i);
 							Selected_ID = i;
@@ -192,24 +192,24 @@ void RestState::Update(f64 deltaTime) {
 			for (int i = 0; i < 4; i++) {
 					//selected 1st item
 					if (m_context->Items->items.at(i).level > 0) {
-						if (selectedID != 0) break;
-						selectedID = i;
+						if (Selected_ID != 0) break;
+						Selected_ID = i;
 						break;
 					}
 				
 			}
 			if (AEInputCheckTriggered(AEVK_RIGHT)) {
-				for (int i = selectedID + 1; i < 4; i++) {
+				for (int i = Selected_ID + 1; i < 4; i++) {
 					if (m_context->Items->items.at(i).level != 0) {
-						selectedID = i;
+						Selected_ID = i;
 						break;
 					}
 				}
 			}
 			if (AEInputCheckTriggered(AEVK_LEFT)) {
-				for (int i = selectedID - 1; i >= 0; i--) {
+				for (int i = Selected_ID - 1; i >= 0; i--) {
 					if (m_context->Items->items.at(i).level != 0) {
-						selectedID = i;
+						Selected_ID = i;
 						break;
 					}
 				}
@@ -264,7 +264,7 @@ void RestState::Update(f64 deltaTime) {
 
 }
 void RestState::Draw() {
-	m_context->render->RenderMesh(&Background, Background_Texture.texture);
+	m_context->render->RenderRect(&Background, Background_Texture.texture);
 	utils::UDrawText(FontID, "REST ROOM", wosx, winh / 13.4f *11.5f, 0.8f,black);
 
 	switch (MODE) {
@@ -272,18 +272,18 @@ void RestState::Draw() {
 		case ROOM:
 			m_context->Player->DrawHPBar(m_context->render, 50.f, 165.f);
 			m_context->Player->DrawPlayer(m_context->render);
-			m_context->render->RenderMesh(&CurrButton);
+			m_context->render->RenderRect(&CurrButton);
 
-			m_context->render->RenderMesh(&UpgradeButton_RS,Board_Texture.texture);
-			m_context->render->RenderMesh(&UpgradeButton_RS,UpgradeButton_Texture.texture);
-			m_context->render->RenderMesh(&HealButton_RS,Board_Texture.texture);
-			m_context->render->RenderMesh(&HealButton_RS,HealButton_Texture.texture);
+			m_context->render->RenderRect(&UpgradeButton_RS,Board_Texture.texture);
+			m_context->render->RenderRect(&UpgradeButton_RS,UpgradeButton_Texture.texture);
+			m_context->render->RenderRect(&HealButton_RS,Board_Texture.texture);
+			m_context->render->RenderRect(&HealButton_RS, HealButton_Texture.texture);
 
 			//text if no items to upgrade
-			m_context->render->RenderMesh(&UpgradeButton_RS,Board_Texture.texture);
-			m_context->render->RenderMesh(&UpgradeButton_RS,UpgradeButton_Texture.texture);
-			m_context->render->RenderMesh(&HealButton_RS,Board_Texture.texture);
-			m_context->render->RenderMesh(&HealButton_RS,HealButton_Texture.texture);
+			m_context->render->RenderRect(&UpgradeButton_RS,Board_Texture.texture);
+			m_context->render->RenderRect(&UpgradeButton_RS,UpgradeButton_Texture.texture);
+			m_context->render->RenderRect(&HealButton_RS,Board_Texture.texture);
+			m_context->render->RenderRect(&HealButton_RS,HealButton_Texture.texture);
 			if (No_Items) {
 				utils::UDrawText(
 					FontID,
@@ -307,18 +307,18 @@ void RestState::Draw() {
 
 			break;
 		case UPGRADEchoice:
-			CurrButton.RS = upgradechoices.at(selectedID).RS;
-			CurrButton.RS.t.w += 20;
-			CurrButton.RS.t.h += 20;
-			m_context->render->RenderRect(&CurrButton.RS);
+			CurrButton = Upgrade_Choices.at(Selected_ID);
+			CurrButton.t.w += 20;
+			CurrButton.t.h += 20;
+			m_context->render->RenderRect(&CurrButton);
 			//after upgrade is chosen
 			for (int i = 0; i < 4; i++) {
 				//if item no avail
 				if (m_context->Items->items.at(i).level == 0) {
-					upgradechoices.at(i).gfx.Color = red;
+					Upgrade_Choices.at(i).gfx.Color = red;
 					UDrawButton(
 						m_context->render, 
-						&upgradechoices.at(i), 
+						&Upgrade_Choices.at(i), 
 						FontID, 
 						"Do Not Own", 
 						black, 
@@ -327,23 +327,23 @@ void RestState::Draw() {
 						0.15f);
 				}
 				else {
-					upgradechoices.at(i).gfx.Color = blue;
-					m_context->render->RenderMesh(&upgradechoices.at(i), Board_Texture.texture);
+					Upgrade_Choices.at(i).gfx.Color = blue;
+					m_context->render->RenderRect(&Upgrade_Choices.at(i), Board_Texture.texture);
 					UDrawButton(
 						m_context->render,
-						&upgradechoices.at(i),
+						&Upgrade_Choices.at(i),
 						FontID,
 						m_context->Items->itemnames.at(i),
 						black,
 						0.f,
 						100.f,
 						0.15f,
-						Items_Texture_Vector.at(i).texture);
+						Upgrades_Texture.at(i).texture);
 					UDrawText(
 						FontID,
 						"Level " + std::to_string(m_context->Items->items.at(i).level),
-						upgradechoices.at(i).t.pos.x,
-						upgradechoices.at(i).t.pos.y - upgradechoices.at(i).t.h / 2.f - 50.f,
+						Upgrade_Choices.at(i).t.pos.x,
+						Upgrade_Choices.at(i).t.pos.y - Upgrade_Choices.at(i).t.h / 2.f - 50.f,
 						0.15f, black);
 				}
 				
@@ -352,9 +352,9 @@ void RestState::Draw() {
 			break;
 		case UPGRADE:
 			//upgrade mech
-			m_context->render->RenderMesh(&Board_RS,Board_Texture.texture);
-			m_context->render->RenderMesh(&Upgrade_Bar.FullHP_Render);
-			m_context->render->RenderMesh(&Upgrade_Bar.CurrHP_Render);
+			m_context->render->RenderRect(&Board_RS,Board_Texture.texture);
+			m_context->render->RenderRect(&Upgrade_Bar.FullHP_Render);
+			m_context->render->RenderRect(&Upgrade_Bar.CurrHP_Render);
 			utils::UDrawText(
 				FontID,
 				std::to_string((int)(Upgrade_SuccessRate * 100)) + "%",
@@ -406,7 +406,7 @@ void RestState::Draw() {
 						FontID,
 						"Unlucky!", 
 						winw / 2.f, 
-						(winh / 2.f) - 150 + (upgradebackground.RS.t.h / 2.f),
+						(winh / 2.f) - 150 + (Board_RS.t.h / 2.f),
 						0.3f, black);
 					utils::UDrawText(
 						FontID, 
