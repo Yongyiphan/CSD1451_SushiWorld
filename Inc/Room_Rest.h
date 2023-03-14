@@ -1,14 +1,10 @@
 #pragma once
 #include "pch.h"
 
-struct render
+struct BAR 
 {
-	AM::RenderSetting RS;
-};
-struct bar 
-{
-	int fullbar = 10;
-	AM::RenderSetting fullrender, currrender;
+	int Fullbar_Ratio = 10;
+	AM::RenderSetting FullHP_Render, CurrHP_Render;
 
 };
 
@@ -27,23 +23,23 @@ private:
 public:
 	//Variables
 	u32 red, blue, green;
-	AM::Color itemavail,black;
-	render healbutton, upgradebutton, upgradebackground, bg, CurrButton;
-	std::vector<render> upgradechoices;
+	AM::Color black;
+	AM::RenderSetting Choices, HealButton_RS, UpgradeButton_RS, Board_RS, Background, CurrButton;
+	std::vector<AM::RenderSetting> upgradechoices;
 	mode MODE;
-	bar upgradebar;
-	float upgradetimer;
-	float timepassed;
-	float upgradenum;
-	bool pass;
-	bool noitems;
-	bool upgraded, healed;
-	std::string selecteditem;
-	AM::TextureMesh healicon, upgradeicon, board, rest_bg, ingredients;
-	std::vector<AM::TextureMesh> upgradesT;
+	BAR Upgrade_Bar;
+	float Upgrade_Timer;
+	float Time_Passed;
+	float Upgrade_SuccessRate;
+	bool PASS;
+	bool No_Items;
+	bool UPGRADED, HEALED;
+	std::string Selected_Item;
+	AM::TextureMesh HealButton_Texture, UpgradeButton_Texture, Board_Texture, Background_Texture, Items_Texture;
+	std::vector<AM::TextureMesh> Items_Texture_Vector;
 
 
-	int selectedID;
+	int Selected_ID;
 	///Methods
 
 	RestState(const std::shared_ptr<Context>&);
@@ -56,5 +52,5 @@ public:
 	void Update(f64 dt) override;
 	void Draw()override;
 	
-	bool checksuccess(float percent);
+	bool Check_Success(float percent);
 };
