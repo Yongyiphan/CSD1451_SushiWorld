@@ -10,6 +10,7 @@ void Shop::Load() {
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	noshopbuttons = 2;
 	black = AM::Color{ 0,0,0 };
+	green = AM::Color{ 0, 170, 0 };
 
 	//bg
 	shop_bg = AM::RenderSetting{
@@ -111,18 +112,25 @@ void Shop::Draw() {
 	m_context->render->RenderMesh(&shopbuttons.at(1), board.texture);
 	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, black, 0.f, 100.f, 0.15f,upgradesT.at(choice1).texture);
 	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, black, 0.f, 100.f, 0.15f, upgradesT.at(choice2).texture);
+	UDrawText(FontID, Description.at(m_context->Items->items.at(choice1).ID), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - 60.f, 0.20f, green);
+	UDrawText(FontID, Description.at(m_context->Items->items.at(choice2).ID), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - 60.f, 0.20f, green);
 
 	if (m_context->Items->items.at(choice1).level == 0) {
 		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
 	}
 	else {
 		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice1).level), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
+		str = "+" + std::to_string(m_context->Items->items.at(choice1).stat);
+		UDrawText(FontID, str, shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 70.f, 0.15f, black);
+
 	}
 	if (m_context->Items->items.at(choice2).level == 0) {
 		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
 	}
 	else {
 		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice2).level), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
+		str = "+" + std::to_string(m_context->Items->items.at(choice2).stat);
+		UDrawText(FontID, str, shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 70.f, 0.15f, black);
 
 	}
 

@@ -68,7 +68,7 @@ void ArrowMap::Update(f64 deltaTime) {
 		// Squid to affect whether player receives damage due to evasion
 		int randomNum = rand() % 100 + 1; // generate a random number between 1 and 100
 		if (randomNum >= m_context->Items->items.at(SQUID).stat / 5) {
-			m_context->Player->currhp -= (dmg_count / 2 + 2);
+			m_context->Player->currhp -= static_cast<float>(dmg_count / 2 + 2);
 		}
 		else {
 			// attack miss
@@ -104,7 +104,7 @@ void ArrowMap::Update(f64 deltaTime) {
 				if (m_context->Player->currhp >= dmg_count) {
 					int randomNum = rand() % 100 + 1; // generate a random number between 1 and 100
 					if (randomNum >= m_context->Items->items.at(SQUID).stat / 5) {
-						m_context->Player->currhp -= (dmg_count / 2 + 2);
+						m_context->Player->currhp -= static_cast<float>(dmg_count / 2 + 2);
 					}
 					else {
 						// attack miss
@@ -166,12 +166,12 @@ void ArrowMap::Update(f64 deltaTime) {
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
 		}
-	if (AEInputCheckTriggered(AEVK_H)) {
+	/*if (AEInputCheckTriggered(AEVK_H)) {
 		m_context->Items->items.at(SQUID).level++;
 		m_context->Items->items.at(SQUID).stat += 10;
 		m_context->Player->CalPlayerStat(SQUID);
 		std::cout << m_context->Items->items.at(SQUID).level << std::endl << m_context->Items->items.at(SQUID).stat << std::endl;
-	}
+	}*/
 }
 void ArrowMap::Draw() {
 	m_context->render->RenderMesh(&arrow_bg, bg.texture);
@@ -209,7 +209,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
 	// TUNA to affect arrow battle by 1 sec per level
-	totaltime.dt = 5.f + (m_context->Items->items.at(TUNA).stat / 10);
+	totaltime.dt = 5.f + static_cast<float>(m_context->Items->items.at(TUNA).stat / 10);
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
