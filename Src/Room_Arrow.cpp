@@ -50,8 +50,8 @@ void ArrowMap::Init() {
 	m_context->Player->RenderSett.t = AM::Transform(200, 200, 200, 200);
 	m_context->Boss->RenderSett.t = AM::Transform(600, 200, 200, 200);
 	m_context->Boss->InitBossStats(50, 250);
-	m_context->Player->maxhp = 100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat;
-	m_context->Player->currhp = 100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat;
+	m_context->Player->maxhp = static_cast<float>(100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat);
+	m_context->Player->currhp = static_cast<float>(100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat);
 
 }
 
@@ -169,7 +169,7 @@ void ArrowMap::Update(f64 deltaTime) {
 	if (AEInputCheckTriggered(AEVK_H)) {
 		m_context->Items->items.at(SQUID).level++;
 		m_context->Items->items.at(SQUID).stat += 10;
-		m_context->Player->UpdatePlayerStat(SQUID);
+		m_context->Player->CalPlayerStat(SQUID);
 		std::cout << m_context->Items->items.at(SQUID).level << std::endl << m_context->Items->items.at(SQUID).stat << std::endl;
 	}
 }

@@ -24,7 +24,7 @@ public:
 	void DrawHPBar(const std::shared_ptr<AM::Renderer>&, float, float);
 	void PlayerControl();
 	//int calevasionchance();
-	void UpdatePlayerStat(ITEMID);
+	void CalPlayerStat(ITEMID);
 	//True = save
 	//False = load from save
 	void SaveLoadPlayerPos(bool = true);

@@ -8,8 +8,8 @@ Player::Player(const std::shared_ptr<ItemManager>& item_manager) {
 	AnimationFrames = currentFrame = frameCounter = 0;
 	maxhp = currhp = 100;
 	PHPBar = HPBar(maxhp, currhp, 250.f, 30.f, utils::RGBAtoHex(150, 0, 0), utils::RGBAtoHex(0, 150, 0));
-	damage = (item_manager->items.at(SWORDFISH).stat / 10);
-	evasion = (item_manager->items.at(SQUID).stat);
+	damage = static_cast<float>(item_manager->items.at(SWORDFISH).stat / 10);
+	evasion = static_cast<float>(item_manager->items.at(SQUID).stat);
 }
 
 
@@ -84,8 +84,26 @@ void Player::SaveLoadPlayerPos(bool save) {
 		RenderSett.t = prevT;
 }
 
-void Player::UpdatePlayerStat(ITEMID id) {
-	maxhp  =  100 + item_manager->items.at(static_cast<int>(id)).stat;
+void Player::CalPlayerStat(ITEMID id) {
+	switch (id)
+	{
+	case SALMON:
+		maxhp = static_cast<float>(100 + item_manager->items.at(id).stat);
+		break;
+	case TUNA:
+		break;
+	case SWORDFISH:
+		damage = static_cast<float>(item_manager->items.at(id).stat / 10);
+		break;
+	case SQUID:
+		evasion = static_cast<float>(item_manager->items.at(id).stat / 5);
+		break;
+	default:
+		break;
+	}
+	
+	
+	
 }
 
 //int Player::calevasionchance() {
