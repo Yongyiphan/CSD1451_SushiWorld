@@ -108,48 +108,6 @@ void Shop::Update(f64 deltaTime) {
 void Shop::Draw() {
 	m_context->render->RenderMesh(&shop_bg, bg.texture);
 	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8f, black);
-	/*m_context->render->RenderMesh(&shopbuttons.at(0), board.texture);
-	m_context->render->RenderMesh(&shopbuttons.at(1), board.texture);
-	UDrawButton(m_context->render, &shopbuttons.at(0), FontID, m_context->Items->items.at(choice1).name, black, 0.f, 100.f, 0.15f,upgradesT.at(choice1).texture);
-	UDrawButton(m_context->render, &shopbuttons.at(1), FontID, m_context->Items->items.at(choice2).name, black, 0.f, 100.f, 0.15f, upgradesT.at(choice2).texture);
-	UDrawText(FontID, Item_description.at(m_context->Items->items.at(choice1).ID), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - 60.f, 0.20f, green);
-	UDrawText(FontID, Item_description.at(m_context->Items->items.at(choice2).ID), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - 60.f, 0.20f, green);*/
-	/*if (m_context->Items->items.at(choice1).level == 0) {
-		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
-	}
-	else {
-		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice1).level), shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 50.f, 0.15f, black);
-		str_buffer = "+" + std::to_string(m_context->Items->items.at(choice1).stat);
-		UDrawText(FontID, str_buffer, shopbuttons.at(0).t.pos.x, shopbuttons.at(0).t.pos.y - shopbuttons.at(0).t.h / 2.f - 70.f, 0.15f, black);
-
-	}
-	if (m_context->Items->items.at(choice2).level == 0) {
-		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
-	}
-	else {
-		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice2).level), shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 50.f, 0.15f, black);
-		str_buffer = "+" + std::to_string(m_context->Items->items.at(choice2).stat);
-		UDrawText(FontID, str_buffer, shopbuttons.at(1).t.pos.x, shopbuttons.at(1).t.pos.y - shopbuttons.at(1).t.h / 2.f - 70.f, 0.15f, black);
-
-	}*/
-
-	//for (int i = 0; i < 2; i++) {
-	//	m_context->render->RenderMesh(&shopbuttons.at(i), board.texture);
-	//	UDrawButton(m_context->render, &shopbuttons.at(i), FontID, m_context->Items->items.at(i == 0 ? choice1 : choice2).name, black, 0.f, 100.f, 0.15f, Upgrades_Textures.at(i == 0 ? choice1 : choice2).texture);
-	//	UDrawText(FontID, Item_description.at(m_context->Items->items.at(i == 0 ? choice1 : choice2).ID), shopbuttons.at(i).t.pos.x, shopbuttons.at(i).t.pos.y - 60.f, 0.20f, green);
-	//}
-	//for (int i = 0; i < 2; ++i) {
-	//	int choice = (i == 0) ? choice1 : choice2;
-	//	float y_offset = (i == 0) ? -50.f : -70.f;
-	//	if (m_context->Items->items.at(choice).level == 0) {
-	//		UDrawText(FontID, "DO NOT OWN", shopbuttons.at(i).t.pos.x, shopbuttons.at(i).t.pos.y - shopbuttons.at(i).t.h / 2.f + y_offset, 0.15f, black);
-	//	}
-	//	else {
-	//		UDrawText(FontID, "Level " + std::to_string(m_context->Items->items.at(choice).level), shopbuttons.at(i).t.pos.x, shopbuttons.at(i).t.pos.y - shopbuttons.at(i).t.h / 2.f + y_offset, 0.15f, black);
-	//		str_buffer = "+" + std::to_string(m_context->Items->items.at(choice).stat);
-	//		UDrawText(FontID, str_buffer, shopbuttons.at(i).t.pos.x, shopbuttons.at(i).t.pos.y - shopbuttons.at(i).t.h / 2.f + y_offset - 20.f, 0.15f, black);
-	//	}
-	//}
 
 	for (int i = 0; i < 2; i++) {
 		int choice = (i == 0) ? choice1 : choice2;
