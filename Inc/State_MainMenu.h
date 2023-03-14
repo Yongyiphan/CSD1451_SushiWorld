@@ -21,9 +21,9 @@ public:
 	void Free() override;
 	void Update(f64 dt) override;
 	void Draw()override;
-	int NoButtons;
-	std::vector<AM::RenderSetting> MMButtons;
-	std::vector<std::string> MMButtonName;
+	int No_Buttons;
+	std::vector<AM::RenderSetting> MM_Buttons;
+	std::vector<std::string> MM_ButtonName;
 
 	AM::RenderSetting bg;
 	AM::TextureMesh Menu_bg, Buttons, BSelect;

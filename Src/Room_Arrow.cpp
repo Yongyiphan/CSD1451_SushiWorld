@@ -40,7 +40,8 @@ void ArrowMap::Unload(){
 
 void ArrowMap::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	dmg_count = 0;
+	// swordfish damage applies to attack
+	dmg_count = 0 + (m_context->Items->items.at(SWORDFISH).stat / 10);
 	check = 2;
 	isEmpty = false;
 	damage = true;
@@ -50,19 +51,30 @@ void ArrowMap::Init() {
 	m_context->Boss->RenderSett.t = AM::Transform(600, 200, 200, 200);
 	m_context->Boss->InitBossStats(50, 250);
 	m_context->Boss->UpdateSize();
+	m_context->Player->Max_HP = static_cast<float>(100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat);
+	m_context->Player->Curr_HP = static_cast<float>(100 + m_context->Player->item_manager->items.at(static_cast<int>(SALMON)).stat);
+
 }
 
 void ArrowMap::Free() {
 	std::cout << "Free " << StateName << std::endl;
 }
 
-void ArrowMap::Update(f64 deltaTime) {
+void ArrowMap::Update(f64 deltaTime) { 
 	timer = static_cast<f32>(UGetDT());
 	if(!GameEnd)
 		totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
 		GenerateArrowKeys(arrows);
-		m_context->Player->Curr_HP -= dmg_count / 2 + 2;
+		// Squid to affect whether player receives damage due to evasion
+		int randomNum = rand() % 100 + 1; // generate a random number between 1 and 100
+		if (randomNum >= m_context->Items->items.at(SQUID).stat / 5) {
+			m_context->Player->Curr_HP -= static_cast<float>(dmg_count / 2 + 2);
+		}
+		else {
+			// attack miss
+		}
+		
 	}
 	if (totaltime.dt && !GameEnd) {
 		if (this->box.empty()) {
@@ -91,7 +103,14 @@ void ArrowMap::Update(f64 deltaTime) {
 		else{
 			if (!damage) {
 				if (m_context->Player->Curr_HP >= dmg_count) {
-					m_context->Player->Curr_HP -= dmg_count / 2 + 2;
+					int randomNum = rand() % 100 + 1; // generate a random number between 1 and 100
+					if (randomNum >= m_context->Items->items.at(SQUID).stat / 5) {
+						m_context->Player->Curr_HP -= static_cast<float>(dmg_count / 2 + 2);
+					}
+					else {
+						// attack miss
+					}
+					//m_context->Player->Curr_HP -= dmg_count / 2 + 2;
 				}
 				else if (m_context->Player->Curr_HP <= dmg_count) {
 					m_context->Player->Curr_HP = 0;
@@ -113,7 +132,8 @@ void ArrowMap::Update(f64 deltaTime) {
 				}
 			}
 			ArrowMap::GenerateArrowKeys(arrows);
-			dmg_count = 0;
+			// Swordfish affects damage dealt
+			dmg_count = m_context->Items->items.at(SWORDFISH).level;
 			isEmpty = false;
 		}
 		if (totaltime.dt == 0) {
@@ -130,11 +150,11 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 
 		//if (AEInputCheckTriggered(AEVK_A)) {
-		//	m_context->Player->currhp -= 1;
+		//	m_context->Player->Curr_HP -= 1;
 		//	totaltime.dt -= 1.f;
 		//}
 		//if (AEInputCheckTriggered(AEVK_D)) {
-		//	m_context->Player->currhp += 1;
+		//	m_context->Player->Curr_HP += 1;
 		//	totaltime.dt += 1.f;
 		//}
 		//if (AEInputCheckTriggered(AEVK_LBUTTON)) {
@@ -147,6 +167,12 @@ void ArrowMap::Update(f64 deltaTime) {
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
 		}
+	/*if (AEInputCheckTriggered(AEVK_H)) {
+		m_context->Items->items.at(SQUID).level++;
+		m_context->Items->items.at(SQUID).stat += 10;
+		m_context->Player->CalPlayerStat(SQUID);
+		std::cout << m_context->Items->items.at(SQUID).level << std::endl << m_context->Items->items.at(SQUID).stat << std::endl;
+	}*/
 }
 void ArrowMap::Draw() {
 	m_context->render->RenderMesh(&arrow_bg, bg.texture);
@@ -167,8 +193,7 @@ void ArrowMap::Draw() {
 		i.rs.gfx.mesh = ArrowMesh.animationframes.at(i.ID);
 		m_context->render->RenderMesh(&i.rs, ArrowMesh.texture);
 	}
-	
-	totaltime.rs.t.w = 30.f * totaltime.dt;
+	totaltime.rs.t.w = (30.f * totaltime.dt);
 	m_context->render->RenderMesh(&totaltime.rs);
 
 	str = std::to_string((int)totaltime.dt);
@@ -184,7 +209,8 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
-	totaltime.dt = 10.f;
+	// TUNA to affect arrow battle by 1 sec per level
+	totaltime.dt = 5.f + static_cast<float>(m_context->Items->items.at(TUNA).stat / 10);
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
