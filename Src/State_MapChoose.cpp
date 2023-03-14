@@ -71,6 +71,9 @@ void MapChooseScreen::Update(f64 deltaTime) {
 			Redirect(RoomB);
 		}
 	}
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
 
 
 	//keyboard

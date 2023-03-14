@@ -167,12 +167,10 @@ void ArrowMap::Update(f64 deltaTime) {
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
 		}
-	/*if (AEInputCheckTriggered(AEVK_H)) {
-		m_context->Items->items.at(SQUID).level++;
-		m_context->Items->items.at(SQUID).stat += 10;
-		m_context->Player->CalPlayerStat(SQUID);
-		std::cout << m_context->Items->items.at(SQUID).level << std::endl << m_context->Items->items.at(SQUID).stat << std::endl;
-	}*/
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
+
 }
 void ArrowMap::Draw() {
 	m_context->render->RenderMesh(&arrow_bg, bg.texture);

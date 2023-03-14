@@ -107,6 +107,7 @@ namespace GM {
 		AESysFrameStart();
 		//std::cout << utils::UGetDT() << std::endl;
 		AEInputUpdate();
+		
 		if (state_stack.empty()) {
 			status = QUIT;
 		}

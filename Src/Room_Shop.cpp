@@ -10,7 +10,7 @@ void Shop::Load() {
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
 	No_shopbuttons = 2;
 	black = AM::Color{ 0,0,0 };
-	green = AM::Color{ 0, 170, 0 };
+	green = AM::Color{0,170,0};
 
 	//bg
 	shop_bg = AM::RenderSetting{
@@ -49,7 +49,10 @@ void Shop::Load() {
 	board = AM::TextureMesh(350, 350);
 	board = m_context->assets->LoadTexture("./Assets/backboard.png", board);
 	
-	
+	CurrButton = shopbuttons.at(choice1);
+	CurrButton.t.w += 20;
+	CurrButton.t.h += 20;
+
 
 
 }
@@ -69,6 +72,10 @@ void Shop::Free() {
 
 void Shop::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mousex, &mousey);
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
+
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 		m_context->gman->SetStatus(QUIT);
@@ -103,10 +110,46 @@ void Shop::Update(f64 deltaTime) {
 			ItemBought = true;
 		}
 	}
+	//keyboard
+	if (AEInputCheckTriggered(AEVK_RIGHT)) {
+		CurrButton.t.pos.x = shopbuttons.at(choice2).t.pos.x;
+	}
+	if (AEInputCheckTriggered(AEVK_LEFT)) {
+		CurrButton.t.pos.x = shopbuttons.at(choice1).t.pos.x;
+	}
+	if (AEInputCheckTriggered(AEVK_RETURN)) {
+		if (CurrButton.t.pos.x == shopbuttons.at(choice2).t.pos.x) {
+			Item* s2 = &m_context->Items->items.at(choice2);
+			ITEMID s2ID = ITEMID(m_context->Items->items.at(choice2).ID);
+			s2->level++;
+			s2->stat += 10;
+			std::cout <<
+				s2->name << std::endl <<
+				s2->level << std::endl <<
+				s2->stat << std::endl;
+
+			ItemBought = true;
+
+		}
+		else {
+			Item* s1 = &m_context->Items->items.at(choice1);
+			ITEMID s1ID = ITEMID(m_context->Items->items.at(choice1).ID);
+			s1->level++;
+			s1->stat += 10;
+			std::cout <<
+				s1->name << std::endl <<
+				s1->level << std::endl <<
+				s1->stat << std::endl;
+			ItemBought = true;
+
+		}
+	}
+
 }
 	
 void Shop::Draw() {
 	m_context->render->RenderMesh(&shop_bg, bg.texture);
+	m_context->render->RenderMesh(&CurrButton);
 	utils::UDrawText(FontID, "SHOP ROOM", wosx, winh / 13.4f * 11.5f, 0.8f, black);
 
 	for (int i = 0; i < 2; i++) {

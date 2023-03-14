@@ -6,7 +6,7 @@ private:
 public:
 
 	std::vector<AM::RenderSetting> shopbuttons;
-	AM::RenderSetting shop_bg;
+	AM::RenderSetting shop_bg,CurrButton;
 	AM::TextureMesh bg,Ingredients_Texture,board;
 	std::vector<AM::TextureMesh> Upgrades_Textures;
 	AM::Color black, green;
