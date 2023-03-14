@@ -68,6 +68,10 @@ void Shop::Free() {
 
 void Shop::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mousex, &mousey);
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
+
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		//m_context->gman->AddState(std::make_unique<TestMap>("TestMap", m_context));
 		m_context->gman->SetStatus(QUIT);

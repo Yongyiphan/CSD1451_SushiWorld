@@ -25,6 +25,18 @@ void PauseScreen::Load() {
 		AM::Transform{wosx, wosy, 250, 350},
 		AM::GfxSetting{utils::RGBAtoHex(50,150,50)}
 	};
+
+	board = AM::TextureMesh(350, 350);
+	board = m_context->assets->LoadTexture("./Assets/backboard.png", board);
+
+	button = AM::TextureMesh(300, 100);
+	button = m_context->assets->LoadTexture("./Assets/button.png", button);
+
+	CurrButton = ResumeGfx;
+	CurrButton.t.w += 20;
+	CurrButton.t.h += 20;
+
+
 }
 void PauseScreen::Unload(){
 }
@@ -53,14 +65,44 @@ void PauseScreen::Update(f64 deltaTime) {
 			m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
 		}
 	}
-	
+	if (AEInputCheckTriggered(AEVK_UP)) {
+		CurrButton.t.pos = ResumeGfx.t.pos;
+	}
+
+	if (AEInputCheckTriggered(AEVK_DOWN)) {
+		CurrButton.t.pos = MMGfx.t.pos;
+	}
+	if (AEInputCheckTriggered(AEVK_RETURN)) {
+		if (CurrButton.t.pos.y == ResumeGfx.t.pos.y) {
+			m_context->gman->SetStatus(RESUME);
+		}
+		else{
+			m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
+		}
+	}
+
 
 }
 
 
 
 void PauseScreen::Draw() {
-	m_context->render->RenderRect(&PauseScreenBorderGfx);
-	UDrawButton(m_context->render, &ResumeGfx, FontID, "Resume Game", AM::Color{150,0,10});
-	UDrawButton(m_context->render, &MMGfx, FontID, "Main Menu", AM::Color{150,0,10});
+	m_context->render->RenderRect(&PauseScreenBorderGfx,board.texture);
+	m_context->render->RenderRect(&CurrButton);
+
+	UDrawButton(
+		m_context->render, 
+		&ResumeGfx, 
+		FontID, 
+		"Resume Game", 
+		AM::Color{ 255,255,255 },
+		0, 0, 0.15,
+		button.texture);
+	UDrawButton(m_context->render, 
+		&MMGfx, 
+		FontID, 
+		"Main Menu", 
+		AM::Color{ 255,255,255 }, 
+		0, 0, 0.15,
+		button.texture);
 }

@@ -83,7 +83,7 @@ void MainField::Update(f64 dt) {
 		m_context->gman->SetStatus(QUIT, true);
 	}
 	if (AEInputCheckTriggered(AEVK_P)) {
-		m_context->gman->AddState(std::make_unique<Shop>(m_context));
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
 	}
 
 	

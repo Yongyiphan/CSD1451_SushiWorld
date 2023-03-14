@@ -106,6 +106,7 @@ namespace GM {
 	void Engine::Update() {
 		AESysFrameStart();
 		AEInputUpdate();
+		
 		if (state_stack.empty()) {
 			status = QUIT;
 		}

@@ -146,6 +146,10 @@ void ArrowMap::Update(f64 deltaTime) {
 		if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 			m_context->gman->SetStatus(QUIT);
 		}
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
+
 }
 void ArrowMap::Draw() {
 	m_context->render->RenderRect(&arrow_bg, bg.texture);

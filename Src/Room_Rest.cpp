@@ -62,9 +62,12 @@ void RestState::Load() {
 	upgradesT.push_back(ingredients);
 	for (int i = 0; i < 4; i++){
 		upgradechoices.at(i).RS.gfx.mesh = upgradesT.at(i).animationframes.at(0);
-		m_context->Items->items.at(i).level = 1;
-
 	}
+	//for testing
+		//m_context->Items->items.at(0).level = 0;
+		//m_context->Items->items.at(1).level = 1;
+		//m_context->Items->items.at(2).level = 0;
+		//m_context->Items->items.at(3).level = 1;
 
 	//bg
 	bg.RS = AM::RenderSetting{
@@ -101,7 +104,7 @@ void RestState::Init() {
 	SetBackground(255, 127, 80);		
 	m_context->Player->RenderSett.t = AM::Transform(150, 100, 50, 50);
 	upgradetimer = 5;
-	timepassed = upgradenum = 0;
+	timepassed = upgradenum = selectedID = 0;
 	noitems = upgraded = healed = 1;
 
 
@@ -119,6 +122,10 @@ void RestState::Free() {
 void RestState::Update(f64 deltaTime) {
 	SetBackground(255, 127, 80);
 	AEInputGetCursorPosition(&mousex, &mousey);
+	if (AEInputCheckTriggered(AEVK_P)) {
+		m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
+	}
+
 	switch (MODE) {
 		case ROOM:
 			//check click
@@ -149,6 +156,7 @@ void RestState::Update(f64 deltaTime) {
 				else MODE = UPGRADEchoice;
 			}
 
+
 			break;
 		case HEALING:
 			//add health
@@ -178,6 +186,36 @@ void RestState::Update(f64 deltaTime) {
 					}	
 				}
 			}
+			//keyboard
+			for (int i = 0; i < 4; i++) {
+					//selected 1st item
+					if (m_context->Items->items.at(i).level > 0) {
+						if (selectedID != 0) break;
+						selectedID = i;
+						break;
+					}
+				
+			}
+			if (AEInputCheckTriggered(AEVK_RIGHT)) {
+				for (int i = selectedID + 1; i < 4; i++) {
+					if (m_context->Items->items.at(i).level != 0) {
+						selectedID = i;
+						break;
+					}
+				}
+			}
+			if (AEInputCheckTriggered(AEVK_LEFT)) {
+				for (int i = selectedID - 1; i >= 0; i--) {
+					if (m_context->Items->items.at(i).level != 0) {
+						selectedID = i;
+						break;
+					}
+				}
+			}
+			if (AEInputCheckTriggered(AEVK_RETURN)) {
+				MODE = UPGRADE;
+			}
+
 			break;
 		case UPGRADE:
 			timepassed += static_cast<f32>(utils::UGetDT());
@@ -264,6 +302,10 @@ void RestState::Draw() {
 
 			break;
 		case UPGRADEchoice:
+			CurrButton.RS = upgradechoices.at(selectedID).RS;
+			CurrButton.RS.t.w += 20;
+			CurrButton.RS.t.h += 20;
+			m_context->render->RenderRect(&CurrButton.RS);
 			//after upgrade is chosen
 			for (int i = 0; i < 4; i++) {
 				//if item no avail
@@ -292,7 +334,7 @@ void RestState::Draw() {
 						100.f,
 						0.15f,
 						upgradesT.at(i).texture);
-					UDrawText(
+					utils::UDrawText(
 						FontID,
 						"Level " + std::to_string(m_context->Items->items.at(i).level),
 						upgradechoices.at(i).RS.t.pos.x,
@@ -301,6 +343,7 @@ void RestState::Draw() {
 				}
 				
 			}
+
 			break;
 		case UPGRADE:
 			//upgrade mech
@@ -358,7 +401,7 @@ void RestState::Draw() {
 						FontID,
 						"Unlucky!", 
 						winw / 2.f, 
-						winh / 2.f, 
+						(winh / 2.f) - 150 + (upgradebackground.RS.t.h / 2.f),
 						0.3f, black);
 					utils::UDrawText(
 						FontID, 
