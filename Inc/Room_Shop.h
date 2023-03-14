@@ -4,11 +4,11 @@ class Shop : public GM::State {
 private:
 
 public:
-	
+
 	std::vector<AM::RenderSetting> shopbuttons;
 	AM::RenderSetting shop_bg;
-	AM::TextureMesh bg,ingredients,board;
-	std::vector<AM::TextureMesh> upgradesT;
+	AM::TextureMesh bg,Ingredients_Texture,board;
+	std::vector<AM::TextureMesh> Upgrades_Textures;
 	AM::Color black, green;
 
 	Shop(const std::shared_ptr<GM::Context>&);
@@ -22,10 +22,9 @@ public:
 	void Draw()override;
 	int choice1, choice2;
 	//ItemManager IM;
-	int noshopbuttons;
+	int No_shopbuttons;
 	void RenderRandomItemChoices();
-	std::vector<std::string> Description{ "+Max HP", "+Time", "+Damage", "+Evasion" };
-	std::string str;
-	
+	std::vector<std::string> Item_description{ "+Max HP", "+Time", "+Damage", "+Evasion" };
+	std::string str_buffer;
 };
 

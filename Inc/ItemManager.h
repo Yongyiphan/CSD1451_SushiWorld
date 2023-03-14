@@ -29,7 +29,7 @@ public:
 	const int NUM_ITEMS = 4;
 	
 	std::vector<Item> items{ NUM_ITEMS };
-	std::vector<std::string> itemnames{ "SALMON", "TUNA", "SWORDFISH", "SQUID" };
+	std::vector<std::string> Item_names{ "SALMON", "TUNA", "SWORDFISH", "SQUID" };
 	//std::vector<int> itemid{ NUM_ITEMS };
 	//std::vector<int> itemlvl{ NUM_ITEMS };
 	ItemManager();

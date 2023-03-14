@@ -170,7 +170,7 @@ void RestState::Update(f64 deltaTime) {
 				for (int i = 0; i < 4; i++) {
 					if (utils::AreaClicked(&upgradechoices.at(i).RS.t, mousex, mousey)) {
 						if (m_context->Items->items.at(i).level > 0) {
-							selecteditem = m_context->Items->itemnames.at(i);
+							selecteditem = m_context->Items->Item_names.at(i);
 							selectedID = i;
 							std::cout << selecteditem << std::endl;
 							MODE = UPGRADE;
@@ -289,7 +289,7 @@ void RestState::Draw() {
 						m_context->render,
 						&upgradechoices.at(i).RS,
 						FontID,
-						m_context->Items->itemnames.at(i),
+						m_context->Items->Item_names.at(i),
 						black,
 						0.f,
 						100.f,
@@ -351,7 +351,7 @@ void RestState::Draw() {
 						0.3f, black);
 					utils::UDrawText(
 						FontID, 
-						m_context->Items->itemnames.at(selectedID) +" is now level " + std::to_string(m_context->Items->items.at(selectedID).level),
+						m_context->Items->Item_names.at(selectedID) +" is now level " + std::to_string(m_context->Items->items.at(selectedID).level),
 						winw / 2.f, 
 						winh / 2.f, 
 						0.15f, black);
@@ -365,7 +365,7 @@ void RestState::Draw() {
 						0.3f, black);
 					utils::UDrawText(
 						FontID, 
-						m_context->Items->itemnames.at(selectedID) + " is still level " + std::to_string(m_context->Items->items.at(selectedID).level), 
+						m_context->Items->Item_names.at(selectedID) + " is still level " + std::to_string(m_context->Items->items.at(selectedID).level), 
 						winw / 2.f, 
 						winh / 2.f, 
 						0.15f, black);

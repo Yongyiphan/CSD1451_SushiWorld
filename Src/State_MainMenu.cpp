@@ -9,11 +9,11 @@ MainMenu::MainMenu(const std::shared_ptr<Context>& context) {
 
 void MainMenu::Load() {
 	FontID = m_context->assets->GetFont("./Assets/Font/roboto/Roboto-Bold.ttf", 100);
-	MMButtons.clear();
-	NoButtons = 3;
+	MM_Buttons.clear();
+	No_Buttons = 3;
 	float StartPosY = 350.f;
-	MMButtonName = { "Start Game", "Tutorial", "Exit" };
-	for (int i{}; i < NoButtons; i++) {
+	MM_ButtonName = { "Start Game", "Tutorial", "Exit" };
+	for (int i{}; i < No_Buttons; i++) {
 		AM::RenderSetting m = AM::RenderSetting{
 			AM::Transform{winw/4.f *3.f, StartPosY - (i * 100), 200, 55},
 			AM::GfxSetting(utils::RGBAtoHex(50,50,200))
@@ -21,9 +21,9 @@ void MainMenu::Load() {
 		Buttons = AM::TextureMesh(300, 100);
 		Buttons = m_context->assets->LoadTexture("./Assets/button.png", Buttons);
 		m.gfx.mesh = Buttons.animationframes.at(0);
-		MMButtons.push_back(m);
+		MM_Buttons.push_back(m);
 	}
-	CurrButton = MMButtons.at(0);
+	CurrButton = MM_Buttons.at(0);
 	CurrButton.t.w += 20;
 	CurrButton.t.h += 20;
 	BSelect = AM::TextureMesh(358,358);
@@ -58,17 +58,17 @@ void MainMenu::Free() {
 void MainMenu::Update(f64 deltaTime) {
 	AEInputGetCursorPosition(&mousex, &mousey);
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
-		for (int i = 0; i < NoButtons; i++) {
-			if (AreaClicked(&MMButtons.at(i).t, mousex, mousey)) {
+		for (int i = 0; i < No_Buttons; i++) {
+			if (AreaClicked(&MM_Buttons.at(i).t, mousex, mousey)) {
 				Redirect(MMButtonID(i));
 			}
 		}
 	}
 	if (AEInputCheckTriggered(AEVK_DOWN)) {
-		CurrSelection = AEInRange(static_cast<f32>(CurrSelection + 1), 0.f, static_cast<f32>(NoButtons - 1)) ? CurrSelection + 1 : CurrSelection;
+		CurrSelection = AEInRange(static_cast<f32>(CurrSelection + 1), 0.f, static_cast<f32>(No_Buttons - 1)) ? CurrSelection + 1 : CurrSelection;
 	}
 	if (AEInputCheckTriggered(AEVK_UP)) {
-		CurrSelection = AEInRange(static_cast<f32>(CurrSelection - 1), 0.f, static_cast<f32>(NoButtons - 1)) ? CurrSelection - 1 : CurrSelection;
+		CurrSelection = AEInRange(static_cast<f32>(CurrSelection - 1), 0.f, static_cast<f32>(No_Buttons - 1)) ? CurrSelection - 1 : CurrSelection;
 	}
 	if (AEInputCheckTriggered(AEVK_RETURN)) {
 		Redirect(MMButtonID(CurrSelection));
@@ -80,10 +80,10 @@ void MainMenu::Draw() {
 	m_context->render->RenderMesh(&bg, Menu_bg.texture);
 	//UDrawText(FontID, "Sushi World", wosx, wosy, 1, Color{255,255,255});
 	// draw main menu buttons
-	CurrButton.t.pos = MMButtons.at(CurrSelection).t.pos;
+	CurrButton.t.pos = MM_Buttons.at(CurrSelection).t.pos;
 	m_context->render->RenderMesh(&CurrButton,BSelect.texture);
-	for (int i{}; i < NoButtons;i++) {
-		UDrawButton(m_context->render, &MMButtons.at(i), FontID, MMButtonName.at(i), AM::Color(), 0,0,0.15f,Buttons.texture);
+	for (int i{}; i < No_Buttons;i++) {
+		UDrawButton(m_context->render, &MM_Buttons.at(i), FontID, MM_ButtonName.at(i), AM::Color(), 0,0,0.15f,Buttons.texture);
 		//m_context->render->RenderRect(&i);
 	}
 }
