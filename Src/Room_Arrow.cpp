@@ -21,16 +21,16 @@ void ArrowMap::Load() {
 	
 	//GenerateArrowKeys(5);
 
-	//bg
-	arrow_bg = AM::RenderSetting{
+	//Background
+	Arrow_Background = AM::RenderSetting{
 		AM::Transform{wosx, wosy, winw, winh},
 		AM::GfxSetting(utils::RGBAtoHex(50,50,200))
 	};
-	bg = AM::TextureMesh(winw, winh);
-	bg = m_context->assets->LoadTexture("./Assets/Audition Room.png", bg);
-	arrow_bg.gfx.mesh = bg.animationframes.at(0);
+	Background = AM::TextureMesh(winw, winh);
+	Background = m_context->assets->LoadTexture("./Assets/Audition Room.png", Background);
+	Arrow_Background.gfx.mesh = Background.animationframes.at(0);
 
-
+	//PlaySound("./Assets/Music/children-electro-swing-1-128373.wav", NULL, SND_ASYNC);
 }
 
 
@@ -40,12 +40,12 @@ void ArrowMap::Unload(){
 
 void ArrowMap::Init() {
 	std::cout << "Init " << StateName << std::endl;
-	dmg_count = 0;
-	check = 2;
+	Dmg_Count = 0;
+	Check_Dead = 2;
 	isEmpty = false;
-	damage = true;
-	arrows = 5;
-	GenerateArrowKeys(arrows);
+	Check_Damage = true;
+	Arrows = 5;
+	GenerateArrowKeys(Arrows);
 	m_context->Player->RenderSett.t = AM::Transform(200, 200, 200, 200);
 	m_context->Boss->RenderSett.t = AM::Transform(600, 200, 200, 200);
 	m_context->Boss->InitBossStats(50, 250);
@@ -56,18 +56,18 @@ void ArrowMap::Free() {
 }
 
 void ArrowMap::Update(f64 deltaTime) {
-	timer = static_cast<f32>(UGetDT());
+	Timer = static_cast<f32>(UGetDT());
 	if(!GameEnd)
-		totaltime.dt -= timer;
-	if (totaltime.dt <= 0) {
-		GenerateArrowKeys(arrows);
-		m_context->Player->currhp -= dmg_count / 2 + 2;
+		TotalTime.dt -= Timer;
+	if (TotalTime.dt <= 0) {
+		GenerateArrowKeys(Arrows);
+		m_context->Player->currhp -= Dmg_Count / 2 + 2;
 	}
-	if (totaltime.dt && !GameEnd) {
+	if (TotalTime.dt && !GameEnd) {
 		if (this->box.empty()) {
 			std::cout << "empty" << std::endl;
 			isEmpty = true;
-			damage = true;
+			Check_Damage = true;
 		}
 		if (!isEmpty) {
 			//up = blue
@@ -88,40 +88,40 @@ void ArrowMap::Update(f64 deltaTime) {
 			}
 		}
 		else{
-			if (!damage) {
-				if (m_context->Player->currhp >= dmg_count) {
-					m_context->Player->currhp -= dmg_count / 2 + 2;
+			if (!Check_Damage) {
+				if (m_context->Player->currhp >= Dmg_Count) {
+					m_context->Player->currhp -= Dmg_Count / 2 + 2;
 				}
-				else if (m_context->Player->currhp <= dmg_count) {
+				else if (m_context->Player->currhp <= Dmg_Count) {
 					m_context->Player->currhp = 0;
-					totaltime.dt = 0;
-					check = PLAYER_DEAD;
+					TotalTime.dt = 0;
+					Check_Dead = PLAYER_DEAD;
 					GameEnd = true;
 				}
 			}
 			else {
-				if (m_context->Boss->currhp > dmg_count) {
-					m_context->Boss->currhp -= dmg_count;
-					arrows++;
+				if (m_context->Boss->currhp > Dmg_Count) {
+					m_context->Boss->currhp -= Dmg_Count;
+					Arrows++;
 				}
-				else if (m_context->Boss->currhp <= dmg_count) {
+				else if (m_context->Boss->currhp <= Dmg_Count) {
 					m_context->Boss->currhp = 0;
-					totaltime.dt = 0;
-					check = BOSS_DEAD;
+					TotalTime.dt = 0;
+					Check_Dead = BOSS_DEAD;
 					GameEnd = true;
 				}
 			}
-			ArrowMap::GenerateArrowKeys(arrows);
-			dmg_count = 0;
+			ArrowMap::GenerateArrowKeys(Arrows);
+			Dmg_Count = 0;
 			isEmpty = false;
 		}
-		if (totaltime.dt == 0) {
-			if (check == 0) {
+		if (TotalTime.dt == 0) {
+			if (Check_Dead == 0) {
 				if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 					m_context->gman->SetStatus(QUIT);
 				}
 			}
-			else if (check == 1) {
+			else if (Check_Dead == 1) {
 				if (AEInputCheckTriggered(AEVK_ESCAPE) || AEInputCheckTriggered(AEVK_LBUTTON)) {
 					m_context->gman->SetStatus(QUIT);
 				}
@@ -148,16 +148,16 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 }
 void ArrowMap::Draw() {
-	m_context->render->RenderMesh(&arrow_bg, bg.texture);
+	m_context->render->RenderMesh(&Arrow_Background, Background.texture);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
-	str = std::to_string(static_cast<int>(m_context->Player->currhp));
-	utils::UDrawText(FontID, "Player's HP:" + str, posx + 55.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
+	int_to_str = std::to_string(static_cast<int>(m_context->Player->currhp));
+	utils::UDrawText(FontID, "Player's HP:" + int_to_str, posx + 55.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
-	str = std::to_string(static_cast<int>(m_context->Boss->currhp));
-	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 500.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
+	int_to_str = std::to_string(static_cast<int>(m_context->Boss->currhp));
+	utils::UDrawText(FontID, "Boss's HP:" + int_to_str, posx + 500.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Boss->DrawHPBar(m_context->render, posx + 450.f, posy);
 
 	for (auto& i : this->box) {
@@ -165,16 +165,16 @@ void ArrowMap::Draw() {
 		m_context->render->RenderMesh(&i.rs, ArrowMesh.texture);
 	}
 	
-	totaltime.rs.t.w = 30.f * totaltime.dt;
-	m_context->render->RenderMesh(&totaltime.rs);
+	TotalTime.rs.t.w = 30.f * TotalTime.dt;
+	m_context->render->RenderMesh(&TotalTime.rs);
 
-	str = std::to_string((int)totaltime.dt);
-	utils::UDrawText(FontID, str, 400.f, 450.f, 0.15f, Color{});
+	int_to_str = std::to_string((int)TotalTime.dt);
+	utils::UDrawText(FontID, int_to_str, 400.f, 450.f, 0.15f, Color{});
 
 	m_context->Player->DrawPlayer(m_context->render);
 	m_context->Boss->DrawBoss(m_context->render);
 
-	CheckDead(check);
+	CheckDead(Check_Dead);
 }
 
 
@@ -183,7 +183,7 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 	Sleep((DWORD)250);
 	srand(static_cast<unsigned int>(time(nullptr)));
 	box.clear();
-	totaltime.dt = 10.f;
+	TotalTime.dt = 10.f;
 	for (int i = 0; i < new_arrow && i <= 10; i++) {
 		int random = (rand() % 4);
 		checkbox cb;
@@ -197,9 +197,9 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 			}, AM::GfxSetting{ rcolour[random] });
 		box.push_back(cb);
 	}
-	totaltime.rs = AM::RenderSetting(AM::Transform{
+	TotalTime.rs = AM::RenderSetting(AM::Transform{
 		400.f , 450.f,
-		30.f * totaltime.dt , 30.f
+		30.f * TotalTime.dt , 30.f
 		}, AM::GfxSetting{ blue });
 	/*totaltime.crs = AM::RenderSetting(AM::Transform{
 		380.f , 450.f,
@@ -209,11 +209,11 @@ void ArrowMap::GenerateArrowKeys(int new_arrow) {
 
 void ArrowMap::CheckArrowKeysPressed(int id) {
 	if (box.front().ID == id) {
-		dmg_count++;
+		Dmg_Count++;
 		box.erase(box.begin());
-		std::cout << dmg_count << std::endl;
+		std::cout << Dmg_Count << std::endl;
 	}
-	else { isEmpty = true; damage = false; }
+	else { isEmpty = true; Check_Damage = false; }
 }
 
 void ArrowMap::CheckDead(int id) {

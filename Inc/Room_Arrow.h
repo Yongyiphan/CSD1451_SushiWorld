@@ -1,14 +1,14 @@
 #pragma once
 #include "pch.h"
 
-struct Arrow {
-	Direction d = {};
-	bool dead;
-	Arrow() {
-		//d = LEFT;
-		dead = false;
-	}
-};
+//struct Arrow {
+//	Direction d = {};
+//	bool dead;
+//	Arrow() {
+//		//d = LEFT;
+//		dead = false;
+//	}
+//};
 
 struct checkbox {
 	int ID{};
@@ -43,13 +43,13 @@ public:
 	u32 red, green, blue, yellow;
 	//std::shared_ptr<s8> FontID;
 	//AEGfxTexture lrarrow;
-	int dmg_count, arrows, check;
-	bool isEmpty, damage, GameEnd;
-	float timer;
-	timebox totaltime;
-	AM::RenderSetting arrow_bg;
-	AM::TextureMesh ArrowMesh,bg;
-	std::string str;
+	int Dmg_Count, Arrows, Check_Dead;
+	bool isEmpty, Check_Damage, GameEnd;
+	float Timer;
+	timebox TotalTime;
+	AM::RenderSetting Arrow_Background;
+	AM::TextureMesh ArrowMesh, Background;
+	std::string int_to_str;
 
 	void Load() override;
 	void Unload() override;
