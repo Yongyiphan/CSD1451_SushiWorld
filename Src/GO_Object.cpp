@@ -14,7 +14,7 @@ void GameObject::ApplyGravity(double gravity) {
 			appliedeffect = -sqrtf(2 * f32(gravity) * (t->pos.y - t->h / 2));
 		}
 		if (Object_Name == "Boss") {
-			std::cout << "Vel y			= " << Vel.y << std::endl;
+			std::cout << "Position: Y: " << RenderSett.t.pos.y << " Vel y " << Vel.y << std::endl;
 		}
 		Vel.y += appliedeffect;
 	}
@@ -91,7 +91,7 @@ void FiniteState::Execute(TimeTracker& timer, f64 dt) {
 		break;
 	case idle_s:
 		Idle();
-		AEVec2Zero(&m_context->Boss->Vel);
+		//AEVec2Zero(&m_context->Boss->Vel);
 		break;
 	}
 }

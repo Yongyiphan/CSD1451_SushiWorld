@@ -47,8 +47,8 @@ void Boss::StartFSM(const std::shared_ptr<GM::Context>& c) {
 	if (BossAttackLoaded)
 		return;
 	attackpatterns.push_back(std::make_unique<JumpAttack>(c));
-	//attackpatterns.push_back(std::make_unique <LaserAttack>(c));
-	//attackpatterns.push_back(std::make_unique<ChargeAttack>(c));
+	attackpatterns.push_back(std::make_unique <LaserAttack>(c));
+	attackpatterns.push_back(std::make_unique<ChargeAttack>(c));
 	BossAttackLoaded = true;
 	std::cout << "Loaded attack patterns" << std::endl;
 }
