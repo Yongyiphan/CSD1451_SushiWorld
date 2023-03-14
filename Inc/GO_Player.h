@@ -11,9 +11,9 @@ public:
 	int x{}, y{}, size{};
 	u32 color{ 0xFF000000 };
 	//Max HP, Current HP
-	float maxhp{}, currhp{};
+	float Max_HP{}, Curr_HP{};
 	//AM::RenderSetting MaxHPRender, CurrHPRender;
-	HPBar PHPBar;
+	HPBar Player_HP_Bar;
 	
 	Player();
 	~Player() {};

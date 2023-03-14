@@ -3,11 +3,11 @@
 
 Player::Player() {
 
-	this->ObjectType = "Player";
+	this->Object_Name = "Player";
 	Flag = Gravity = true;
 	AnimationFrames = currentFrame = frameCounter = 0;
-	maxhp = currhp = 100;
-	PHPBar = HPBar(maxhp, currhp, 250.f, 30.f, utils::RGBAtoHex(150, 0, 0), utils::RGBAtoHex(0, 150, 0));
+	Max_HP = Curr_HP = 100;
+	Player_HP_Bar = HPBar(Max_HP, Curr_HP, 250.f, 30.f, utils::RGBAtoHex(150, 0, 0), utils::RGBAtoHex(0, 150, 0));
 	
 }
 
@@ -38,8 +38,8 @@ void Player::DrawPlayer(const std::shared_ptr<AM::Renderer> &render) {
 }
 
 void Player::DrawHPBar(const std::shared_ptr<AM::Renderer> &render, float posx, float posy) {
-	PHPBar.SetPos(posx, posy);
-	PHPBar.DrawHPBar(render, maxhp, currhp);
+	Player_HP_Bar.SetPos(posx, posy);
+	Player_HP_Bar.DrawHPBar(render, Max_HP, Curr_HP);
 
 }
 

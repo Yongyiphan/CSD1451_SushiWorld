@@ -50,8 +50,7 @@ void Game::Run() {
 	int gGameRunning = 1;
 	//m_context->gman->AddState(std::make_unique<MainField>(m_context));
 	//m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
-	m_context->gman->AddState(std::make_unique<MainMenu>(m_context));
-	//m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
+	m_context->gman->AddState(std::make_unique<PlatformMap>(m_context));
 	//m_context->gman->AddState(std::make_unique<ArrowMap>(m_context));
 	// Game Loop
 	while (gGameRunning && AESysDoesWindowExist())

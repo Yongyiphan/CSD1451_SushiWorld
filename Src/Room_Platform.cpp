@@ -40,6 +40,8 @@ void PlatformMap::Init() {
 		700,130,150,150
 	);
 	m_context->Boss->UpdateSize();
+	m_context->Boss->Gravity = true;
+	m_context->Player->Gravity = true;
 
 }
 
@@ -48,10 +50,14 @@ void PlatformMap::Free() {
 }
 
 void PlatformMap::Update(f64 dt) {
-	
+	m_context->Boss->Gravity	= true;
+	m_context->Player->Gravity	= true;
 	if (AEInputCheckTriggered(AEVK_ESCAPE)) {
 		m_context->gman->SetStatus(QUIT);
 		//m_context->gman->AddState(std::make_unique<MainField>(m_context));
+		//m_context->Boss->Gravity	= false;
+		//m_context->Player->Gravity	= false;
+		//m_context->gman->AddState(std::make_unique<PauseScreen>(m_context));
 	}
 
 	if (AEInputCheckTriggered(AEVK_C)) {

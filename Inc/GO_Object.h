@@ -13,6 +13,7 @@ struct TimeTracker {
 	f32 a_lifetime{};
 	//Sleep
 	f32 a_delay{};
+
 	void UpdateDT(f32 dt) {
 		a_dt += dt;
 		a_timeleft -= dt;
@@ -21,17 +22,38 @@ struct TimeTracker {
 	void sleep(f32 t) {
 		a_delay = t;
 	}
-	void Reset(f32 adt = 0, f32 na = 0, f32 adelay = 0) {
+	void Reset(f32 adt = 0, f32 atimeleft = 0, f32 adelay = 0) {
 		this->a_dt = adt;
-		this->a_timeleft = this->a_lifetime = na;
+		this->a_timeleft = atimeleft;
+		this->a_lifetime = atimeleft;
 		this->a_delay = adelay;
 	}
 };
+
+enum Inner_State {
+	enter_s,
+	update_s,
+	exit_s,
+	idle_s
+};
+class FiniteState {
+protected:
+	std::shared_ptr<GM::Context> m_context;
+public:
+	Inner_State c_state{};
+	virtual void Enter (TimeTracker&)	 = 0;
+	virtual void Update(TimeTracker&)	 = 0;
+	virtual void Exit  (TimeTracker&)	 = 0;
+	void Execute(TimeTracker&, f64);
+	void Idle();
+	virtual void DamagePlayerCondition() = 0;
+};
+
 class GameObject {
 private:
 protected:
 public:
-	std::string ObjectType;
+	std::string Object_Name;
 	//Flag whether current object is active
 	bool Flag{ false }, Friendly{ true };
 	int Collide_D{};

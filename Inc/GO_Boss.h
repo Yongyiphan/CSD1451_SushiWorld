@@ -1,24 +1,6 @@
 #pragma once
 #include "pch.h"
 
-enum Inner_State {
-	enter_s,
-	update_s,
-	exit_s,
-	idle_s
-};
-class FiniteState {
-protected:
-	std::shared_ptr<GM::Context> m_context;
-public:
-	Inner_State c_state{};
-	virtual void Enter (TimeTracker&)	 = 0;
-	virtual void Update(TimeTracker&)	 = 0;
-	virtual void Exit  (TimeTracker&)	 = 0;
-	void Execute(TimeTracker&, f64);
-	void Idle();
-	virtual void DamagePlayerCondition() = 0;
-};
 
 
 
@@ -27,9 +9,9 @@ private:
 	
 public:
 	//Max HP, Current HP
-	float maxhp, currhp;
+	float Max_HP, Curr_HP;
 
-	HPBar BHPBar;
+	HPBar Boss_HP_Bar;
 
 
 	Boss();

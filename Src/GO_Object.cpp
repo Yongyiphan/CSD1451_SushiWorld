@@ -7,12 +7,17 @@ GameObject::GameObject() {}
 GameObject::~GameObject() {}
 
 void GameObject::ApplyGravity(double gravity) {
-	AM::Transform* t = &RenderSett.t;
-	float effect{};
-	if (t->pos.y > t->h/2) {
-		effect = -sqrtf(2 * f32(gravity) * (t->pos.y - t->h / 2));
+	if (Gravity) {
+		AM::Transform* t = &RenderSett.t;
+		float appliedeffect{};
+		if (t->pos.y > t->h/2) {
+			appliedeffect = -sqrtf(2 * f32(gravity) * (t->pos.y - t->h / 2));
+		}
+		if (Object_Name == "Boss") {
+			std::cout << "Vel y			= " << Vel.y << std::endl;
+		}
+		Vel.y += appliedeffect;
 	}
-	Vel.y += effect;
 }
 
 
@@ -54,7 +59,7 @@ void GameObject::Draw(const std::shared_ptr<AM::Renderer>& render) {
 }
 
 bool operator==(const GameObject & lhs,const GameObject & rhs) {
-	if (lhs.ObjectType == rhs.ObjectType) {
+	if (lhs.Object_Name == rhs.Object_Name) {
 		if (lhs.RenderSett.t.pos.x == rhs.RenderSett.t.pos.x &&
 			lhs.RenderSett.t.pos.y == rhs.RenderSett.t.pos.y)
 			return true;
@@ -65,8 +70,11 @@ bool operator==(const GameObject & lhs,const GameObject & rhs) {
 
 void FiniteState::Execute(TimeTracker& timer, f64 dt) {
 	//Force stop, when timer up
-	if (timer.a_timeleft <= 0 && c_state == update_s)
+	if (timer.a_timeleft <= 0 && c_state == update_s) {
+		std::cout << "Times Up: Exiting" << std::endl;
 		c_state = exit_s;
+	}
+
 	switch (c_state) {
 	case enter_s:
 		timer.done = false;
@@ -81,6 +89,7 @@ void FiniteState::Execute(TimeTracker& timer, f64 dt) {
 		break;
 	case idle_s:
 		Idle();
+		AEVec2Zero(&m_context->Boss->Vel);
 		break;
 	}
 }

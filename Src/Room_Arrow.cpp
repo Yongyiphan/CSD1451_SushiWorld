@@ -49,6 +49,7 @@ void ArrowMap::Init() {
 	m_context->Player->RenderSett.t = AM::Transform(200, 200, 200, 200);
 	m_context->Boss->RenderSett.t = AM::Transform(600, 200, 200, 200);
 	m_context->Boss->InitBossStats(50, 250);
+	m_context->Boss->UpdateSize();
 }
 
 void ArrowMap::Free() {
@@ -61,7 +62,7 @@ void ArrowMap::Update(f64 deltaTime) {
 		totaltime.dt -= timer;
 	if (totaltime.dt <= 0) {
 		GenerateArrowKeys(arrows);
-		m_context->Player->currhp -= dmg_count / 2 + 2;
+		m_context->Player->Curr_HP -= dmg_count / 2 + 2;
 	}
 	if (totaltime.dt && !GameEnd) {
 		if (this->box.empty()) {
@@ -89,23 +90,23 @@ void ArrowMap::Update(f64 deltaTime) {
 		}
 		else{
 			if (!damage) {
-				if (m_context->Player->currhp >= dmg_count) {
-					m_context->Player->currhp -= dmg_count / 2 + 2;
+				if (m_context->Player->Curr_HP >= dmg_count) {
+					m_context->Player->Curr_HP -= dmg_count / 2 + 2;
 				}
-				else if (m_context->Player->currhp <= dmg_count) {
-					m_context->Player->currhp = 0;
+				else if (m_context->Player->Curr_HP <= dmg_count) {
+					m_context->Player->Curr_HP = 0;
 					totaltime.dt = 0;
 					check = PLAYER_DEAD;
 					GameEnd = true;
 				}
 			}
 			else {
-				if (m_context->Boss->currhp > dmg_count) {
-					m_context->Boss->currhp -= dmg_count;
+				if (m_context->Boss->Curr_HP > dmg_count) {
+					m_context->Boss->Curr_HP -= dmg_count;
 					arrows++;
 				}
-				else if (m_context->Boss->currhp <= dmg_count) {
-					m_context->Boss->currhp = 0;
+				else if (m_context->Boss->Curr_HP <= dmg_count) {
+					m_context->Boss->Curr_HP = 0;
 					totaltime.dt = 0;
 					check = BOSS_DEAD;
 					GameEnd = true;
@@ -149,14 +150,16 @@ void ArrowMap::Update(f64 deltaTime) {
 }
 void ArrowMap::Draw() {
 	m_context->render->RenderMesh(&arrow_bg, bg.texture);
+	m_context->Player->DrawPlayer(m_context->render);
+	m_context->Boss->DrawBoss(m_context->render);
 	//Temp var for x, y for drawing
 	float posx = 50, posy = 500, baroffset = 20;
 	
-	str = std::to_string(static_cast<int>(m_context->Player->currhp));
+	str = std::to_string(static_cast<int>(m_context->Player->Curr_HP));
 	utils::UDrawText(FontID, "Player's HP:" + str, posx + 55.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Player->DrawHPBar(m_context->render, posx,posy);
 
-	str = std::to_string(static_cast<int>(m_context->Boss->currhp));
+	str = std::to_string(static_cast<int>(m_context->Boss->Curr_HP));
 	utils::UDrawText(FontID, "Boss's HP:" + str, posx + 500.f, posy + baroffset, 0.15f, Color{ 0,0,0 });
 	m_context->Boss->DrawHPBar(m_context->render, posx + 450.f, posy);
 
@@ -171,8 +174,6 @@ void ArrowMap::Draw() {
 	str = std::to_string((int)totaltime.dt);
 	utils::UDrawText(FontID, str, 400.f, 450.f, 0.15f, Color{});
 
-	m_context->Player->DrawPlayer(m_context->render);
-	m_context->Boss->DrawBoss(m_context->render);
 
 	CheckDead(check);
 }

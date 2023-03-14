@@ -153,11 +153,11 @@ void RestState::Update(f64 deltaTime) {
 		case HEALING:
 			//add health
 			if (healed) {
-				m_context->Player->currhp += 10;
+				m_context->Player->Curr_HP += 10;
 				healed = 0; // heal once
 			}
-			if (m_context->Player->currhp >= m_context->Player->maxhp) {
-				m_context->Player->currhp = m_context->Player->maxhp;
+			if (m_context->Player->Curr_HP >= m_context->Player->Max_HP) {
+				m_context->Player->Curr_HP = m_context->Player->Max_HP;
 			}
 			//go back map
 			if (AEInputCheckTriggered(AEVK_ESCAPE)) {
